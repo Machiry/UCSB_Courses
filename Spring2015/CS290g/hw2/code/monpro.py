@@ -1,3 +1,4 @@
+import random
 def mon_pro(aarg,barg,n_arg,n1_arg,r_arg):
     a = long(aarg)
     b = long(barg)
@@ -64,7 +65,7 @@ def get_next_log_2(n):
         count = count + 1
     return (count, i<<count)
     
-def mon_exp(m_arg,e_arg,n_arg):
+def mon_exp(m_arg,e_arg,n_arg,d_arr):
     n = long(n_arg)
     e = long(e_arg)
     m = long(m_arg)
@@ -76,6 +77,8 @@ def mon_exp(m_arg,e_arg,n_arg):
     c1 = r % n
     (k,_) = get_next_log_2(e)
     while k > 0:
+        if not k in d_arr:
+            d_arr[k] = {0:[],1:[]}
         curr_b = (1 << (k-1)) & e
         (c1,st) = mon_pro(c1,c1,n,n1,r)
         if curr_b:
@@ -83,7 +86,24 @@ def mon_exp(m_arg,e_arg,n_arg):
         k = k -1
     c = mon_pro(c1,1,n,n1,r)
     return c
+
+def generate_random_numbers():
+    nums = []
+    for i in range(100):
+        nums.append(random.randint(1000,(1L<<16)))
+    return nums
+d_arr = {}
+print str(mon_exp(175,85,391,d_arr))
+print str(mon_exp(175,87,391,d_arr))
+print str(mon_exp(11,13,53,d_arr))
+'''rand_msgs = generate_random_numbers()
+d_arr = {}
+for curr_msg in rand_msgs:
+    mon_exp(curr_msg,"129","391",d_arr)
+
+
+for curr_b in d_arr:
+    print str(curr_b) + ':' + str(len(d_arr[curr_b][1])) + ':' + str(len(d_arr[curr_b][0]))'''
     
-print str(mon_exp("175","85","391")[0])
     
     
