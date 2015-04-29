@@ -14,51 +14,55 @@
 \begin{document}
 \maketitle
 \section{Implement MonPro that returns the Montgomery product c and also a bool value StepFour which is True if there is a subtraction in Step 4 or False if not. Using the MonPro routine, create an implementation of the modular exponentiation algorithm MonExp}
-I have implemented MonPro and MonExp using Python. The code for which is present in the file $\texttt{monpro\_timing\_attack.py}$. Functions for MonPro and MonExp are $\texttt{mon\_pro}$ and $\texttt{mon\_exp\_attacker}$ respectively.
+I have implemented MonPro and MonExp using Python. The code for which is present in the file $\texttt{machiry\_monpro\_timing\_attack.py}$. Functions for MonPro and MonExp are $\texttt{mon\_pro}$ and $\texttt{mon\_exp\_attacker}$ respectively.
 \section{Timing Attack}
-Here, First I generate 10000 random messages. For a given $d$ and $n$, I run $mon\_exp\_compute\_total\_subtractions$  for each message $m$ to compute $m^{d}$ (mod n) along with total number of subtractions happened in all the $\texttt{mon\_pro}$ invocations. In code, variable $\texttt{nums\_subs}$ holds this.\\
-Except for Most significant bit ($d_{k}$ which can be reasonably assumed to be 1), for each of the other bits of $d$, I assume $d_{i}$ ($i$ < $k$) to be 1 and group messages depending on return value of $\texttt{mon\_pro}$ i.e $\texttt{true}$ (Group $\textbf{A}$) or $\texttt{false}$ (Group $\textbf{B}$). In code, variable $\texttt{d\_arr}$ holds this.\\
+For a given $d$ and $n$, First I generate 10000 random messages. Second, I run $mon\_exp\_compute\_total\_subtractions$  for each message $m$ to compute $m^{d}$ (mod $n$) along with total number of subtractions happened in all the $\texttt{mon\_pro}$ invocations. In code, variable $\texttt{nums\_subs}$ holds this.\\
+Except for Most significant bit ($d_{k}$ which can be reasonably assumed to be 1), for each of the other bits of $d$, I assume $d_{i}$ ($i < k$) to be 1 and group messages depending on return value of $\texttt{mon\_pro}$ i.e $\texttt{true}$ (Group $\textbf{A}$) or $\texttt{false}$ (Group $\textbf{B}$). In code, variable $\texttt{d\_arr}$ holds this.\\
 For each bit $d_{i}$, compute the average number of subtractions of messages in Group $\textbf{A}$ and Group $\textbf{B}$, if the difference is greater than 1, then predict $d_{i}$ to be 1 else predict 0.
 \section{Code usage and results}
-Attached is the file $\texttt{monpro\_timing\_attack.py}$ that contains all the code. You can run the code as shown in the example below:
+Attached is the file $\texttt{machiry\_monpro\_timing\_attack.py}$ that contains all the code. You can run the code as shown in the examples below:
 \subsection{Example 1 (d=85, n=391)}
 \begin{lstlisting}
-python monpro_timing_attack.py 85 391
+>> python machiry_monpro_timing_attack.py 85 391
+
 Computing MonPro along with timings for: d=85, n=391 with no of messages = 10000
 Computing Differences for each bit of exponent
 [+] Timing Attack Results:
-    For bit:1 difference:1.49324662261 Guessing bit to be 1
-    For bit:2 difference:0.78368535565 Guessing bit to be 0
-    For bit:3 difference:1.23034366116 Guessing bit to be 1
-    For bit:4 difference:0.555460398892 Guessing bit to be 0
-    For bit:5 difference:1.11873242982 Guessing bit to be 1
-    For bit:6 difference:0.632019363081 Guessing bit to be 0
-    For bit(MSB):7 difference:-1.9005 Guessing bit to be 1
+    For bit:1 difference:1.49956114749 Guessing bit to be 1
+    For bit:2 difference:0.733689867916 Guessing bit to be 0
+    For bit:3 difference:1.2635785391 Guessing bit to be 1
+    For bit:4 difference:0.560659944641 Guessing bit to be 0
+    For bit:5 difference:1.12327680701 Guessing bit to be 1
+    For bit:6 difference:0.643323021801 Guessing bit to be 0
+    For bit(MSB):7 difference:-1.9002 Guessing bit to be 1
 
 [+] Attack Predicted : 1010101
 [+] Actual Value : 1010101
 
 ++++++ VALUES MATCH: TIMING ATTACK SUCCESSFULL ++++++
+
 \end{lstlisting}
 \subsection{Example 2 (d=6597, n=11413)}
 \begin{lstlisting}
-python monpro_timing_attack.py 6597 11413
-Computing MonPro along with timings for: d=6597, n=11413 with no of messages = 10000
+>> python machiry_monpro_timing_attack.py 6597 11413
+
+Computing MonPro along with timings for: d=6597, n=11413 with 
+    no of messages = 10000
 Computing Differences for each bit of exponent
 [+] Timing Attack Results:
-    For bit:1 difference:1.21617369123 Guessing bit to be 1
-    For bit:2 difference:0.568733861633 Guessing bit to be 0
-    For bit:3 difference:1.09795873189 Guessing bit to be 1
-    For bit:4 difference:0.673425759553 Guessing bit to be 0
-    For bit:5 difference:0.527513445071 Guessing bit to be 0
-    For bit:6 difference:0.469437064096 Guessing bit to be 0
-    For bit:7 difference:1.07740422424 Guessing bit to be 1
-    For bit:8 difference:1.24420195633 Guessing bit to be 1
-    For bit:9 difference:1.15285579156 Guessing bit to be 1
-    For bit:10 difference:0.495667562777 Guessing bit to be 0
-    For bit:11 difference:0.49760355057 Guessing bit to be 0
-    For bit:12 difference:1.02542399815 Guessing bit to be 1
-    For bit(MSB):13 difference:-3.7707 Guessing bit to be 1
+    For bit:1 difference:1.24845233437 Guessing bit to be 1
+    For bit:2 difference:0.595160580067 Guessing bit to be 0
+    For bit:3 difference:1.0800554905 Guessing bit to be 1
+    For bit:4 difference:0.628992367776 Guessing bit to be 0
+    For bit:5 difference:0.559395113874 Guessing bit to be 0
+    For bit:6 difference:0.492662803506 Guessing bit to be 0
+    For bit:7 difference:1.04541593116 Guessing bit to be 1
+    For bit:8 difference:1.18725120832 Guessing bit to be 1
+    For bit:9 difference:1.12435168822 Guessing bit to be 1
+    For bit:10 difference:0.511415480353 Guessing bit to be 0
+    For bit:11 difference:0.557207429916 Guessing bit to be 0
+    For bit:12 difference:1.03862332563 Guessing bit to be 1
+    For bit(MSB):13 difference:-3.7471 Guessing bit to be 1
 
 [+] Attack Predicted : 1100111000101
 [+] Actual Value : 1100111000101

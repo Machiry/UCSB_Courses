@@ -1,5 +1,5 @@
-\BOOKMARK [1][-]{section.1}{Implement MonPro that returns the Montgomery product c and also a bool value StepFour which is True if there is a subtraction in Step 4 or False if not. Using the MonPro routine, create an implementation of the modular exponentiation algorithm MonExp}{}% 1
-\BOOKMARK [1][-]{section.2}{Timing Attack}{}% 2
-\BOOKMARK [1][-]{section.3}{Code usage and results}{}% 3
-\BOOKMARK [2][-]{subsection.3.1}{Example 1 \(d=85, n=391\)}{section.3}% 4
-\BOOKMARK [2][-]{subsection.3.2}{Example 2 \(d=6597, n=11413\)}{section.3}% 5
+\BOOKMARK [1][-]{section.1}{Implement MonPro that returns the Montgomery product c and also a bool value StepFour which is True if there is a subtraction in Step 4 or False if not. Using the MonPro routine, create an implementation of the modular exponentiation algorithm MonExp}{}
+\BOOKMARK [1][-]{section.2}{Timing Attack}{}
+\BOOKMARK [1][-]{section.3}{Code usage and results}{}
+\BOOKMARK [2][-]{subsection.3.1}{Example 1 \(d=85, n=391\)}{section.3}
+\BOOKMARK [2][-]{subsection.3.2}{Example 2 \(d=6597, n=11413\)}{section.3}
