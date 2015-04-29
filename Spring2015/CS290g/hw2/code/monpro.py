@@ -83,9 +83,43 @@ def mon_exp(m_arg,e_arg,n_arg,d_arr):
         (c1,st) = mon_pro(c1,c1,n,n1,r)
         if curr_b:
             (c1,st) = mon_pro(m1,c1,n,n1,r)
+            if st:
+                d_arr[k][1].append(m)
+            else:
+                d_arr[k][0].append(m)
         k = k -1
     c = mon_pro(c1,1,n,n1,r)
     return c
+
+def mon_exp_total(m_arg,e_arg,n_arg,d_arr):
+    n = long(n_arg)
+    e = long(e_arg)
+    m = long(m_arg)
+    (_,r) = get_next_log_2(n)
+    (gcd,r1,n1) = eea(n,r)
+    n1 = -n1
+    assert(gcd == 1)
+    m1 = (m * r) % n
+    c1 = r % n
+    (k,_) = get_next_log_2(e)
+    total_subs = 0
+    while k > 0:
+        curr_b = (1 << (k-1)) & e
+        (c1,st) = mon_pro(c1,c1,n,n1,r)
+        if st:
+            total_subs += 1
+        if curr_b:
+            (c1,st) = mon_pro(m1,c1,n,n1,r)
+            if st:
+                total_subs += 1
+        k = k -1
+    (c,st) = mon_pro(c1,1,n,n1,r)
+    if st:
+        total_subs += 1
+    d_arr[m] = total_subs        
+    return c
+    
+
 
 def generate_random_numbers():
     nums = []
@@ -93,17 +127,34 @@ def generate_random_numbers():
         nums.append(random.randint(1000,(1L<<16)))
     return nums
 d_arr = {}
-print str(mon_exp(175,85,391,d_arr))
+'''print str(mon_exp(175,85,391,d_arr))
 print str(mon_exp(175,87,391,d_arr))
-print str(mon_exp(11,13,53,d_arr))
-'''rand_msgs = generate_random_numbers()
+print str(mon_exp(11,13,53,d_arr))'''
+rand_msgs = generate_random_numbers()
 d_arr = {}
+nums_subs = {}
 for curr_msg in rand_msgs:
-    mon_exp(curr_msg,"129","391",d_arr)
-
+    mon_exp(curr_msg,"85","391",d_arr)
+    mon_exp_total(curr_msg,"85","391",nums_subs)
 
 for curr_b in d_arr:
-    print str(curr_b) + ':' + str(len(d_arr[curr_b][1])) + ':' + str(len(d_arr[curr_b][0]))'''
+    curr_bit = curr_b
+    false_diffs = 0
+    for curr_m in d_arr[curr_b][0]:
+        false_diffs += nums_subs[curr_m]
+    true_diffs = 0
+    for curr_m in d_arr[curr_b][1]:
+        true_diffs += nums_subs[curr_m]
+
+    if true_diffs != 0 or false_diffs != 0:
+        avg_false_diff =  false_diffs/float(len(d_arr[curr_b][0]))
+        avg_true_diff = true_diffs/float(len(d_arr[curr_b][1]))
+        print str(curr_bit) + ':' + str(avg_false_diff) + ':'+str(avg_true_diff) + ':' + str(avg_true_diff - avg_false_diff)
+        
+
+print str(nums_subs)
+for curr_b in d_arr:
+    print str(curr_b) + ':' + str(len(d_arr[curr_b][1])) + ':' + str(len(d_arr[curr_b][0]))
     
     
     
