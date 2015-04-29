@@ -205,6 +205,8 @@ for curr_bit in difference_array:
 
 print '\n[+] Attack Predicted : ' + result
 print '[+] Actual Value : ' + bin(input_d)[2:]
+if result == bin(input_d)[2:]:
+    print '\n\033[92m' + '\033[1m' + '++++++ VALUES MATCH: TIMING ATTACK SUCCESSFULL ++++++' + '\033[0m\n'
 '''print str(nums_subs)
 for curr_b in d_arr:
     print str(curr_b) + ':' + str(len(d_arr[curr_b][1])) + ':' + str(len(d_arr[curr_b][0]))'''
