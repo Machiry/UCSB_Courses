@@ -197,7 +197,10 @@ print '[+] Timing Attack Results:'
 result = ''
 for curr_bit in difference_array:
     if difference_array[curr_bit] > 1.0 or difference_array[curr_bit] < 0:
-        print '    For bit:' + str(curr_bit) + ' difference:' + str(difference_array[curr_bit]) + ' Guessing bit to be 1'
+        if difference_array[curr_bit] < 0:
+            print '    For bit(MSB):' + str(curr_bit) + ' difference:' + str(difference_array[curr_bit]) + ' Guessing bit to be 1'
+        else:
+            print '    For bit:' + str(curr_bit) + ' difference:' + str(difference_array[curr_bit]) + ' Guessing bit to be 1'
         result = '1' + result
     else:
         print '    For bit:' + str(curr_bit) + ' difference:' + str(difference_array[curr_bit]) + ' Guessing bit to be 0'
