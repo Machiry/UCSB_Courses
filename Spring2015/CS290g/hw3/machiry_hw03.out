@@ -1,0 +1,22 @@
+\BOOKMARK [1][-]{section.1}{Problem 1}{}
+\BOOKMARK [2][-]{subsection.1.1}{the left-to-right binary method}{section.1}
+\BOOKMARK [2][-]{subsection.1.2}{the right-to-left binary method}{section.1}
+\BOOKMARK [2][-]{subsection.1.3}{the square-and-multiply-always algorithm}{section.1}
+\BOOKMARK [2][-]{subsection.1.4}{the Montgomery powering ladder}{section.1}
+\BOOKMARK [2][-]{subsection.1.5}{the Atomic square-and-multiply algorithm}{section.1}
+\BOOKMARK [2][-]{subsection.1.6}{the Atomic right-to-left algorithm}{section.1}
+\BOOKMARK [2][-]{subsection.1.7}{Binary method}{section.1}
+\BOOKMARK [2][-]{subsection.1.8}{m-ary method}{section.1}
+\BOOKMARK [3][-]{subsubsection.1.8.1}{For d=2}{subsection.1.8}
+\BOOKMARK [3][-]{subsubsection.1.8.2}{For d=4}{subsection.1.8}
+\BOOKMARK [2][-]{subsection.1.9}{Factor Method}{section.1}
+\BOOKMARK [2][-]{subsection.1.10}{Power Tree Method}{section.1}
+\BOOKMARK [2][-]{subsection.1.11}{Canonical Recording for d=1}{section.1}
+\BOOKMARK [1][-]{section.2}{Illustrate the steps of the standard multiplication algorithm for computing c =a * b = 456 * 555}{}
+\BOOKMARK [1][-]{section.3}{Illustrate the steps of the standard squaring algorithm for computing c =a * a = 456 * 456}{}
+\BOOKMARK [1][-]{section.4}{Let r = 32, n = 21, a = 13, and b = 15. Compute c = a * b * r-1 mod n using the standard Montgomery multiplication algorithm. Illustrate the steps and give all temporary results}{}
+\BOOKMARK [2][-]{subsection.4.1}{function MonPro\(a = 13 , b = 15\)}{section.4}
+\BOOKMARK [1][-]{section.5}{Let p = 29, a = 23, and g = 10. Compute ga \(mod p\) using the binary method of exponentiation and the Montgomery multiplication where r = 32. Show the steps and temporary values.}{}
+\BOOKMARK [1][-]{section.6}{Let an RSA key be determined by the parameters \173p,q,n,e,d\175 = \17317,23,391,29,85\175. Compute S = Md \(mod n\) for M = 175 with and without the Chinese remainder theorem and the binary exponentiation.}{}
+\BOOKMARK [2][-]{subsection.6.1}{Chinese remainder theorem}{section.6}
+\BOOKMARK [2][-]{subsection.6.2}{Binary Exponentiation.}{section.6}
