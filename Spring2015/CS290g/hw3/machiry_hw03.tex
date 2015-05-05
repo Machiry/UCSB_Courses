@@ -16,7 +16,38 @@
 \section{Problem 1}
 Consider the exponent d = 49 = (110001). Show the steps and all intermediate powers in the computation of $m^{d}$ for the algorithms
 \subsection{the left-to-right binary method}
+\begin{center}
+\begin{tabular}{ |c|c|l|l| } 
+ \hline
+ i & e_{i} & Step 2a & Step 2b \\
+ \hline
+ \hline  
+ 4 & 1 & (m)^{2} = m^{2} & m^{2}.m = m^{3} \\ 
+ 3 & 0 & (m^{3})^{2} = m^{6} & m^{6} \\
+ 2 & 0 & (m^{6})^{2} = m^{12} & m^{12} \\ 
+ 1 & 0 & (m^{12})^{2} = m^{24} & m^{24} \\ 
+ 0 & 1 & (m^{24})^{2} = m^{48} & m^{48}.m = m^{49} \\ 
+ \hline
+\end{tabular}
+\end{center}
 \subsection{the right-to-left binary method}
+$R_{0}=1,R_{1}=m,i=0$
+\begin{center}
+\begin{tabular}{ |c|c|c|l|l| } 
+ \hline
+ i & d_{i} & R_{0} & R_{1} \\
+ \hline
+ \hline  
+ 0 & 1 & 1.m & m^{2} \\ 
+ 1 & 0 & m & (m^{2})^{2} \\
+ 2 & 0 & m & (m^{4})^{2} \\ 
+ 3 & 0 & m & (m^{8})^{2} \\ 
+ 4 & 1 & m.m^{16} & (m^{16})^{2} \\ 
+ 5 & 1 & m^{17}.m^{32} & (m^{32})^{2} \\
+ \hline
+\end{tabular}
+\end{center}
+$R_{0} = m^{49}$
 \subsection{the square-and-multiply-always algorithm}
 $R_{0}=1,R_{1}=1$
 \begin{center}
@@ -25,16 +56,16 @@ $R_{0}=1,R_{1}=1$
  i & d_{i} & b & R_{0} & R_{b} \\
  \hline
  \hline  
- 5 & 1 & 0 & R_{0} = 1^{2} (mod N) & R_{0} = 1.m(mod N) \\ 
- 4 & 1 & 0 & R_{0} = m^{2} (mod N) & R_{0} = m^{2}.m(mod N) \\
- 3 & 0 & 1 & R_{0} = (m^{3})^{2} (mod N) & R_{1} = 1.m(mod N) \\ 
- 2 & 0 & 1 & R_{0} = (m^{6})^{2} (mod N) & R_{1} = m.m(mod N) \\ 
- 1 & 0 & 1 & R_{0} = (m^{12})^{2} (mod N) & R_{1} = m^{2}.m(mod N) \\ 
- 0 & 1 & 0 & R_{0} = (m^{24})^{2} (mod N) & R_{0} = m^{48}.m (mod N) \\
+ 5 & 1 & 0 & R_{0} = 1^{2} & R_{0} = 1.m \\ 
+ 4 & 1 & 0 & R_{0} = m^{2} & R_{0} = m^{2}.m \\
+ 3 & 0 & 1 & R_{0} = (m^{3})^{2} & R_{1} = 1.m \\ 
+ 2 & 0 & 1 & R_{0} = (m^{6})^{2} & R_{1} = m.m \\ 
+ 1 & 0 & 1 & R_{0} = (m^{12})^{2} & R_{1} = m^{2}.m \\ 
+ 0 & 1 & 0 & R_{0} = (m^{24})^{2} & R_{0} = m^{48}.m \\
  \hline
 \end{tabular}
 \end{center}
-$R_{0} = m^{49} mod N$
+$R_{0} = m^{49}$
 \subsection{the Montgomery powering ladder}
 $R_{0}=1,R_{1}=m$
 \begin{center}
@@ -43,196 +74,58 @@ $R_{0}=1,R_{1}=m$
  i & d_{i} & b & R_{b} & R_{d_{i}} \\
  \hline
  \hline  
- 5 & 1 & 0 & R_{0} = 1.m (mod N) & R_{1} = m^{2} (mod N) \\ 
- 4 & 1 & 0 & R_{0} = m.m^{2} (mod N) & R_{1} = (m^{2})^2 (mod N) \\
- 3 & 0 & 1 & R_{1} = m^{3}.m^{4} (mod N) & R_{0} = (m^{3})^2 (mod N) \\ 
- 2 & 0 & 1 & R_{1} = m^{6}.m^{7} (mod N) & R_{0} = (m^{6})^2 (mod N) \\ 
- 1 & 0 & 1 & R_{1} = m^{12}.m^{13} (mod N) & R_{0} = (m^{12})^2 (mod N) \\ 
- 0 & 1 & 0 & R_{0} = m^{24}.m^{25} (mod N) & R_{1} = (m^{25})^2 (mod N) \\
+ 5 & 1 & 0 & R_{0} = 1.m & R_{1} = m^{2} \\ 
+ 4 & 1 & 0 & R_{0} = m.m^{2} & R_{1} = (m^{2})^2  \\
+ 3 & 0 & 1 & R_{1} = m^{3}.m^{4} & R_{0} = (m^{3})^2 \\ 
+ 2 & 0 & 1 & R_{1} = m^{6}.m^{7} & R_{0} = (m^{6})^2 \\ 
+ 1 & 0 & 1 & R_{1} = m^{12}.m^{13} & R_{0} = (m^{12})^2 \\ 
+ 0 & 1 & 0 & R_{0} = m^{24}.m^{25} & R_{1} = (m^{25})^2 \\
  \hline
 \end{tabular}
 \end{center}
-$R_{0} = m^{49} mod N$
+$R_{0} = m^{49}$
 \subsection{the Atomic square-and-multiply algorithm}
 $R_{0}=1,R_{1}=m$
 \begin{center}
-\begin{tabular}{ |c|c|c|l|l| } 
+\begin{tabular}{ |c|c|c|l|l|c| } 
  \hline
- i & d_{i} & b & R_{b} & R_{0} \\
+ i & d_{i} & b_{before} & R_{b} & R_{0} & b_{after}\\
  \hline
  \hline  
- 5 & 1 & 0 & R_{0} = 1 & 1.1 (mod N) \\ 
- 4 & 1 & 1 & R_{1} = m (mod N) & 1.m (mod N) \\
- 3 & 0 & 1 & R_{1} = m (mod N) & m.m (mod N) \\ 
- 2 & 0 & 1 & R_{1} = m (mod N) & m^{2}.m (mod N) \\ 
- 1 & 0 & 1 & R_{1} = m (mod N) (mod N) & R_{0} = (m^{12})^2 (mod N) \\ 
- 0 & 1 & 1 & R_{0} = m^{24}.m^{25} (mod N) & R_{1} = (m^{25})^2 (mod N) \\
+ 5 & 1 & 0 & R_{0} = 1 & 1.1 & 1\\ 
+ 5 & 1 & 1 & R_{1} = m & 1.m & 0 \\ 
+ 4 & 1 & 0 & R_{0} = m & m.m & 1 \\
+ 4 & 1 & 1 & R_{1} = m & m^{2}.m & 0 \\
+ 3 & 0 & 0 & R_{0} = m^{3} & m^{3}.m^{3} & 0 \\
+ 2 & 0 & 0 & R_{0} = m^{6} & m^{6}.m^{6} & 0 \\
+ 1 & 0 & 0 & R_{0} = m^{12} & m^{12}.m^{12} & 0 \\
+ 0 & 1 & 0 & R_{0} = m^{24} & m^{24}.m^{24} & 1 \\
+ 0 & 1 & 1 & R_{1} = m & m^{48}.m & 0\\
  \hline
 \end{tabular}
 \end{center}
-$R_{0} = m^{49} mod N$
+$R_{0} = m^{49}$
 \subsection{the Atomic right-to-left algorithm}
-
-\subsection{Binary method}
+$R_{0}=1,R_{1}=m,b=1,i=0$
 \begin{center}
-\begin{tabular}{ |c|c|l|l| } 
+\begin{tabular}{ |c|c|c|l|l| } 
  \hline
- i & e_{i} & Step 2a & Step 2b \\
+ i & d_{i} & b = b $\bigoplus$ d_{i} & R_{b} \\
  \hline
- \hline 
- 6 & 0 & (M)^{2} =  M^{2} & M^{2} \\ 
- 5 & 0 & (M^{2})^{2} = M^{4} & M^{4} \\ 
- 4 & 0 & (M^{4})^{2} = M^{8} & M^{8} \\
- 3 & 1 & (M^{8})^{2} = M^{16} & M^{16}.M = M^{17} \\ 
- 2 & 1 & (M^{17})^{2} = M^{34} & M^{34}.M = M^{35} \\ 
- 1 & 1 & (M^{35})^{2} = M^{70} & M^{70}.M = M^{71} \\ 
- 0 & 1 & (M^{71})^{2} = M^{142} & M^{142}.M = M^{143} \\
+ \hline  
+ 0 & 1 & 0 & R_{0} = 1.m \\ 
+ 0 & 1 & 1 & R_{1} = m.m \\
+ 1 & 0 & 1 & R_{1} = m^{2}.m^{2} \\
+ 2 & 0 & 1 & R_{1} = m^{4}.m^{4} \\
+ 3 & 0 & 1 & R_{1} = m^{8}.m^{8} \\
+ 4 & 1 & 0 & R_{0} = m.m^{16} \\
+ 4 & 1 & 1 & R_{1} = m^{16}.m^{16} \\
+ 5 & 1 & 0 & R_{0} = m^{17}.m^{32} \\
+ 5 & 1 & 1 & R_{1} = m^{32}.m^{49} \\
  \hline
 \end{tabular}
 \end{center}
-Addition chain = 1 2 4 8 16 17 34 35 70 71 142 143, Length = 12.
-\subsection{m-ary method}
-\subsubsection{For d=2}
-\begin{center}
-\begin{tabular}{ |c|c|l|} 
- \hline
- bits & w & M^{w} \\
- \hline
- \hline 
- 00 & 0 & 1 \\ 
- 01 & 1 & M \\ 
- 10 & 2 & M.M = M^{2} \\
- 11 & 3 & M^{2}.M = M^{3} \\
- \hline
-\end{tabular}
-\end{center}
-
-\begin{center}
-\begin{tabular}{ |c|c|l|l| } 
- \hline
- i & F_{i} & Step 4a & Step 4b \\
- \hline
- \hline 
- 2 & 00 & (M^{2})^{4} = M^{8} & M^{8} \\ 
- 1 & 11 & (M^{8})^{4} = M^{32} & M^{32}.M^{3} = M^{35} \\ 
- 0 & 11 & (M^{35})^{4} = M^{140} & M^{140}.M^{3} = M^{143} \\
- \hline
-\end{tabular}
-\end{center}
-Addition chain = 1 2 3 4 8 16 32 35 70 140 143, Length = 11.
-\subsubsection{For d=4}
-\begin{center}
-\begin{tabular}{ |c|c|l|} 
- \hline
- bits & w & M^{w} \\
- \hline
- \hline
- 0000 & 0 & 1 \\ 
- 0001 & 1 & M \\ 
- 0010 & 2 & M.M = M^{2} \\
- 0011 & 3 & M^{2}.M = M^{3} \\
- 0100 & 4 & M^{3}.M = M^{4} \\ 
- 0101 & 5 & M^{4}.M = M^{5} \\ 
- 0110 & 6 & M^{5}.M = M^{6} \\
- 0111 & 7 & M^{6}.M = M^{7} \\
- 1000 & 8 & M^{7}.M = M^{8} \\ 
- 1001 & 9 & M^{8}.M = M^{9} \\ 
- 1010 & 10 & M^{9}.M = M^{10} \\
- 1011 & 11 & M^{10}.M = M^{11} \\
- 1100 & 12 & M^{11}.M = M^{12} \\ 
- 1101 & 13 & M^{12}.M = M^{13} \\ 
- 1110 & 14 & M^{13}.M = M^{14} \\
- 1111 & 15 & M^{14}.M = M^{15} \\
- \hline
-\end{tabular}
-\end{center}
-
-\begin{center}
-\begin{tabular}{ |c|c|l|l| } 
- \hline
- i & F_{i} & Step 4a & Step 4b \\
- \hline
- \hline 
- 0 & 1111 & (M^{8})^{16} = M^{128} & M^{128}.M^{15} = M^{143} \\
- \hline
-\end{tabular}
-\end{center}
-Addition chain = 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 32 64 128 143, Length = 20.
-\subsection{Factor Method}
-Compute: M $ \rightarrow$ M^{2} \\
-Assign: a = M^{2} \\
-Compute: a $ \rightarrow$ a^{2} $ \rightarrow$ a^{4} $ \rightarrow$ a^{5}\\
-Assign: b = a^{5} = M^{10}\\
-Compute: b.M $ \rightarrow$ M^{11} \\
-Assign: c = M^{11} \\
-Compute: c $ \rightarrow$ c^{2} $ \rightarrow$ c^{3} \\
-Assign: d = c^{3} = (M^{11})^{3}\\
-Compute: d $ \rightarrow$ d^{2} $ \rightarrow$ d^{4} \\
-Assign: e = d^{4} = (M^{11})^{12} \\
-Compute: e.c $ \rightarrow$  (M^{11})^{13} = $M^{143}$ \\
-Addition chain = 1 2 4 8 10 11 22 33 66 132 143, Length = 11.
-\subsection{Power Tree Method}
-A tree of height 11 leads to 143 as its leaf node. Refer code $\texttt{mk\_tree.py}$ for the details. 
-The path from the root is: 1 2 3 5 7 14 21 35 70 140 143. Addition chain is same as this path.\\
-Addition chain = 1 2 3 5 7 14 21 35 70 140 143, Length = 11.
-\subsection{Canonical Recording for d=1}
-Truth table for canonical recording is as shown below:
-\begin{center}
-\begin{tabular}{ |c|c|c|c|c|} 
- \hline
- c_{i} & e_{i+1} & e_{i} & c_{i+1} & f_{i} \\
- \hline
- \hline 
- 0 & 0 & 0 & 0 & 0 \\ 
- 0 & 0 & 1 & 0 & 1 \\ 
- 0 & 1 & 0 & 0 & 0 \\
- 0 & 1 & 1 & 1 & $\overline{1}$\\
- 1 & 0 & 0 & 0 & 1 \\ 
- 1 & 0 & 1 & 1 & 0 \\ 
- 1 & 1 & 0 & 1 & $\overline{1}$\\
- 1 & 1 & 1 & 1 & 0 \\
- \hline
-\end{tabular}
-\end{center}
-Using truth table, recording for given number is:
-\begin{center}
-\begin{tabular}{ |c|c|c|c|c|} 
- \hline
- c_{i} & e_{i+1} & e_{i} & c_{i+1} & f_{i} \\
- \hline
- \hline 
- 0 & 1 & 1 & 1 & $\overline{1}$ \\ 
- 1 & 1 & 1 & 1 & 0 \\ 
- 1 & 1 & 1 & 1 & 0 \\
- 1 & 0 & 1 & 1 & 0\\
- 1 & 0 & 0 & 0 & 1 \\ 
- 0 & 0 & 0 & 0 & 0 \\ 
- 0 & 1 & 0 & 0 & 0\\
- 0 & 0 & 1 & 0 & 1\\
- \hline
-\end{tabular}
-\end{center}
-$1001000\overline{1}$ = 2^{7} + 2^{4} - 2^{0} = 143\\
-
-Computing the exponent:
-\begin{center}
-\begin{tabular}{ |c|c|l|l| } 
- \hline
- i & f_{i} & Step 2a & Step 2b \\
- \hline
- \hline 
- 7 & 1 & M & M \\ 
- 6 & 0 & (M)^{2} =  M^{2} & M^{2} \\ 
- 5 & 0 & (M^{2})^{2} = M^{4} & M^{4} \\ 
- 4 & 1 & (M^{4})^{2} = M^{8} & M^{8}.M=M^{9} \\
- 3 & 0 & (M^{9})^{2} = M^{18} & M^{18} \\ 
- 2 & 0 & (M^{18})^{2} = M^{36} & M^{36} \\ 
- 1 & 0 & (M^{36})^{2} = M^{72} & M^{72} \\ 
- 0 & $\overline{1}$ & (M^{72})^{2} = M^{144} & M^{144}.$M^{-1}$ = M^{143} \\
- \hline
-\end{tabular}
-\end{center}
-Addition chain: 1 2 4 8 9 18 36 72 144 143, Length = 10.
+$R_{0} = m^{49}$
 \section{Let an RSA key be determined by the parameters \{p,q,n,$\phi(n)$,e,d\} = \{97,103,9991,9792,2015,8927\}. Compute S = $M^{d}$ (mod n) for M = 25 using each of these DPA-type countermeasure algorithms by selecting suitable random parameters:}
 \subsection{Randomizing m, where e is known}
 Picking random r = 17.\\
