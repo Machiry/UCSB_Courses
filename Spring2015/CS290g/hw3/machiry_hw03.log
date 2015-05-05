@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.8.22)  5 MAY 2015 00:11
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2015.4.1)  5 MAY 2015 12:31
 entering extended mode
  %&-line parsing enabled.
 **machiry_hw03.tex
@@ -32,7 +32,7 @@ Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 )
 (/usr/share/texmf-texlive/tex/generic/oberdiek/ifpdf.sty
 Package: ifpdf 2009/04/10 v2.0 Provides the ifpdf switch (HO)
-Package ifpdf Info: pdfTeX in pdf mode not detected.
+Package ifpdf Info: pdfTeX in pdf mode detected.
 )
 (/usr/share/texmf-texlive/tex/generic/oberdiek/ifvtex.sty
 Package: ifvtex 2008/11/04 v1.4 Switches for detecting VTeX and its modes (HO)
@@ -63,27 +63,12 @@ Package graphics Info: Driver file: pdftex.def on input line 91.
 
 (/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2010/03/12 v0.04p Graphics/color for pdfTeX
-
-
-! Package pdftex.def Error: PDF mode expected, but DVI mode detected!
-(pdftex.def)                If you are using `latex', then call `pdflatex'.
-(pdftex.def)                Otherwise check and correct the driver options.
-(pdftex.def)                Error recovery by switching to PDF mode.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.414     }\@ehc
-                
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
 \Gread@gobject=\count90
 ))
 \Gin@req@height=\dimen107
 \Gin@req@width=\dimen108
-) (/usr/share/texmf-texlive/tex/latex/amsmath/amsmath.sty
+)
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2000/07/18 v2.13 AMS math features
 \@mathmargin=\skip43
 
@@ -301,29 +286,11 @@ Package: atbegshi 2008/07/31 v1.9 At begin shipout hook (HO)
 \c@Item=\count118
 \c@Hfootnote=\count119
 )
-
-Package hyperref Warning: Wrong driver `hpdftex.def';
-(hyperref)                pdfTeX is not running in PDF mode.
-(hyperref)                Using default driver.
-
-*hyperref using default driver hdvips*
-(/usr/share/texmf-texlive/tex/latex/hyperref/hdvips.def
-File: hdvips.def 2009/10/09 v6.79a Hyperref driver for dvips
-
-(/usr/share/texmf-texlive/tex/latex/hyperref/pdfmark.def
-File: pdfmark.def 2009/10/09 v6.79a Hyperref definitions for pdfmark specials
-
-
-Package hyperref Warning: You have enabled option `breaklinks'.
-(hyperref)                But driver `hdvips.def' does not suppport this.
-(hyperref)                Expect trouble with the link areas of broken links.
-
-\pdf@docset=\toks31
-\pdf@box=\box34
-\pdf@toks=\toks32
-\pdf@defaulttoks=\toks33
+*hyperref using driver hpdftex*
+(/usr/share/texmf-texlive/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2009/10/09 v6.79a Hyperref driver for pdfTeX
 \Fld@listcount=\count120
-))
+)
 
 ! LaTeX Error: Option clash for package graphicx.
 
@@ -378,11 +345,7 @@ LaTeX Font Info:    ... okay on input line 14.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 14.
 LaTeX Font Info:    ... okay on input line 14.
 
-
-Package geometry Warning: Wrong driver setting: `pdftex'; using default driver.
-
-
-*geometry detected driver: dvips*
+*geometry detected driver: pdftex*
 -------------------- Geometry parameters
 paper: class default
 landscape: --
@@ -400,7 +363,7 @@ truedimen: --
 includehead: --
 includefoot: --
 includemp: --
-driver: dvips
+driver: pdftex
 -------------------- Page layout dimensions and switches
 \paperwidth  614.295pt
 \paperheight 794.96999pt
@@ -426,14 +389,14 @@ driver: dvips
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count121
 \scratchdimen=\dimen126
-\scratchbox=\box35
+\scratchbox=\box34
 \nofMPsegments=\count122
 \nofMParguments=\count123
-\everyMPshowfont=\toks34
+\everyMPshowfont=\toks31
 \MPscratchCnt=\count124
 \MPscratchDim=\dimen127
 \MPnumerator=\count125
-\everyMPtoPDFconversion=\toks35
+\everyMPtoPDFconversion=\toks32
 )
 \c@lstlisting=\count126
 Package hyperref Info: Link coloring OFF on input line 14.
@@ -451,7 +414,7 @@ LaTeX Info: Redefining \pageref on input line 14.
 \@outlinefile=\write3
 \openout3 = `machiry_hw03.out'.
 
-\AtBeginShipoutBox=\box36
+\AtBeginShipoutBox=\box35
 
 ! Missing $ inserted.
 <inserted text> 
@@ -1860,50 +1823,8 @@ really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
 [1
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
 
-
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 ! Missing $ inserted.
 <inserted text> 
                 $
@@ -3761,20 +3682,7 @@ l.134 $r^
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
-[2
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!]
+[2]
 ! Missing $ inserted.
 <inserted text> 
                 $
@@ -3804,22 +3712,6 @@ you left one out. Proceed, with fingers crossed.
                 $
 l.142 \subsection
                  {Randomizing m, using a small r}
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.143 Selecting l to be 5. 2^
-                             {l} = 32.\\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.145 $m^
-         {*}$ = 25 + 17.9991 = 169872.\\
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
@@ -3955,63 +3847,31 @@ l.169 \end{document}
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
-[3
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!] [4
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!] (./machiry_hw03.aux) ) 
+[3] [4] (./machiry_hw03.aux) ) 
 Here is how much of TeX's memory you used:
- 6586 strings out of 495062
- 94273 string characters out of 1182644
- 189695 words of memory out of 3000000
- 9669 multiletter control sequences out of 15000+50000
+ 6552 strings out of 495061
+ 93787 string characters out of 1182622
+ 188750 words of memory out of 3000000
+ 9618 multiletter control sequences out of 15000+50000
  11651 words of font info for 42 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  38i,9n,39p,356b,347s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-texlive/fonts
-/type1/public/amsfonts/cm/cmbsy10.pfb></usr/share/texmf-texlive/fonts/type1/pub
-lic/amsfonts/cm/cmbx10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfont
-s/cm/cmbx12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmex10
-.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/
-share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf
--texlive/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-texlive/fon
-ts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-texlive/fonts/type1/pub
-lic/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts
-/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr17.pf
-b></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share
-/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texl
-ive/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on machiry_hw03.pdf (4 pages, 152241 bytes).
+</usr/share/texmf-texlive/fonts/type1/public/amsf
+onts/cm/cmbsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cm
+bx10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></
+usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/t
+exmf-texlive/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texliv
+e/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-texlive/fonts/typ
+e1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-texlive/fonts/type1/public/am
+sfonts/cm/cmmi8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cm
+r10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb></us
+r/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texm
+f-texlive/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-texlive/fon
+ts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/pu
+blic/amsfonts/cm/cmsy8.pfb>
+Output written on machiry_hw03.pdf (4 pages, 157938 bytes).
 PDF statistics:
- 71 PDF objects out of 1000 (max. 8388607)
- 0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 144 PDF objects out of 1000 (max. 8388607)
+ 20 named destinations out of 1000 (max. 500000)
+ 121 words of extra memory for PDF output out of 10000 (max. 10000000)
 
