@@ -130,253 +130,40 @@ $R_{0} = m^{49}$
 \subsection{Randomizing m, where e is known}
 Picking random r = 17.\\
 $m^{*}$ = (17)^{2015}.25 mod (9991) = 7111.\\
-$S^{*}$ = (7111)^{8972} mod (9991) = 6660. \\
+$S^{*}$ = (7111)^{8927} mod (9991) = 5681. \\
 $r^{-1}$ = 4114.\\
-$S$ = 6660.4114 mod (9991) = 7406.
-\begin{center}
-\begin{tabular}{ ccccc} 
- \hline
- i & j & Step & (C,S) & Partial t \\
- \hline
- 0 & 0 & t_{0}+a_{0}b_{0}+C & (0,*) & 000000 \\ 
-  &  & 0 + 6*5 + 0 & (3,0) & 00000$\textbf{0}$ \\ 
-\hline
-  & 1 & t_{1}+a_{1}b_{0}+C &  &  \\ 
-  &  & 0 + 5*5 + 3 & (2,8) & 0000$\textbf{8}$0 \\ 
- \hline
-  & 2 & t_{2}+a_{2}b_{0}+C &  &  \\ 
-  &  & 0 + 4*5 + 2 & (2,2) & 000$\textbf{2}$80 \\ 
- \hline
- & & & & 00$\textbf{2}$280 \\
- \hline
-  1 & 0 & t_{1}+a_{0}b_{1}+C & (0,*) &  \\ 
-  &  & 8 + 6*5 + 0 & (3,8) & 0022$\textbf{8}$0 \\ 
-\hline
-  & 1 & t_{2}+a_{1}b_{1}+C &  &  \\ 
-  &  & 2 + 5*5 + 3 & (3,0) & 002$\textbf{0}$80 \\ 
- \hline
-  & 2 & t_{3}+a_{2}b_{1}+C &  &  \\ 
-  &  & 2 + 4*5 + 3 & (2,5) & 00$\textbf{5}$080 \\ 
- \hline
- & & & & 0$\textbf{2}$5080 \\
- \hline
-  2 & 0 & t_{2}+a_{0}b_{2}+C & (0,*) &  \\ 
-  &  & 0 + 6*5 + 0 & (3,0) & 025$\textbf{0}$80 \\ 
-\hline
-  & 1 & t_{3}+a_{1}b_{2}+C &  &  \\ 
-  &  & 5 + 5*5 + 3 & (3,3) & 02$\textbf{3}$080 \\ 
- \hline
-  & 2 & t_{4}+a_{2}b_{2}+C &  &  \\ 
-  &  & 2 + 4*5 + 3 & (2,5) & 0$\textbf{5}$3080 \\ 
- \hline
- & & & & $\textbf{2}$53080 \\
- \hline
-\end{tabular}
-\end{center}
-\section{Illustrate the steps of the standard squaring algorithm for computing c
-=a * a = 456 * 456}
-\begin{center}
-\begin{tabular}{ ccccc} 
- \hline
- i & j & Step & (C,S) & Partial t \\
- \hline
- 0 & 1 & t_{0} + a_{0}a_{0} &  & 000000 \\
-  & & 0 + 6*6 & (3,6) & 00000$\textbf{6}$ \\
-  & & t_{1}+2a_{1}a_{0}+C & (3,*) & 000006 \\ 
-  & & 0 + 2*5*6 + 3 & (6,3) & 0000$\textbf{3}$6 \\ 
-\hline
- 0 & 2 & t_{2}+2a_{2}a_{0}+C & (6,*) & 000036 \\ 
-  &  & 0 + 2*4*6 + 6 & (5,4) & 000$\textbf{4}$36 \\ 
- \hline
- & & & & 00$\textbf{5}$436 \\
- \hline
-  1 & 2 & t_{2} + a_{1}a_{1} &  & 005436 \\
-  & & 4 + 5*5 & (2,9) & 005$\textbf{9}$36 \\
-  & & t_{3}+2a_{2}a_{1}+ C & (2,*) & 005936 \\ 
-  & & 5 + 2*4*5 + 2 & (4,7) & 00$\textbf{7}$936 \\ 
-\hline
- & & & & 0$\textbf{4}$7936 \\
- \hline
- 2 & 2 & t_{4} + a_{2}a_{2} &  & 047936 \\
-  & & 4 + 4*4 & (2,0) & 0$\textbf{0}$7936 \\
- \hline
- & & & & $\textbf{2}$07936 \\
- \hline
-\end{tabular}
-\end{center}
-\section{Let r = 32, n = 21, a = 13, and b = 15. Compute $c = a * b * r^{-1}$ mod n using the standard Montgomery multiplication algorithm. Illustrate the steps and give all temporary results}
-\begin{center}
-\begin{tabular}{c||c|c|c|c|c|c|c} 
-iteration & q & g_{0} & g_{1} & u_{0} & u_{1} & v_{0} & v_{1}\\
-\hline
-0 & - & 32 & 21 & 1 & 0 & 0 & 1 \\
-\hline
-1 & 1 & 21 & 11 & 0 & 1 & 1 & -1 \\
-\hline
-2 & 1 & 11 & 10 & 1 & -1 & -1 & 2\\
-\hline
-3 & 1 & 10 & 1 & -1 & 2 & 2 & -3\\
-\hline
-4 & 10 & 1 & 0 & 2 & -21 & -3 & 32 \\
-\hline
-& & $\bullet$ & & $\bullet$ & & $\bullet$ & \\
-\label{tab:gcd1}
-\end{tabular}
-\end{center}
-From Table \ref{tab:gcd1}, GCD = 1, $r^{-1}$ = 2, $n'$ = 3. \\
-Consider $\overline{x}$ = a = 13, such that x = $\overline{x} * r^{-1} $ mod n = 5. $\overline{y}$ = b = 15, such that y = $\overline{y} * r^{-1} $ mod n = 9. \\
-Now, $a * b * r^{-1}$ mod n is same as $\overline{x} * \overline{y} * r^{-1}$ mod n.\\
-So, $a * b * r^{-1}$ mod n = $\overline{x} * \overline{y} * r^{-1}$ mod n = MonPro($\overline{x}$ = 13,$\overline{y}$ = 15).
-
-\subsection{function MonPro($\overline{a}$ = 13 , $\overline{b}$ = 15)}
-\begin{enumerate}
-\item t = 13*15 = 195
-\item m = (195*3) mod 32 = 9
-\item u = (195 + 9 * 21) / 32 = 384/32 = 12
-\item 12 $<$ 21 $\textbf{return}$ 12
-\end{enumerate}
-Final result is : 12.
-\section{Let p = 29, a = 23, and g = 10. Compute $g^{a}$ (mod p) using the binary method of exponentiation and the Montgomery multiplication where r = 32. Show the steps and temporary values.}
-Consider n=p=29, M=g=10, e=a=23.
-\begin{center}
-\begin{tabular}{c||c|c|c|c|c|c|c} 
-iteration & q & g_{0} & g_{1} & u_{0} & u_{1} & v_{0} & v_{1}\\
-\hline
-0 & - & 32 & 29 & 1 & 0 & 0 & 1 \\
-\hline
-1 & 1 & 29 & 3 & 0 & 1 & 1 & -1 \\
-\hline
-2 & 9 & 3 & 2 & 1 & -9 & -1 & 10\\
-\hline
-3 & 1 & 2 & 1 & -9 & 10 & 10 & -11\\
-\hline
-4 & 2 & 1 & 0 & 10 & -29 & -11 & 32 \\
-\hline
-& & $\bullet$ & & $\bullet$ & & $\bullet$ & \\
-\end{tabular}
-\label{tab:gcd2}
-\end{center}
-From Table \ref{tab:gcd2}, GCD = 1, $r^{-1}$ = 10, $n'$ = 11. \\
-\begin{itemize}
-\item Step 2
-\begin{description}
-$\overline{M}$ = M * r mod n = 10 * 32 mod 29 = 1
-\end{description}
-\item Step 3
-\begin{description}
-$\overline{C}$ = 1 * r mod n = 1 * 32 mod 29 = 3
-\end{description}
-\item Step 4
-\begin{description}
-\begin{center}
-\begin{tabular}{c|c|c} 
-$e_{i}$ & Step 5 & Step 6\\
-\hline
-1 & MonPro(3,3) = 3 & MonPro(1,3) = 1 \\
-\hline
-0 & MonPro(1,1) = 10 &  \\
-\hline
-1 & MonPro(10,10) = 14 & MonPro(1,14) = 24\\
-\hline
-1 & MonPro(24,24) = 18 & MonPro(1,18) = 6\\
-\hline
-1 & MonPro(6,6) = 12 & MonPro(1,12) =  4 \\
-\end{tabular}
-\end{center}
-\\
-$MonPro(3,3)$\\
-t = 3 * 3 = 9\\
-m = 9 * 11 mod 32 = 3\\
-u = (9 + 3 * 29) / 32 = 3\\
-\\
-$MonPro(1,3)$\\
-t = 1 * 3 = 3\\
-m = 3 * 11 mod 32 = 1\\
-u = (3 + 1 * 29) / 32 = 1\\
-\\
-$MonPro(1,1)$\\
-t = 1 * 1 = 1\\
-m = 1 * 11 mod 32 = 11\\
-u = (1 + 11 * 29) / 32 = 10\\
-\\
-$MonPro(10,10)$\\
-t = 10 * 10 = 100\\
-m = 100 * 11 mod 32 = 12\\
-u = (100 + 12 * 29) / 32 = 14\\
-\\
-$MonPro(1,14)$\\
-t = 1 * 14 = 14\\
-m = 14 * 11 mod 32 = 26\\
-u = (14 + 26 * 29) / 32 = 24\\
-\\
-$MonPro(24,24)$\\
-t = 24 * 24 = 576\\
-m = 576 * 11 mod 32 = 0\\
-u = (576 + 0 * 29) / 32 = 18\\
-\\
-$MonPro(1,18)$\\
-t = 1 * 18 = 18\\
-m = 18 * 11 mod 32 = 6\\
-u = (18 + 6 * 29) / 32 = 6\\
-\\
-$MonPro(6,6)$\\
-t = 6 * 6 = 36\\
-m = 36 * 11 mod 32 = 12\\
-u = (36 + 12 * 29) / 32 = 12\\
-\\
-$MonPro(1,12)$\\
-t = 1 * 12 = 12\\
-m = 12 * 11 mod 32 = 4\\
-u = (12 + 4 * 29) / 32 = 4\\
-\end{description}
-\item Step 7
-\begin{description}
-C = MonPro(4,1) = 11
-\end{description}
-\end{itemize}
-Result of $10^{23}$ (mod 29) = $\textbf{11}$
-\section{Let an RSA key be determined by the parameters \{p,q,n,e,d\} = \{17,23,391,29,85\}. Compute S = $M^{d}$ (mod n) for M = 175 with and without the Chinese remainder theorem and the binary exponentiation.}
-\subsection{Chinese remainder theorem}
-$d_{1}$ = 85 mod (16) = 5\\
-$d_{2}$ = 85 mod (22) = 19\\
-\begin{center}
-\begin{tabular}{c||c|c|c|c|c|c|c} 
-iteration & quotient & g_{0} & g_{1} & u_{0} & u_{1} & v_{0} & v_{1}\\
-\hline
-0 & - & 23 & 17 & 1 & 0 & 0 & 1 \\
-\hline
-1 & 1 & 17 & 6 & 0 & 1 & 1 & -1 \\
-\hline
-2 & 2 & 6 & 5 & 1 & -2 & -1 & 3\\
-\hline
-3 & 1 & 5 & 1 & -2 & 3 & 3 & -4\\
-\hline
-4 & 5 & 1 & 0 & 3 & -17 & -4 & 23 \\
-\hline
-& & $\bullet$ & & $\bullet$ & & $\bullet$ & \\
-\label{tab:gcd3}
-\end{tabular}
-\end{center}
-In Table \ref{tab:gcd3}, Initial values of $g_{0}$ = q = 23 and $g_{1}$ = p = 17. This $p^{-1}$ = -4 and $q^{-1}$ = 3.\\
-$M_{1}$ = $M^{d_{1}}$ mod p = $175^{5}$ mod 17 = 14.\\
-$M_{2}$ = $M^{d_{2}}$ mod q = $175^{19}$ mod 23 = 10.\\
-S = $M_{1}$ + p *(($M_{2}$ - $M_{1}$) * $p^{-1}$ mod q) = 14 + 17*((10-14)*-4 mod 23) = 14 + 272 = $\textbf{286}$.
-\subsection{Binary Exponentiation.}
-Representing 85 in binary results in: 1 0 1 0 1 0 1 \\
-Following table shows computation of RSA decryption using binary exponentiation.
-\begin{center}
-\begin{tabular}{ |c|c|l|l| } 
- \hline
- i & e_{i} & Step 2a & Step 2b \\
- \hline
- \hline 
- 6 & 0 & ($(175)^{2}$) mod 391 =  127 & 127 \\ 
- 5 & 1 & ($(127)^{2}$) mod 391 = 98 & 98*175 mod 391 = 337 \\ 
- 4 & 0 & ($(337)^{2}$) mod 391 =  179 & 179 \\
- 3 & 1 & ($(179)^{2}$) mod 391 = 370 & 370*175 mod 391 = 235 \\ 
- 1 & 0 & ($(235)^{2}$) mod 391 =  94 & 94 \\ 
- 0 & 1 & ($(94)^{2}$) mod 391 = 234 & 234*175 mod 391 = $\textbf{286}$ \\
- \hline
-\end{tabular}
-\end{center}
+$S$ = 5681.4114 mod (9991) = $\textbf{2685}$.
+\subsection{Randomizing m, where e is unknown}
+Picking random r = 17.\\
+$m^{*}$ = 17.25 mod (9991) = 425.\\
+$S^{*}$ = (425)^{8927} mod (9991) = 4289. \\
+$r^{-1}$ = 4114.\\
+$S$ = 4289.4114^{8927} mod (9991) = $\textbf{2685}$.
+\subsection{Randomizing m, using a small r}
+Selecting l to be 5. 2^{l} = 32.\\
+Selecting r to be 17 ( < 32).\\
+$m^{*}$ = 25 + 17.9991 = 169872.\\
+$N^{*}$ = 32*9991 = 319712.\\
+$S^{*}$ = (169872)^{8927} mod (319712) = 52640. \\
+$S$ = 52640 mod (9991) = $\textbf{2685}$.
+\subsection{Randomizing d, using a small r}
+Picking random r = 17.\\
+$d^{*}$ = 8927+17*9792 = 175391.\\
+$S$ = (25)^{175391} mod (9991) = $\textbf{2685}$. 
+\subsection{Randomizing d, where $\phi(n)$ is unknown}
+Picking random r = 17.\\
+$d^{*}$ = 8927+17*(2015*8927-1) = 305803295.\\
+$S$ = (25)^{305803295} mod (9991) = $\textbf{2685}$. 
+\subsection{Randomizing d, where e is unknown}
+Picking random r = 17.\\
+$d^{*}$ = 8927-17 = 8910.\\
+$S_{1}^{*}$ = (25)^{8910} mod (9991) = 7017. \\
+$S_{2}^{*}$ = (25)^{17} mod (9991) = 9120. \\
+$S$ = 7017*9120 mod (9991) = $\textbf{2685}$. 
+\subsection{Randomizing n, using small random $r_{1}$ and $r_{2}$}
+Picking random $r_{1}$ = 17,$r_{2}$ = 29.\\
+$m^{*}$ = 25 + 17*9991 = 169872.\\
+$N^{*}$ = 29*9991 = 289739.\\
+$S^{*}$ = 169872^{8927} mod (289739) = 22667.\\
+$S$ = 22667 mod (9991) = $\textbf{2685}$.
 \end{document}
