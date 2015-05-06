@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2015.4.1)  5 MAY 2015 12:31
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2015.4.1)  5 MAY 2015 18:34
 entering extended mode
  %&-line parsing enabled.
 **machiry_hw03.tex
@@ -3842,36 +3842,300 @@ you left one out. Proceed, with fingers crossed.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.169 \end{document}
-                    
+l.169 \section
+              {For the same RSA key set, show the computation of s = $m^{d}$...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
-[3] [4] (./machiry_hw03.aux) ) 
+[3]
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 169.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `superscript' on input line 169.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 169.
+
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 171.
+
+Underfull \hbox (badness 10000) in paragraph at lines 171--174
+
+ []
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.176 iteration & quotient & g_
+                               {0} & g_{1} & u_{0} & u_{1} & v_{0} & v_{1}\\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+<template> \unskip \hfil }
+                          \hskip \tabcolsep \hskip -.5\arrayrulewidth \vrule...
+l.176 iteration & quotient & g_{0} &
+                                     g_{1} & u_{0} & u_{1} & v_{0} & v_{1}\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.176 iteration & quotient & g_{0} &
+                                     g_{1} & u_{0} & u_{1} & v_{0} & v_{1}\\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.176 iteration & quotient & g_{0} &
+                                     g_{1} & u_{0} & u_{1} & v_{0} & v_{1}\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.176 iteration & quotient & g_{0} & g_
+                                       {1} & u_{0} & u_{1} & v_{0} & v_{1}\\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+<template> \unskip \hfil }
+                          \hskip \tabcolsep \hskip -.5\arrayrulewidth \vrule...
+l.176 iteration & quotient & g_{0} & g_{1} &
+                                             u_{0} & u_{1} & v_{0} & v_{1}\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.176 iteration & quotient & g_{0} & g_{1} &
+                                             u_{0} & u_{1} & v_{0} & v_{1}\\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.176 iteration & quotient & g_{0} & g_{1} &
+                                             u_{0} & u_{1} & v_{0} & v_{1}\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.176 iteration & quotient & g_{0} & g_{1} & u_
+                                               {0} & u_{1} & v_{0} & v_{1}\\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+<template> \unskip \hfil }
+                          \hskip \tabcolsep \hskip -.5\arrayrulewidth \vrule...
+l.176 ...tion & quotient & g_{0} & g_{1} & u_{0} &
+                                                   u_{1} & v_{0} & v_{1}\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.176 ...tion & quotient & g_{0} & g_{1} & u_{0} &
+                                                   u_{1} & v_{0} & v_{1}\\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.176 ...tion & quotient & g_{0} & g_{1} & u_{0} &
+                                                   u_{1} & v_{0} & v_{1}\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.176 ...n & quotient & g_{0} & g_{1} & u_{0} & u_
+                                                  {1} & v_{0} & v_{1}\\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+<template> \unskip \hfil }
+                          \hskip \tabcolsep \hskip -.5\arrayrulewidth \vrule...
+l.176 ...uotient & g_{0} & g_{1} & u_{0} & u_{1} &
+                                                   v_{0} & v_{1}\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.176 ...uotient & g_{0} & g_{1} & u_{0} & u_{1} &
+                                                   v_{0} & v_{1}\\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.176 ...uotient & g_{0} & g_{1} & u_{0} & u_{1} &
+                                                   v_{0} & v_{1}\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.176 ...ient & g_{0} & g_{1} & u_{0} & u_{1} & v_
+                                                  {0} & v_{1}\\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+<template> \unskip \hfil }
+                          \hskip \tabcolsep \hskip -.5\arrayrulewidth \vrule...
+l.176 ...& g_{0} & g_{1} & u_{0} & u_{1} & v_{0} &
+                                                   v_{1}\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.176 ...& g_{0} & g_{1} & u_{0} & u_{1} & v_{0} &
+                                                   v_{1}\\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.176 ...& g_{0} & g_{1} & u_{0} & u_{1} & v_{0} &
+                                                   v_{1}\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.176 ..._{0} & g_{1} & u_{0} & u_{1} & v_{0} & v_
+                                                  {1}\\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+<template> \unskip \hfil }
+                          \hskip \tabcolsep \endtemplate 
+l.177 \hline
+            
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.177 \hline
+            
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.177 \hline
+            
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 190--201
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 190--201
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 190--201
+
+ []
+
+[4] (./machiry_hw03.aux) ) 
 Here is how much of TeX's memory you used:
- 6552 strings out of 495061
- 93787 string characters out of 1182622
- 188750 words of memory out of 3000000
- 9618 multiletter control sequences out of 15000+50000
+ 6558 strings out of 495061
+ 93864 string characters out of 1182622
+ 188806 words of memory out of 3000000
+ 9622 multiletter control sequences out of 15000+50000
  11651 words of font info for 42 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 38i,9n,39p,356b,347s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-texlive/fonts/type1/public/amsf
-onts/cm/cmbsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cm
-bx10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></
-usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/t
-exmf-texlive/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texliv
-e/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-texlive/fonts/typ
-e1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-texlive/fonts/type1/public/am
-sfonts/cm/cmmi8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cm
-r10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb></us
-r/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texm
-f-texlive/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-texlive/fon
-ts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/pu
-blic/amsfonts/cm/cmsy8.pfb>
-Output written on machiry_hw03.pdf (4 pages, 157938 bytes).
+ 38i,9n,39p,387b,347s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/texmf-texlive/fonts/type1/public/amsfonts
+/cm/cmbsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10
+.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/
+share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf
+-texlive/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fo
+nts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-texlive/fonts/type1/p
+ublic/amsfonts/cm/cmmi6.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfon
+ts/cm/cmmi8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr10.
+pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/sh
+are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texmf-te
+xlive/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-texlive/fonts/t
+ype1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-texlive/fonts/type1/public/a
+msfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/
+cmsy8.pfb>
+Output written on machiry_hw03.pdf (4 pages, 175334 bytes).
 PDF statistics:
- 144 PDF objects out of 1000 (max. 8388607)
- 20 named destinations out of 1000 (max. 500000)
- 121 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 157 PDF objects out of 1000 (max. 8388607)
+ 22 named destinations out of 1000 (max. 500000)
+ 137 words of extra memory for PDF output out of 10000 (max. 10000000)
 

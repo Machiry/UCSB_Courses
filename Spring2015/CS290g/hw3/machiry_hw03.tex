@@ -166,4 +166,36 @@ $m^{*}$ = 25 + 17*9991 = 169872.\\
 $N^{*}$ = 29*9991 = 289739.\\
 $S^{*}$ = 169872^{8927} mod (289739) = 22667.\\
 $S$ = 22667 mod (9991) = $\textbf{2685}$.
+\section{For the same RSA key set, show the computation of s = $m^{d}$ (mod n) for m = 50 using the CRT method, and emulate the fault attack by showing that of there is an fault induced on mod p or q computations, an incorrect s value gives away the prime q or p using the GCD attack}
+\subsection{Chinese remainder theorem}
+We have: \{p,q,n,$\phi(n)$,e,d\} = \{97,103,9991,9792,2015,8927\} and m = 50. \\
+$d_{1}$ = 8927 mod (96) = 95.\\
+$d_{2}$ = 8927 mod (102) = 53.\\
+\begin{center}
+\begin{tabular}{c||c|c|c|c|c|c|c} 
+iteration & quotient & g_{0} & g_{1} & u_{0} & u_{1} & v_{0} & v_{1}\\
+\hline
+0 & - & 103 & 97 & 1 & 0 & 0 & 1 \\
+\hline
+1 & 1 & 97 & 6 & 0 & 1 & 1 & -1 \\
+\hline
+2 & 16 & 6 & 1 & 1 & -16 & -1 & 17\\
+\hline
+3 & 6 & 1 & 0 & -16 & 97 & 17 & -103\\
+\hline
+& & $\bullet$ & & $\bullet$ & & $\bullet$ & \\
+\label{tab:gcd3}
+\end{tabular}
+\end{center}
+From Table \ref{tab:gcd3}, Initial values of $g_{0}$ = q = 103 and $g_{1}$ = p = 97. This $p^{-1}$ = 17 and $q^{-1}$ = -16.\\
+$M_{1}$ = $M^{d_{1}}$ mod p = $50^{95}$ mod 97 = 33.\\
+$M_{2}$ = $M^{d_{2}}$ mod q = $50^{53}$ mod 103 = 28.\\
+S = $M_{1}$ + p *(($M_{2}$ - $M_{1}$) * $p^{-1}$ mod q) = 33 + 97*((28-33)*17 mod 103) = 14 + 1746 = $\textbf{1779}$. \\
+\\
+Assuming fault happened during calculating $M_{1}$, because of which $M_{1}$ = $M_{1}^{f}$ = 83.\\
+$S^{f}$ = $M_{1}^{f}$ + p *(($M_{2}$ - $M_{1}^{f}$) * $p^{-1}$ mod q) = 83 + 97*((28-83)*17 mod 103) = 83 + 9215 = 9298. \\
+\\
+gcd(($(S^{f})^{e}$-m) mod n,n) = gcd(($9298^{2015}$-50) mod 9991,9991) = gcd(4017,9991) = $\textbf{103} = q$. \\
+\\
+Fault Attack Successful.
 \end{document}

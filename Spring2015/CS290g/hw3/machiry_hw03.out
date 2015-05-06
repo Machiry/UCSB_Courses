@@ -13,3 +13,5 @@
 \BOOKMARK [2][-]{subsection.2.5}{Randomizing d, where \(n\) is unknown}{section.2}
 \BOOKMARK [2][-]{subsection.2.6}{Randomizing d, where e is unknown}{section.2}
 \BOOKMARK [2][-]{subsection.2.7}{Randomizing n, using small random r1 and r2}{section.2}
+\BOOKMARK [1][-]{section.3}{For the same RSA key set, show the computation of s = md \(mod n\) for m = 50 using the CRT method, and emulate the fault attack by showing that of there is an fault induced on mod p or q computations, an incorrect s value gives away the prime q or p using the GCD attack}{}
+\BOOKMARK [2][-]{subsection.3.1}{Chinese remainder theorem}{section.3}

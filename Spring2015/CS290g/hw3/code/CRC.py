@@ -42,11 +42,16 @@ d2 = d%(q-1)
 
 (modulus,q1,p1) = eea(p,q)
 
+print str((modulus,q1,p1))
+
 assert(modulus == 1)
 
 m1 = (m**d1)%p
 m2 = (m**d2)%q
 s= m1 + p*(((m2-m1)*p1)%q)
 print 'Answer:' + str(s)
+sf = 83 + p*(((m2-83)*p1)%q)
+print p*(((m2-83)*p1)%q)
+print 'sf:' + str(sf)
    
     
