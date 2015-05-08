@@ -1,0 +1,11 @@
+\BOOKMARK [1][-]{section.1}{Dataset}{}
+\BOOKMARK [2][-]{subsection.1.1}{Seeds Data Set}{section.1}
+\BOOKMARK [1][-]{section.2}{Parametric Values for the Datasets}{}
+\BOOKMARK [2][-]{subsection.2.1}{Mammographic dataset}{section.2}
+\BOOKMARK [2][-]{subsection.2.2}{Wine dataset}{section.2}
+\BOOKMARK [1][-]{section.3}{Computing best dichotomy parameters}{}
+\BOOKMARK [2][-]{subsection.3.1}{Mammographic dataset}{section.3}
+\BOOKMARK [2][-]{subsection.3.2}{Wine dataset}{section.3}
+\BOOKMARK [1][-]{section.4}{Classification Accuracy}{}
+\BOOKMARK [2][-]{subsection.4.1}{Wine dataset}{section.4}
+\BOOKMARK [2][-]{subsection.4.2}{Mammographic dataset}{section.4}
