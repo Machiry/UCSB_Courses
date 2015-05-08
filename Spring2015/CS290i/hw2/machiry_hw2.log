@@ -1,8 +1,8 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2015.4.1)  8 MAY 2015 04:17
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2015.4.1)  8 MAY 2015 14:38
 entering extended mode
  %&-line parsing enabled.
-**machiry_hw1.tex
-(./machiry_hw1.tex
+**machiry_hw2.tex
+(./machiry_hw2.tex
 LaTeX2e <2009/09/24>
 Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
 yphenation, loaded.
@@ -337,8 +337,8 @@ You meant to type ## instead of #, right?
 Or maybe a } was forgotten somewhere earlier, and things
 are all screwed up? I'm going to assume that you meant ##.
 
-(./machiry_hw1.aux)
-\openout1 = `machiry_hw1.aux'.
+(./machiry_hw2.aux)
+\openout1 = `machiry_hw2.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
 LaTeX Font Info:    ... okay on input line 15.
@@ -420,9 +420,9 @@ Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 )
 LaTeX Info: Redefining \ref on input line 15.
 LaTeX Info: Redefining \pageref on input line 15.
- (./machiry_hw1.out) (./machiry_hw1.out)
+ (./machiry_hw2.out) (./machiry_hw2.out)
 \@outlinefile=\write3
-\openout3 = `machiry_hw1.out'.
+\openout3 = `machiry_hw2.out'.
 
 \AtBeginShipoutBox=\box35
 
@@ -443,51 +443,34 @@ File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 21.
 
-<pics/FeaturesVisualization.png, id=49, 578.16pt x 433.62pt>
+<pics/FeaturesVisualization.png, id=21, 578.16pt x 433.62pt>
 File: pics/FeaturesVisualization.png Graphic file (type png)
 
 <use pics/FeaturesVisualization.png>
+<pics/decbou.png, id=23, 578.16pt x 433.62pt>
+File: pics/decbou.png Graphic file (type png)
+ <use pics/decbou.png> [1
 
-LaTeX Warning: Reference `fig:mam' on page 1 undefined on input line 42.
-
-
-LaTeX Warning: Reference `fig:wine' on page 1 undefined on input line 46.
-
-[1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 50--51
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 52--53
-
- []
-
-[2 <./pics/FeaturesVisualization.png>] [3] (./machiry_hw1.aux)
-
-LaTeX Warning: There were undefined references.
-
- ) 
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2 <./pics/FeaturesVisuali
+zation.png> <./pics/decbou.png>] [3] (./machiry_hw2.aux) ) 
 Here is how much of TeX's memory you used:
- 6555 strings out of 495061
- 93810 string characters out of 1182622
- 171926 words of memory out of 3000000
- 9619 multiletter control sequences out of 15000+50000
- 10834 words of font info for 40 fonts, out of 3000000 for 9000
+ 6554 strings out of 495061
+ 93828 string characters out of 1182622
+ 180940 words of memory out of 3000000
+ 9615 multiletter control sequences out of 15000+50000
+ 10498 words of font info for 38 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 38i,8n,36p,613b,302s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/sha
-re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-te
-xlive/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/
-type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/public
-/amsfonts/cm/cmr17.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm
-/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.pfb
->
-Output written on machiry_hw1.pdf (3 pages, 139640 bytes).
+ 38i,8n,36p,614b,879s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/texmf-tex
+live/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-texlive/fonts/
+type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-texlive/fonts/type1/publi
+c/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/c
+m/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr17.pfb>
+</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share
+/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on machiry_hw2.pdf (3 pages, 166344 bytes).
 PDF statistics:
- 105 PDF objects out of 1000 (max. 8388607)
- 18 named destinations out of 1000 (max. 500000)
- 94 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 90 PDF objects out of 1000 (max. 8388607)
+ 21 named destinations out of 1000 (max. 500000)
+ 43 words of extra memory for PDF output out of 10000 (max. 10000000)
 
