@@ -113,7 +113,7 @@ def find_miller_smallest_witness(n):
     min_liar = None
     while i < n_1:
         #print 'Trying:' + str(i)
-        fir = mon_pro_expo(i,1,n)
+        fir = mon_pro_expo(i,m,n)
         j = 0
         is_witness = (fir != 1)
         while j <= k-1:
@@ -141,12 +141,20 @@ def print_latex_table_footer(label):
     print '\\end{tabular}'
     print '\\end{center}'
 
+def check_smallest_prime_factor(n,i):
+    target_num = [2,3,5,7,11,13,17,19]
+    for curr_num in target_num:
+        if n % curr_num == 0:
+            return curr_num == i
+    return False
+
 numbers = ['41041', '62745', '63973', '75361', '101101', '126217', '172081', '188461', '278545', '340561', '449065', '552721', '656601', '658801', '670033', '748657', '838201', '852841', '997633', '1033669', '1082809', '1569457', '1773289', '2100901', '2113921', '2433601', '2455921']
 print_latex = True
 #Fermat Primality Testing
 print 'Fermat\'s Primality Testing Results\\\\'
 if print_latex:
     print_latex_table_header()
+minimal_witness_property = True
 for curr_num in numbers:
     (min_witness,min_liar) = find_fermat_smallest_witness(curr_num)
     if print_latex:
@@ -154,8 +162,14 @@ for curr_num in numbers:
         print '\\hline'
     else:
         print curr_num + ',' + str(min_witness) + ',' + str(min_liar)
+    minimal_witness_property = minimal_witness_property and check_smallest_prime_factor(long(curr_num),min_witness)
+
 if print_latex:
     print_latex_table_footer('tab:fermat')
+if minimal_witness_property:
+    print 'ALL SMALLEST WITNESS ARE SMALLEST PRIME FACTORS OF CORRESPONDING NUMBERS'
+else:
+    print 'ALL SMALLEST WITNESS ARE PRIME NUMBERS'
 
 #Miller-Rabin primality Testing
 print '\nMiller-Rabin Primality Testing Results\\\\'

@@ -1,0 +1,145 @@
+\documentclass[11pt, pdftex]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{semantic}
+\usepackage[hyphens]{url}
+\usepackage[breaklinks]{hyperref}
+\usepackage[demo]{graphicx}
+\usepackage{subcaption}
+\title{Homework Assignment 04}
+\author{Machiry Aravind Kumar}
+\date{UCSB}
+\begin{document}
+\maketitle
+\section{ Implement the Fermat’s primality testing algorithm in Python, C++ or Mathematica, and apply to these numbers and discover the smallest liar and smallest witness for each one. What is the property of the witness?}
+I implemented the algorithm in python. File $\texttt{machiry\_hw4.py}$ has the code for the algorithm. I used Montgomery exponentiation to perform $a^{p-1} mod n$ check. The results for smallest witness and smallest liar for the given numbers are as shown in Table \ref{tab:fermat}.
+\begin{center}
+\begin{tabular}{ |c|c|c| }
+\hline
+Target Number & Smallest Witness & Smallest Liar\\
+\hline
+41041 & 7 & 2\\
+\hline
+62745 & 3 & 2\\
+\hline
+63973 & 7 & 2\\
+\hline
+75361 & 11 & 2\\
+\hline
+101101 & 7 & 2\\
+\hline
+126217 & 7 & 2\\
+\hline
+172081 & 7 & 2\\
+\hline
+188461 & 7 & 2\\
+\hline
+278545 & 5 & 2\\
+\hline
+340561 & 13 & 2\\
+\hline
+449065 & 5 & 2\\
+\hline
+552721 & 13 & 2\\
+\hline
+656601 & 3 & 2\\
+\hline
+658801 & 11 & 2\\
+\hline
+670033 & 7 & 2\\
+\hline
+748657 & 7 & 2\\
+\hline
+838201 & 7 & 2\\
+\hline
+852841 & 11 & 2\\
+\hline
+997633 & 7 & 2\\
+\hline
+1033669 & 7 & 2\\
+\hline
+1082809 & 7 & 2\\
+\hline
+1569457 & 17 & 2\\
+\hline
+1773289 & 7 & 2\\
+\hline
+2100901 & 11 & 2\\
+\hline
+2113921 & 19 & 2\\
+\hline
+2433601 & 17 & 2\\
+\hline
+2455921 & 13 & 2 \\
+\hline
+\end{tabular}
+\label{tab:fermat}
+\end{center}
+The property of smallest witness of all these numbers are they are the \textbf{smallest prime factors of corresponding carmichael numbers}.
+\section{Implement the Miller-Rabin primality testing algorithm in Python, C++ or Mathematica, and apply to these numbers and discover the smallest liar and smallest witness for each one.}
+I implemented the algorithm in python. File $\texttt{machiry\_hw4.py}$ has the code for the algorithm. I used Montgomery exponentiation to perform all modular exponentiations. The results for smallest witness and smallest liar for the given numbers are as shown in Table \ref{tab:miller}.
+\begin{center}
+\begin{tabular}{ |c|c|c| }
+\hline
+Target Number & Smallest Witness & Smallest Liar\\
+\hline
+41041 & 2 & 16\\
+\hline
+62745 & 2 & 16\\
+\hline
+63973 & 2 & 9\\
+\hline
+75361 & 2 & 256\\
+\hline
+101101 & 2 & 16\\
+\hline
+126217 & 2 & 16\\
+\hline
+172081 & 2 & 9\\
+\hline
+188461 & 2 & 9\\
+\hline
+278545 & 2 & 98\\
+\hline
+340561 & 2 & 35\\
+\hline
+449065 & 2 & 16\\
+\hline
+552721 & 2 & 21\\
+\hline
+656601 & 2 & 16\\
+\hline
+658801 & 2 & 101\\
+\hline
+670033 & 2 & 9\\
+\hline
+748657 & 2 & 9\\
+\hline
+838201 & 2 & 9\\
+\hline
+852841 & 2 & 16\\
+\hline
+997633 & 2 & 898\\
+\hline
+1033669 & 2 & 9\\
+\hline
+1082809 & 2 & 16\\
+\hline
+1569457 & 2 & 256\\
+\hline
+1773289 & 2 & 3\\
+\hline
+2100901 & 2 & 16\\
+\hline
+2113921 & 2 & 195\\
+\hline
+2433601 & 2 & 98\\
+\hline
+2455921 & 2 & 9\\
+\hline
+\end{tabular}
+\label{tab:miller}
+\end{center}
+\end{document}
