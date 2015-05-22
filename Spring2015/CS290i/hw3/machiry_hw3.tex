@@ -34,9 +34,9 @@ I used SVM package from $\texttt{sklearn}$ module. I used following kernel funct
     \hline
     {\bf Kernel Function} & {\bf C} & {\bf gamma} & {\bf Mean Accuracy}\\ 
     \hline
-    rbf & 0.1 & 0 & 50.0\\
+    rbf & 0.1 & 0 & 93.57\\
 	\hline
-	sigmoid & 0.1 & 0 & 93.57\\
+	sigmoid & 0.1 & 0 & 50.0\\
 	\hline
 	linear & 0.1 & 0 & 94.28\\
 	\hline
@@ -103,7 +103,10 @@ Another important reason to use sigmoid function as hypotheses rather than defau
     \label{fig:costf}
 \end{figure}
 \\
-With the above cost function, I used learning rate (i.e $\alpha$) of 0.0005 with regularization parameter (i.e $\lambda$) as 0.01 (to avoid over fitting) with 10,000 iterations. The core algorithm in python as shown below:
+With the above cost function, I used learning rate (i.e $\alpha$) of 0.0005 with regularization parameter (i.e $\lambda$) as 0.01 (to avoid over fitting) with 10,000 iterations. Also, I normalized the feature values for all the features by subtracting mean and dividing it by standard deviation:
+$x_{i} = (x_{i} - \mu(x)) / \rho(x) $
+\\
+The core algorithm in python as shown below:
 
 \begin{lstlisting}
 for i in xrange(0, iters):
@@ -127,8 +130,10 @@ for i in xrange(0, iters):
   self.theta[j] = val
 \end{lstlisting}
 \\
-The complete code for this is present in file $\texttt{gradient\_descent.py}$. Cross validation results for various values of n is as shown in Table \ref{tab:gradcv}.\\
-{\bf Weighted Vector computed using Gradient Descent is: [0.56232669359224408, 0.003148429546239455, 0.49146013233794189, 0.48967826722053615, 0.3474530090250722, 0.66867992711948321]}
+The complete code for this is present in file $\texttt{gradient\_descent.py}$. Cross validation results for various values of n is as shown in Table \ref{tab:gradcv}. The results are pretty accurate with 94.00$\%$ Accuracy and doesn't vary much with n, which proves that features are linearly separable and gradient descent is a good searching strategy.\\
+{\bf Weighted Vector computed using Gradient Descent is: [0.56232669359224408, \\
+0.003148429546239455, 
+0.49146013233794189, 0.48967826722053615, 0.3474530090250722, 0.66867992711948321]}
 \begin{table}
 \centering
 \begin{tabular}{ | c | c | c |}
@@ -157,5 +162,22 @@ The complete code for this is present in file $\texttt{gradient\_descent.py}$. C
 	\caption{Cross Validation Results for Seeds Dataset using Gradient Descent}
     \label{tab:gradcv}
 \end{table}
+\section{Comparison: SVM v/s GradientDescent LDF}
+SVM is both faster (by 3 seconds) and slightly more accurate(1.0\%) than LDF implemented using Gradient Descent. But it took some time to figure out correct kernel parameters for SVM where as for Gradient Descent, we need to normalize the feature values.\\
+ROC Curve, whose area is equal to the probability that a classifier will rank a randomly chosen positive instance higher than a randomly chosen negative one. The area should be more for classifier to be Good.\\
+ROC Curves For SVM and Gradient Descent are shown in Figure \ref{fig:rocsvm} and \ref{fig:rocgd}.\\
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{pics/ROCSVM.png} 
+    \caption{ROC Curve using SVM}
+    \label{fig:rocsvm}
+\end{figure}
+Area under {\bf ROC curves for SVM and Gradient Descent is same and its 98.69}. which proves that both are equally accurate for this binary classification problem.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{pics/ROCGD.png} 
+    \caption{ROC Curve using Gradient Descent}
+    \label{fig:rocgd}
+\end{figure}
 
 \end{document}

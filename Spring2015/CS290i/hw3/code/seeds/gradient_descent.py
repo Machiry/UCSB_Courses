@@ -4,6 +4,9 @@ import numpy as np
 from sklearn import cross_validation
 from sklearn.base import BaseEstimator
 from matplotlib import pyplot
+from sklearn.metrics import roc_curve, auc
+from sklearn.utils import shuffle
+import pylab as pl
 
 class GradientDescent(BaseEstimator):
 
@@ -27,6 +30,7 @@ class GradientDescent(BaseEstimator):
         self.cost_vals = []
         #print "reg_parambda=", self.reg_param      
         self._gradientDescend(10000)  
+        return self
     
     def _sigmoid(self, x):
         z = 1.0 / (1.0 + numpy.exp((-1) * x))
@@ -90,6 +94,23 @@ class GradientDescent(BaseEstimator):
         numpy.putmask(pred, pred < 0.5, 0.0)
 
         return pred
+        
+    def predict_proba(self, X_test):
+        ret = []        
+        for i in range(0,len(X_test)):
+            X_curr = X_test[i]
+            X = []
+            X.append(X_curr)
+            X = numpy.array(X)
+            m, n = X.shape
+            x = numpy.array(X)
+            x = (x - self.xMean) / self.xStd
+            # add const column
+            const = numpy.array([1] * m).reshape(m, 1)
+            X = numpy.append(const, x, axis=1)
+            pred = self._sigmoid(numpy.dot(X, self.theta))
+            ret.append([1-pred,pred])
+        return numpy.array(ret)
 
 def read_features(file_name):
     fo = open(file_name,'r')
@@ -131,3 +152,35 @@ print "\n\tMean Accuracy\tMean Error"
 for n in range(3,12):
     score = cross_validation.cross_val_score(lr, features, classes, cv=n, scoring='accuracy')
     print str(n) + '\t' + str(score.mean()*100) + '\t' +  str((1 - score.mean()) * 100)
+    
+random_state = np.random.RandomState(0)
+features, classes = shuffle(features, classes, random_state=random_state)
+
+half = int(len(features) / 2)
+X_train, X_test = features[:half], features[half:]
+y_train, y_test = classes[:half], classes[half:]
+
+classifier = GradientDescent()
+probas_ = classifier.fit(X_train, y_train).predict_proba(X_test)
+
+# Convert into binary values
+y_test1 = []
+for c in y_test:
+    y_test1.append(int(c))
+fpr, tpr, thresholds = roc_curve(y_test1, probas_[:, 1])
+roc_auc = auc(fpr, tpr)
+print "\nArea under the ROC curve for Gradient Descent: %f" % roc_auc
+
+# Plot ROC curve
+pl.clf()
+pl.plot(fpr, tpr, label='ROC curve (area = %0.2f)' % roc_auc)
+pl.plot([0, 1], [0, 1], 'k--')
+pl.xlim([0.0, 1.0])
+pl.ylim([0.0, 1.0])
+pl.xlabel('False Positive Rate')
+pl.ylabel('True Positive Rate')
+pl.title('ROC using GradientDescent')
+pl.legend(loc="lower right")
+pl.savefig('ROC_GD')
+pl.close()
+print "\nROC Curve saved at:ROC_GD.png"
