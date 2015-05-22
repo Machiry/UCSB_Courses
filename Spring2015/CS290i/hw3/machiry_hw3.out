@@ -1,5 +1,4 @@
 \BOOKMARK [1][-]{section.1}{Dataset}{}% 1
 \BOOKMARK [2][-]{subsection.1.1}{Seeds Data Set}{section.1}% 2
 \BOOKMARK [1][-]{section.2}{Running SVM}{}% 3
-\BOOKMARK [1][-]{section.3}{Running LDA classifier on the Dataset}{}% 4
-\BOOKMARK [1][-]{section.4}{Classification Accuracy}{}% 5
+\BOOKMARK [1][-]{section.3}{LDF with gradient descent}{}% 4

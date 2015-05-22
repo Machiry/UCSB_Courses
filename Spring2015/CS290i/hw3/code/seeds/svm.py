@@ -30,10 +30,11 @@ def read_features(file_name):
 
 data_set_filepath = 'seeds_dataset.txt'
 (features,classes) = read_features(data_set_filepath)
-print 'Feature Array:' + str(len(features)) + ' Classes:' + str(len(classes))
 parameters = {'kernel':['linear'], 'C':[1.4], 'gamma': [0]}
 clf = svm.SVC()
 clf = grid_search.GridSearchCV(clf, parameters, refit=True)
 clf1 = clf.fit(features, classes)
-scores = cross_validation.cross_val_score(clf, features, classes, cv=10, scoring='accuracy')
-print scores.mean()*100
+print "\n\tMean Accuracy\tMean Error"
+for n in range(3,12):
+    score = cross_validation.cross_val_score(clf, features, classes, cv=n, scoring='accuracy')
+    print str(n) + '\t' + str(score.mean()*100) + '\t' +  str((1 - score.mean()) * 100)

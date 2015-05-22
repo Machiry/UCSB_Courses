@@ -3,6 +3,7 @@ import numpy
 import numpy as np
 from sklearn import cross_validation
 from sklearn.base import BaseEstimator
+from matplotlib import pyplot
 
 class GradientDescent(BaseEstimator):
 
@@ -22,8 +23,8 @@ class GradientDescent(BaseEstimator):
         self.Y = numpy.array(Y)
         self.learning_rate = learning_rate
         self.reg_param = reg_param
-        self.theta = numpy.random.uniform(0,1,size=n+1)
-
+        self.theta = numpy.random.uniform(0,0,size=n+1)
+        self.cost_vals = []
         #print "reg_parambda=", self.reg_param      
         self._gradientDescend(10000)  
     
@@ -57,10 +58,9 @@ class GradientDescent(BaseEstimator):
 
         for i in xrange(0, iters):
             theta_temp = self.theta
-            # update theta[0]
             #compute_hypothesis
             h_theta = self._sigmoid(numpy.dot(self.X, self.theta))
-            #compute cost
+            #compute error
             diff = h_theta - self.Y
             #update theta
             self.theta[0] = theta_temp[0] - self.learning_rate * \
@@ -69,6 +69,9 @@ class GradientDescent(BaseEstimator):
                 val = theta_temp[
                     j] - self.learning_rate * (1.0 / m) * (sum(diff * self.X[:, j]) + self.reg_param * m * theta_temp[j])
                 self.theta[j] = val
+                
+            cost = self._costFunc()
+            self.cost_vals.append(cost)
 
 
     def predict(self, X):
@@ -112,6 +115,19 @@ data_set_filepath = 'seeds_dataset.txt'
 (features,classes) = read_features(data_set_filepath)
 lr = GradientDescent()
 lr.fit(features,classes)
-scores = cross_validation.cross_val_score(lr, features, classes, cv=10, scoring='accuracy')
-print lr.theta
-print scores.mean()*100
+print 'Weight Vector:' + str(list(lr.theta)[1:])
+pyplot.xlabel('Iteration Count')
+pyplot.ylabel('Cost OR Error')
+x_vals = []
+for i in range(0,len(lr.cost_vals)):
+    x_vals.append(i)
+pyplot.plot(x_vals,lr.cost_vals)
+pyplot.title('Cost Function For each Iteration')
+pyplot.savefig('Cost_Function_Change')
+pyplot.close()
+print '\nCost Function Trend is saved in Figure:Cost_Function_Change.png\n'
+
+print "\n\tMean Accuracy\tMean Error"
+for n in range(3,12):
+    score = cross_validation.cross_val_score(lr, features, classes, cv=n, scoring='accuracy')
+    print str(n) + '\t' + str(score.mean()*100) + '\t' +  str((1 - score.mean()) * 100)
