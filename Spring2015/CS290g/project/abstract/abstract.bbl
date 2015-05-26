@@ -1,0 +1,44 @@
+\begin{thebibliography}{1}
+
+\bibitem{aciccmez2006trace}
+Onur Aci{\c{c}}mez and {\c{C}}etin~Kaya Ko{\c{c}}.
+\newblock Trace-driven cache attacks on aes.
+\newblock 2006.
+
+\bibitem{banescu2011cache}
+Sebastian Banescu.
+\newblock Cache timing attacks.
+\newblock 2011.
+
+\bibitem{bernstein2005cache}
+Daniel~J Bernstein.
+\newblock Cache-timing attacks on aes, 2005.
+
+\bibitem{frenzel2010arm}
+Torsten Frenzel, Adam Lackorzynski, Alexander Warg, and Hermann H{\"a}rtig.
+\newblock Arm trustzone as a virtualization technique in embedded systems.
+\newblock In {\em Proceedings of Twelfth Real-Time Linux Workshop, Nairobi,
+  Kenya}, 2010.
+
+\bibitem{180212}
+Taesoo Kim, Marcus Peinado, and Gloria Mainar-Ruiz.
+\newblock Stealthmem: System-level protection against cache-based side channel
+  attacks in the cloud.
+\newblock In {\em Presented as part of the 21st USENIX Security Symposium
+  (USENIX Security 12)}, pages 189--204, Bellevue, WA, 2012. USENIX.
+
+\bibitem{wang2007new}
+Zhenghong Wang and Ruby~B Lee.
+\newblock New cache designs for thwarting software cache-based side channel
+  attacks.
+\newblock In {\em ACM SIGARCH Computer Architecture News}, volume~35, pages
+  494--505. ACM, 2007.
+
+\bibitem{184415}
+Yuval Yarom and Katrina Falkner.
+\newblock Flush+reload: A high resolution, low noise, l3 cache side-channel
+  attack.
+\newblock In {\em 23rd USENIX Security Symposium (USENIX Security 14)}, pages
+  719--732, San Diego, CA, August 2014. USENIX Association.
+
+\end{thebibliography}

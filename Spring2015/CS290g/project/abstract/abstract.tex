@@ -1,0 +1,29 @@
+\documentclass[11pt, pdftex]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{semantic}
+\usepackage[hyphens]{url}
+\usepackage[breaklinks]{hyperref}
+\usepackage[demo]{graphicx}
+\usepackage{subcaption}
+\typeout{Using 'Abbrev' bibliography style}
+\title{CACHEOMS: About Practical Exploitation of \textbf{Cache} Side Channel \textbf{O}n \textbf{M}ultiprocessor \textbf{S}ystems}
+\author{Aravind Kumar Machiry \\
+\texttt{machiry@cs.ucsb.edu} \and Varun Kulkarni Somashekhar\\
+\texttt{varun\_kulkarni@cs.ucsb.edu}}
+\begin{document}
+\maketitle
+\section{Abstract}
+Cache side channel is well known attack on cryptographic implementations\cite{bernstein2005cache}\cite{aciccmez2006trace}\cite{banescu2011cache}. This is primarily based on observation that infrequently used information incurs a large timing penalty, thus revealing some information about the frequency of use of the memory blocks. This attack is straight forward on a single processor system with single level of cache, but current systems (both desktop and mobile) are multiprocessor where each processor has multilevel caches also there are some cache levels which are common to a subset of processors. Moreover, latest ARM processors have TrustZone support\cite{frenzel2010arm} which ensures System-On-Chip (SOC) wide security by avoiding shared cache access. In addition to this, there has been lot of work done both on Hardware and Software side to mitigate cache side channel\cite{180212}\cite{wang2007new}. It is high time we revisit and evaluate cache side channel, its bandwidth and implications\cite{184415}.\\
+We would like to explore this for our project, specifically following are our goals:
+\begin{itemize}
+\item Investigate, understand and report cache side channel with examples. We aim to make the documentation simple enough to be understood by a computer science graduate without much knowledge of cryptography or computer architecture.
+\item Research on the recent improvements and state of art on cache side channel and clearly report the findings.
+\item Evaluate the applicability of these attacks on well known protocols on current multiprocessor systems, both on x86 and ARM.
+\item If time permits, implement one of these attacks and report corresponding result.
+\end{itemize}
+\bibliographystyle{plain}
+\bibliography{bibliography1}
+\end{document}
