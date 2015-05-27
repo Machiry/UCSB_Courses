@@ -1,0 +1,314 @@
+\documentclass[twocolumn]{IEEEtran}
+\usepackage{epsfig}
+%-----------------------
+
+\begin{document}
+
+
+\title{Architectucres for Unified Field Inversion with Applications 
+in Elliptic Curve Cryptography}
+
+
+\author{Aravind Machiry \& Author2
+\thanks{Authors are with the
+Department of Computer Science,
+University of California, Santa Barbara, CA 93106.
+E-mail: \texttt{\{you,me\}@cs.ucsb.edu}}
+\thanks{This work is supported by Motorola.}
+}
+
+\markboth{IEEE Transactions On Computers, Vol. 51, No. 5, May 2002}
+{Me and You}
+
+\maketitle
+
+\begin{abstract}
+We are presenting two new inversion algorithms for binary extension
+and prime fields which are slightly modified versions of the
+Montgomery inverse algorithm. An hardware architecture implementing
+these algorithms is also introduced, in which the field elements
+are represented using a multi-word format. This feature allows a
+scalable and unified architecture which operates in a broad range 
+of precision, which has advantages in elliptic curve cryptography.
+\end{abstract}
+
+\section {Introduction}
+
+The basic arithmetic operations (i.e. addition, multiplication, and 
+inversion) in prime and binary extension fields, $GF(p)$ and $GF(2^n)$, 
+have several applications in cryptography, such as decipherment 
+operation of RSA algorithm \cite{QC82:Fast}, Diffie-Hellman key exchange 
+algorithm \cite{DH76:New}, the Government Digital Signature Standard 
+\cite{NIST91:DSS} and also elliptic curve cryptography 
+\cite{K87:Elliptic,M93:Elliptic}. Recently, speeding up inversion operation
+in both fields has been gaining some attention since inversion is the
+most time consuming operation in elliptic curve cryptographic algorithms 
+when affine coordinates are selected \cite{K95:The,SOOS95:Fast,%
+K99:Fast,SK00:The,H01:Efficient}.
+
+In this paper, we will give and analyze multiplicative inversion algorithms
+for $GF(p)$ and $GF(2^n)$ which allow very fast and area-efficient, unified
+and scalable hardware
+implementations. The algorithms are based on the Montgomery inverse algorithms 
+given in \cite{K95:The}. 
+
+\section {The Montgomery Inversion Algorithm}
+
+The following algorithm performs the Montgomery inversion in $GF(2^n)$.
+However, the Phase II of the algorithm is omitted since it is not
+relevant to this paper, and a similar algorithm is in \cite{SK00:The}.
+
+\noindent \textbf{Algorithm A} \\
+\textbf{Input:} $a(x)$ and $p(x)$, where $deg(a(x)) < deg(p(x))$ \\
+\textbf{Output:} $r(x)$ and $k$, where $r=a(x)^{-1} x^k \pmod{p(x)}$  
+and $deg(a(x)) \leq k \leq deg(p(x))+deg(a(x))+1$
+
+\begin{tabbing}
+\hspace*{0cm} \= \hspace{0.5cm} \= \hspace{1ex} \= \hspace{1ex} \= \kill
+\> 1:  \> $u(x) := p(x)$, $v(x) := a(x)$, $r(x) := 0$, and $s(x) := 1$\\
+\> 2:  \> $k:=0$\\
+\> 3:  \> while ($v(x) != 0$) \\
+\> 4:  \> \> if $u(0) = 0$ then $u(x) := u(x)/x$, $s(x) := xs(x)$ \\
+\> 5:  \> \> else if $v(0)=0$ then $v(x) := v(x)/x$, $r(x) := xr(x)$ \\
+\> 6:  \> \> else if $deg(u(x)) > deg(v(x))$ then \\
+\>	\>  \> \> $u(x):= (u(x)+v(x))/x$ \\
+\> \>  \> \> $r(x) := r(x) + s(x)$ \\
+\> \>  \> \> $s(x) := xs(x)$ \\
+\> 7:  \> \> else $v(x) := (v(x)+u(x))/x$ \\
+\> \>  \> \> $s(x) := s(x)+r(x)$ \\
+\> \>  \> \> $r(x) := xr(x)$ \\
+\> 8:  \> \> $k:=k+1$\\
+\> 9:  \> if $deg(r(x)) = deg(p(x))$ then $r(x) := r(x)+p(x)$ \\
+\> 10: \> return $r(x)$ and $k$
+\end{tabbing}
+The following properties are observed: 
+
+\noindent $\bullet$ 
+If $deg(p(x))>deg(a(x))>0$, then the degrees of intermediate binary polynomials
+$r(x)$, $s(x)$, $u(x)$, and $v(x)$ in the
+Montgomery inverse algorithm are always in the range $[0, deg(p(x))]$.
+
+\noindent $\bullet$ 
+If $p(x)$ is an irreducible polynomial, and $deg(p(x))>deg(a(x))>0$, then
+$n + 1 < k \leq deg(a(x)) + n + 1$.  
+
+\noindent $\bullet$ 
+If $p(x)$ is an irreducible polynomial, and $deg(p(x))>deg(a(x))>0$, then 
+Phase I of Montgomery inverse algorithm for $GF(2^n)$ returns $a(x)^{-1}x^k$
+$\pmod{p(x)}$.
+
+Additions and subtractions in the original algorithm are replaced with 
+additions without carry in $GF(2^n)$ version of the algorithm. Since it is
+possible to perform addition (and subtraction) with carry and addition
+without carry in a single arithmetic unit, this difference does not 
+cause a change in the control unit of a possible unified hardware implementation.  
+On the other hand, the algorithm for $GF(2^n)$ differentiates from the original 
+algorithm in Step~6, in which the degrees of $u(x)$ and $v(x)$ are compared.
+In order to have a unified architecture,
+we propose a slight modification in the original algorithm
+for $GF(p)$ which is given in the following section.  
+
+\section {A Variation of Montgomery Inversion Algorithm}
+
+We propose to modify Step 6 of the algorithm given in \cite{K95:The} in a
+such way that instead of comparing $u$ and
+$v$, number of bits needed  to represent them are compared.
+The proposed modifications can be seen in Step~6 and
+Step~7.a of the modified algorithm given below: 
+
+\medskip 
+
+\noindent \textbf{Algorithm B} \\
+\textbf{Input:} $a \in [1,p-1]$ and $p$ \\
+\textbf{Output:} $r \in [1,p-1]$ and $k$, where
+$r=a^{-1}2^k \pmod{p}$ and $n \leq k \leq 2n$
+
+\begin{tabbing}
+\hspace*{0cm} \= \hspace{0.8cm} \= \hspace{0.5cm} \= \hspace{0.5cm} \= \kill
+\> 1:  \> $u:=p$, $v:=a$, $r:=0$, and $s:=1$\\
+\> 2:  \> $k:=0$\\
+\> 3:  \> while ($v > 0$) \\
+\> 4:  \> \> if $u$ is even then $u:=u/2$, $s:=2s$ \\
+\> 5:  \> \> else if $v$ is even then $v:=v/2$, $r:=2r$ \\
+\> 6:  \> \> else if $bitsize(u) > bitsize(v)$ then \\
+\>     \> \> \> $u:=(u-v)/2$, $r:=r+s$, $s:=2s$ \\
+\> 7:  \> \> else then \\
+\>     \> \> \> $v:=(v-u)/2$, $s:=s+r$, $r:=2r$ \\
+\> 7.a:\> \> \> if $v<0$ then $v := -v$, $s := -s$ \\ 
+\> 8:  \> \> $k:=k+1$\\
+\> 9:  \> if $r<0$ then \\
+\> 9.a:\> \> if $r \leq -p$ then $r:=r+p$ \\
+\> 9.b:\> \> return $r:=-r$ \\
+\> 10: \> else \\ 
+\> 10.a: \> \> if $r \geq p$ then $r:=r-p$ \\
+\> 10.b:\> \> return $r:=p-r$ and $k$
+\end{tabbing}
+
+When corrections in Step~7.a are executed, the effect is multiplying both sides of
+the invariant by $-1$. Therefore, new invariant when $s<0$ is given as
+$-p=us+vr$. While $u$ and $v$ remain to be positive integers, $s$ and $r$ 
+might be positive or negative. Therefore, we need to alter the final reduction
+steps to bring $r$ in the correct range, which is $[0, p)$. The range of $s$ and $r$
+are $[-p, p]$ and $[-2p, 2p]$, respectively. As a result we need to use one more bit
+to represent $s$ and $r$ than in the original algorithm. The advantage of this
+version of the algorithm will be discussed in the next section.
+
+\section {Hardware Architecture}
+
+Scalability of the arithmetic modules is important in cryptographic 
+context since it allows to increase the key length when the need
+for more security arises without having to modify or re-design
+the cryptographic unit. The scalability of the inverter unit can easily 
+be achieved by using shifter and adder units which handle only certain
+number of bits of the operands at a time. One addition (or shift) operation,
+therefore, in the corresponding field takes more than one clock cycle.
+The number of bits that the unit operate on is referred as {\it word} and its
+length can be determined or adjusted with respect to 
+given area, speed or latency requirements. 
+
+The algorithms~B and C can be implemented in a unified hardware architecture 
+provided that a dual-field adder/subtractor (DFA/S) that operates in both fields
+is available. In order for the inverter unit to be scalable,
+The DFA/S is designed to handle words of finite number of bits at a clock
+cycle, therefore we call them word DFA/s(WDFA/S).
+
+Except the final correctional steps (steps~9 through 11), 
+the main loops of the Algorithm~A and Algorithm~B 
+can be implemented in the same
+hardware unit. The only difference in the main loops of the 
+two algorithms is that the Algorithm~B has the extra Step~7.a. 
+However, this extra step neither necessitates a major change 
+in the circuitry nor introduces any extra clock cycle in the 
+computation. Algorithm~B replaces integer comparison operation
+of the original algorithm with just one bitsize comparison.
+In exchange for that, some of the intermediate variables
+take negative integer values. For example, the variables
+$v$ and $s$ may have to change sign in Step~7.a if the subtraction 
+operation in Step~7 produce a negative result. Taking two's
+complement of these two variables may re-introduce the clock
+cycles we saved by eliminating integer comparison operation
+in Step~6 of the original algorithm \cite{K95:The}. On the other hand, When 
+variable $v$ turns out to be a negative number as a result
+of the subtraction in Step~7, we may keep it as negative in two's
+complement representation. In the
+next iteration in the loop, it can easily be seen that Step~5
+or Step~6 is executed. 
+Sign change of the variable may be performed at the
+same time as the subtraction operation in the subsequent Step~6.
+
+On the other hand, the magnitutes of $r$ and $s$ cannot easily be 
+determined. Therefore, we need to devise a method in order to avoid
+taking two's complement of $s$ in Step~7.a. We propose
+to maintain one extra bit for each of the variables $s$ and $r$ which 
+holds extra sign information for them. We call this extra sign bit 
+as {\it correct sign} ($CS$) of the variable. These variables can
+be kept as negative (in two's complement representation) or positive, 
+however, their real sign
+is determined by the value in correct sign bit. If their actual 
+sign is different from the one in the correct sign bit,
+the sign must be flipped. On the other hand, taking two's complement
+when this happens is not desirable since we want to avoid
+the extra clock cycles it introduces. The actual and correct
+signs of a variable determine the way we execute the
+addition operation $x:=r+s$ in Steps~6 and~7. Assuming that
+$S_x$ and $CS_x$ are the actual and correct sign of the variable
+$x$ respectively, this operation is performed as in the following:
+
+\medskip
+
+\noindent \textbf{Algorithm C} \\
+\textbf{Input:} $r$, $s$, $S_r$, $S_s$, $CS_r$, and $CS_s$ \\
+\textbf{Output:} $x := r+s$, $S_x$, and $CS_s$
+
+\begin{tabbing}
+\hspace*{0cm} \= \hspace{0.5cm} \= \hspace{1ex} \hspace{1ex} \= \kill
+\> 1:   \> if $S_r=CS_r$ and $S_s=CS_s$ then \\
+\> 1.a: \> \> $x:=s+r$ and $CS_x:=S_x$ \\ 
+\> 2:   \> else if $S_r=CS_r$ and $S_s=\bar{CS_s}$ then \\
+\> 2.a: \> \> $x:=r-s$ and $CS_x:=S_x$ \\ 
+\> 3:   \> else if $S_r=\bar{CS_r}$ and $S_s=CS_s$ then \\
+\> 3.a: \> \> $x:=s-r$ and $CS_x:=S_x$ \\ 
+\> 4:   \> else $S_r=\bar{CS_r}$ and $S_s=\bar{CS_s}$ then\\
+\> 4.a: \> \> $x:=s+r$ and $CS_x:=\bar{S_x}$ 
+\end{tabbing}
+
+\section {Complexity Analysis of the Unified Inverter}
+
+Assuming that we have two WDFA/S in our design, the total computation time 
+of inversion in terms of total clock cycle count can be computed using the 
+formula $T = k \cdot (e+1)$,
+where $k$ is the iteration index in the main loop of the algorithms, 
+$e=\lceil \frac {n+1} {w} \rceil$ is the number of words and $w$ is 
+the word length.
+
+Based on these experimental values we calculated the estimated 
+execution time in terms of number of clock cycles for inversion operation 
+using word length 32. We summarized the results in Table~1.
+Table~1 also includes the clock cycle count estimates for
+the modular multiplication operation for the same precisions, which is 
+assumed to be performed using unified and scalar Montgomery modular 
+multiplication unit proposed in \cite{STK00:A} with 7 pipeline 
+stages and 32-bit word size. The ratio of inversion time
+to multiplication time, which is important in the decision 
+whether affine or projective coordinates are to be
+employed in elliptic curve cryptography, is also included in the
+table. It is argued in \cite{LD99:Fast} that for binary extention
+fields $GF(2^k)$ projective 
+coordinates, which does not entail fast execution of inversion
+operation, perform better than the affine coordinates when
+inversion operation is more than 7 times slower than the multiplication
+operation. Similarly, our calculations show that this ratio is about 9 
+for prime field $GF(p)$. As can be observed in Table~1 the ratio stays lower
+than 7 for the precisions of interest to the elliptic curve 
+cryptography.
+
+\begin{center}
+\textbf{Table 1:} Estimated clock cycles for inversion and the ratio 
+to the multiplication operation. \\[1em]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
+bitsize & Inversion & Multiplication & Ratio  \\ \hline
+160 & 1368  & 327 & 4.18 \\ \hline
+192 & 1911  & 398 & 5.00 \\ \hline
+224 & 2544  & 469 & 5.42 \\ \hline
+256 & 3276  & 526 & 6.23 \\ \hline
+\end{tabular}
+\end{center}
+
+In Figure~1 and Figure~2, hardware realizations of the operations $(u-v)/2$ 
+and $r+s$ are shown, respectively. In Figure~1, the building block~A simply 
+seperates the least significant bit from the rest of the result bits, which are 
+to be kept in the latch one clock cycle in order to perform shift operation.
+In the next clock these bits are combined with the least significant bit of 
+the current result, which is placed in the most significant position of the 
+final resulting word, in block~B. The block~C of the Figure~1, is used to 
+connect the register outputs to the correct input of the adder/subtractor unit.
+The circuit in Figure~2 performs 
+two operations: $r+s$ and $2r$(or $2s$). The register content, which is to be
+shifted left by one bit, is available at the output of block~D. The block~D
+is also used to connect the register outputs to the correct input of the 
+adder/subtractor unit. Blocks~A and B are used to shift a word in each 
+clock cycle. Block~C directs the results of the two operation 
+($r+s$ and $2r$(or $2s$)) to the appropriate registers. 
+
+\bigskip
+\bigskip
+
+\centerline{\textbf{Figure 1:} Hardware realization of $(u-v)/2$.}
+\medskip
+\epsfxsize=3.1in
+\centerline{\epsffile{f1.eps}}
+
+\bigskip
+\bigskip
+
+\centerline{\textbf{Figure 2:} Hardware realization of $r+s$.}
+\medskip
+\epsfxsize=3.1in
+\centerline{\epsffile{f2.eps}}
+
+\bibliographystyle{IEEEbib}
+\bibliography{my}
+
+
+\end{document}
+
