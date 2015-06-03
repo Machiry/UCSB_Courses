@@ -30,19 +30,19 @@ x & $x^{3} - 3x + 4$ & y & Points \\
 \hline
 1 & 2 & - &  - \\
 \hline
-2 & 6 & $\pm28$ & (2,28), (2,1) \\
+2 & 6 & $\pm8$ & (2,8), (2,21) \\
 \hline
-3 & 22 & $\pm28$ & (3,28), (3,1) \\
+3 & 22 & $\pm14$ & (3,14), (3,15) \\
 \hline
 4 & 27 & - &  - \\
 \hline
 5 & 27 & - &  - \\
 \hline
-6 & 28 & $\pm28$ & (6,28), (6,1) \\
+6 & 28 & $\pm12$ & (6,12), (6,17) \\
 \hline
-7 & 7 & $\pm1$ & (7,1), (7,28) \\
+7 & 7 & $\pm6$ & (7,6), (7,23) \\
 \hline
-8 & 28 & $\pm28$ & (8,28), (8,1) \\
+8 & 28 & $\pm12$ & (8,12), (8,17) \\
 \hline
 9 & 10 & - &  - \\
 \hline
@@ -56,15 +56,15 @@ x & $x^{3} - 3x + 4$ & y & Points \\
 \hline
 14 & 9 & $\pm3$ & (14,3), (14,26) \\
 \hline
-15 & 28 & $\pm28$ & (15,28), (15,1) \\
+15 & 28 & $\pm12$ & (15,12), (15,17) \\
 \hline
 16 & 21 & - &  - \\
 \hline
-17 & 23 & $\pm1$ & (17,1), (17,28) \\
+17 & 23 & $\pm9$ & (17,9), (17,20) \\
 \hline
 18 & 11 & - &  - \\
 \hline
-19 & 20 & $\pm1$ & (19,1), (19,28) \\
+19 & 20 & $\pm7$ & (19,7), (19,22) \\
 \hline
 20 & 27 & - &  - \\
 \hline
@@ -82,8 +82,43 @@ x & $x^{3} - 3x + 4$ & y & Points \\
 \hline
 27 & 2 & - &  - \\
 \hline
-28 & 6 & $\pm28$ & (28,28), (28,1) \\
+28 & 6 & $\pm8$ & (28,8), (28,21) \\
 \hline
+\end{tabular}
+\end{center}
+\subsection{Find the exact order of the group.}
+Order of the EC group is the number of points on the curve plus one to include point at infinity. From the table above, number of points is equal to 30, thus order of group is {\bf 31}.
+\subsection{Find a primitive element of the group. Call that P.}
+Since the order of the group is prime, all points except for point at infinity is primitive element. Taking one point: (7, 6). Lets assign: $P=(7,6)$.
+\subsection{Compute [15]P using the binary method}
+We have $P=(7,6)$.\\
+e = 15 = (1111)
+\begin{center}
+\begin{tabular}{ |c|c|l|l| } 
+ \hline
+ i & e_{i} & Step 2a & Step 2b \\
+ \hline
+ \hline 
+ 2 & 1 & (7, 6) + (7, 6) = (14,26) & (14,26) + (7,6) = (28,21) \\ 
+ 1 & 1 & (28, 21) + (28, 21) = (2,8) & (2,8) + (7,6) = (19,22) \\ 
+ 0 & 1 & (19,22) + (19,22) = (13,4) & (13,4) + (7,6) = {\bf (22,28)} \\
+ \hline
+\end{tabular}
+\end{center}
+\subsection{Compute [15]P using the canonical recoding binary method}
+We have $P=(7,6)$. $-P = (7,-6) = (7,23)$\\
+Canonical recording for 15 = f = (1000$\overline{1}$)
+\begin{center}
+\begin{tabular}{ |c|c|l|l| } 
+ \hline
+ i & f_{i} & Step 2a & Step 2b \\
+ \hline
+ \hline 
+ 3 & 0 & (7, 6) + (7, 6) = (14,26) & (14,26) \\ 
+ 2 & 0 & (14, 26) + (14, 26) = (17,20) & (17,20) \\ 
+ 1 & 0 & (17, 20) + (17, 20) = (8,12) & (8,12) \\ 
+ 0 & $\overline{1}$ & (8,12) + (8,12) = (22,1) & (22,1) + (7,23) = {\bf (22,28)} \\
+ \hline
 \end{tabular}
 \end{center}
 \end{document}

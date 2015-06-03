@@ -8,24 +8,31 @@ def is_square(apositiveint):
         if x in seen: return False
         seen.add(x)
     return True
+    
+def find_residue(target, mod):
+    i = 2
+    while True:
+        if((i*i)%mod == target):
+            return i
+        i = i + 1
+    return None
 
 def get_residue_point(target,mod):
     sol = (target**((mod-1)/2))%mod
     # check if its a quadratic residue
     if sol == 1:
-        # if yes, 
-        #assert((mod+1)%4 == 0)
-        return (target**((mod+1)/4))%mod
+        return find_residue(target, mod)
     else:
         return None
 
 print_s = ''
+# P
 mod = 29
 order = 0
 for i in range(mod):
     print_s = str(i) + ' & '
+    # Equation
     y = i*i*i - 3*i + 4
-    #y = i*i*i + i + 1
     y = y % mod
     print_s += str(y) + ' & '
     y_s = None
