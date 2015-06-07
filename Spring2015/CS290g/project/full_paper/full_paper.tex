@@ -65,6 +65,31 @@ misses is reduced by these principles, they are not eliminated.
 
 Obviously, data in the cache can be accessed much faster than data present only in memory.This is also true for multi-level caches where data accessed from the L1 cache will experience lower latencies, than data accessed from subsequent cache levels. These time differences are used to decide whether a specific portion of memory resides in the cache - implying that the corresponding data has been accessed recently. This resulting information leakage stemming from microarchitectural time differences when data is retrieved from cache rather than memory forms the basis of cache side channel attacks.
 
+\subsection { Types of Cache Side Channel Attacks }
+
+Cache misses occur at every cache level and they are categorized as:
+
+\begin {itemize}
+\item \textbf{cold start misses}, which occur when data is first referenced;
+\item \textbf{capacity misses}, which occur if the size of the LUTs Look Up Table used by the cipher is larger than the size of the cache; this type of cache misses do not occur for most cryptographic cipher implementations.
+\item \textbf{conflict misses}, which occur when at least two elements of LUTs that map to the same cache block are used.
+\end {itemize}
+
+Based on this idea, cache attacks can be classified into three groups:
+
+\begin {itemize}
+
+\item \textbf{Reset attacks} require that all or most LUTs used by the cryptographic cipher are not to be loaded in the cache before the attack commences. Therefore this type of attacks is mainly based on cold start misses.
+
+\item \textbf{Initialization attacks} require the adversary to be able to set the cache into a known state before the attack commences. Therefore this type of attacks is based both on cold start misses and conflict misses.
+
+\item \textbf{Micro-architecture attacks} require the cache to hold all or most LUTs that will be used by the cipher,before the attack commences. Therefore this type of attacks is partially based only on conflict misses and partially on other timing penalties that
+strongly depend on the CPU micro-architecture. 
+
+\end {itemize}
+
+These three types of attacks are not limited to timing channels. Measuring power dissipation levels during the encryption process also offers more information about data access. However, this work would focus only on timing attacks.
+
 
 \end{document}
 
