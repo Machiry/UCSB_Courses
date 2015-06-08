@@ -53,7 +53,7 @@ Each block in the cache is in one of the below four states:
 \begin {itemize}
 \item \textbf {Invalid:} This block has an incoherent copy of the memory.
 \item \textbf{Valid:} This block has a coherent copy of the memory. The data may be possibly shared, but its content is not modified.
-\item \textbf{Reserved:} The block is the only copy of the memory, but it is still coherent. No write-back is needed if the block is replaced.
+\item \textbf{Reserved:} The block is the only copy of the memory, but it is still coherent. No write back is needed if the block is replaced.
 \item \textbf {Dirty:} The block is the only copy of the memory and it is incoherent. This copy was written one or more times. This is the only state that generates a write-back when the block is replaced in the cache.
 
 \end{itemize}
@@ -155,10 +155,11 @@ Unlike physical side channel attacks, software cache-based side channel  attacks
 
 \end{itemize}
 
-The above methods have been described in detail in \cite{wang2007new}. Another mitigation strategy employed in ARM achitectures is the presence of distinguished trustzone. In ............. to be completed by Arvind.
+The above methods have been described in detail in \cite{wang2007new}. Since most of the attacks rely on timing difference to be succesfull, these can be thwarted by introducing random delays in the encryption process. Another mitigation strategy employed in ARM achitectures is the presence of distinguished trustzone. 
 
+\section {Conclusion and Future Work}
 
-\section { Conclusion }
+The timing variations in encryption timings exploited by cache attacks are primarily due to cache misses. These attacks are applicable to cipher implementations based on LUTs namely AES and DES. Due to heirarchical memory model, subsequent access to LUT's are performed in variable amounts of time resulting in leakage of side channel information. Once the attacker gets an approximate idea the size of look up table in the cache set based on cache evictions, he can then resort to brute force to determine the key for the corresponding cipher implementation. This same methodology can be applied to the cloud wherein the virtual machines co-resident on the same core display similar behavior and thus leak side channel information. Several such attempts have been succesfull and have been discussed in  \cite{sc2015lastlevel}.  Similar strategies have been employed to perform a shared cache attack that work across cores and has been discussed recently in \cite{ir2015aes}.
 
 
 

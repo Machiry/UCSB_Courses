@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{bernstein2005cache}
 Daniel~J Bernstein,
@@ -47,5 +47,20 @@ John Tse and Alan~Jay Smith,
   implementations,''
 \newblock {\em Computers, IEEE Transactions on}, vol. 47, no. 5, pp. 509--526,
   1998.
+
+\bibitem{intelhype}
+Intel,
+\newblock ``{Intel Hyperthreading},''
+  \url{http://www.intel.com/content/www/us/en/architecture-and-technology/hyper-threading/hyper-threading-technology.html}.
+
+\bibitem{sc2015lastlevel}
+Ge~Heiser~Lee Liu, Yarom,
+\newblock ``Last level cache side-channel attacks are practical,''
+\newblock in {\em 2015 IEEE Symposium on Security and Privacy}, 2015.
+
+\bibitem{ir2015aes}
+Sunar Irazoqui, Eisenbarth,
+\newblock ``A shared cache attack,''
+\newblock in {\em 2015 IEEE Symposium on Security and Privacy}, 2015.
 
 \end{thebibliography}

@@ -1,8 +1,11 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: full_paper.aux
 The style file: IEEEbib.bst
 Database file #1: my.bib
-Warning--I didn't find a database entry for "intelhype"
 Warning--empty journal in aciccmez2006trace
 Warning--empty journal in banescu2011cache
 Warning--can't use both volume and number fields in wang2007new
-(There were 4 warnings)
+Too many commas in name 1 of "Liu,Yarom,Ge,Heiser,Lee" for entry sc2015lastlevel
+while executing---line 1012 of file IEEEbib.bst
+Too many commas in name 1 of "Liu,Yarom,Ge,Heiser,Lee" for entry sc2015lastlevel
+while executing---line 1012 of file IEEEbib.bst
+(There were 2 error messages)
