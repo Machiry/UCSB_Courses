@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.5.12)  8 JUN 2015 04:26
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.5.12)  8 JUN 2015 04:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -245,10 +245,22 @@ Underfull \hbox (badness 1043) in paragraph at lines 105--106
  []
 
 [2]
-Overfull \hbox (267.79636pt too wide) in paragraph at lines 115--126
+Overfull \hbox (9.97656pt too wide) in paragraph at lines 127--128
  [] 
  []
 
+Missing character: There is no â in font cmr10!
+Missing character: There is no € in font cmr10!
+Missing character: There is no ™ in font cmr10!
+Missing character: There is no â in font cmr10!
+Missing character: There is no € in font cmr10!
+Missing character: There is no ™ in font cmr10!
+Missing character: There is no â in font cmr10!
+Missing character: There is no € in font cmr10!
+Missing character: There is no ™ in font cmr10!
+Missing character: There is no â in font cmr10!
+Missing character: There is no € in font cmr10!
+Missing character: There is no ™ in font cmr10!
 (./full_paper.bbl
 ! Undefined control sequence.
 l.54   \url
@@ -269,9 +281,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 52--55
 \OT1/cmr/m/n/8 http://www.intel.com/content/www/us/en/architecture-and-
  []
 
-) [3
-
-] (./full_paper.aux)
+) [3] (./full_paper.aux)
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
  ) 
 Here is how much of TeX's memory you used:
@@ -281,7 +291,7 @@ Here is how much of TeX's memory you used:
  4935 multiletter control sequences out of 15000+600000
  26486 words of font info for 98 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 37i,7n,24p,1082b,194s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,8n,24p,1082b,194s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texli
@@ -298,7 +308,7 @@ b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on full_paper.pdf (3 pages, 214919 bytes).
+Output written on full_paper.pdf (3 pages, 217241 bytes).
 PDF statistics:
  82 PDF objects out of 1000 (max. 8388607)
  59 compressed objects within 1 object stream

@@ -1,11 +1,10 @@
-This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
-Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
-The top-level auxiliary file: full_paper.aux
+This is BibTeX, Version 0.99dThe top-level auxiliary file: full_paper.aux
 The style file: IEEEbib.bst
 Database file #1: my.bib
 Warning--empty journal in aciccmez2006trace
 Warning--empty journal in banescu2011cache
 Warning--can't use both volume and number fields in wang2007new
+<<<<<<< HEAD
 You've used 9 entries,
             1838 wiz_defined-function locations,
             522 strings with 5179 characters,
@@ -48,3 +47,6 @@ while$ -- 20
 width$ -- 10
 write$ -- 98
 (There were 3 warnings)
+=======
+(There were 13 warnings)
+>>>>>>> 79a5a5bc028efc1b48ae1195bf04b0a89e05fef6
