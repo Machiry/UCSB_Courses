@@ -1,6 +1,8 @@
 \documentclass[twocolumn]{IEEEtran}
 \usepackage{epsfig}
 \usepackage{url}
+\usepackage{graphicx}
+\usepackage{float}
 %-----------------------
 
 \begin{document}
@@ -39,13 +41,25 @@ In this section we give a brief overview of the background needed to understand 
 
 \subsection {Cache Design and Operation}
 
-A cache is a small memory placed between the CPU and RAM to reduce the big latency added by retrieval of data. Modern processors usually have more than one level of cache to improve the efficiency of memory accesss.Most modern processes offer 3 levels of cache.with the first level (L1) being the closest to the CPU registers. Generally, L1 and L2 caches are each split into instruction caches and separate data caches. L3 usually stores both instructions and data.The cache size is much smaller than the number of directly addressable bytes in main memory. Hence a mapping strategy needs to be adopted.The cache associativity determines how the main memory blocks map into blocks of the cache.
+A cache is a small memory placed between the CPU and RAM to reduce the big latency added by retrieval of data. Modern processors usually have more than one level of cache to improve the efficiency of memory accesss.Most modern processes offer 3 levels of cache.with the first level (L1) being the closest to the CPU registers. Generally, L1 and L2 caches are each split into instruction caches and separate data caches. L3 usually stores both instructions and data.The cache size is much smaller than the number of directly addressable bytes in main memory. Hence a mapping strategy needs to be adopted.The cache associativity determines how the main memory blocks map into blocks of the cache. The below figure depicts the differences between direct mapped cache and an associatve cache memory
 
-{\bf Varun: Put some picture of cache operation, explain associativity, cache replacement policy(invalidate, dirty bit)}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=90mm]{cache}
+\end{figure}
+
+Each block in the cache is in one of the below four states:
+
+\begin {itemize}
+\item \textbf {Invalid:} This block has an incoherent copy of the memory.
+\item \textbf{Valid:} This block has a coherent copy of the memory. The data may be possibly shared, but its content is not modified.
+\item \textbf{Reserved:} The block is the only copy of the memory, but it is still coherent. No write-back is needed if the block is replaced.
+\item \textbf {Dirty:} The block is the only copy of the memory and it is incoherent. This copy was written one or more times. This is the only state that generates a write-back when the block is replaced in the cache.
+
+\end{itemize}
 
 When a memory reference is made by the CPU, the tag address of the main memory block is compared with all the tags in the corresponding set. If the tag is found then this reference qualifies as a cache hit. Meaning that there is no need to retrieve the data from main memory since it is already located in the cache, and the data can be immediately provided to the CPU. Conversely, if the tag is not found in the corresponding set then the memory reference qualifies as a cache miss.The caching mechanism operation is based on the principals of spatial and temporal locality, which help to minimize the number of
-cache misses. Temporal locality states that the same data blocks will likely be requested repeatedly during the execution of a process. Spacial locality states that data blocks from nearby addresses are likely to be subsequently accessed. Even though the number of cache
-misses is reduced by these principles, they are not eliminated.
+cache misses. Temporal locality states that the same data blocks will likely be requested repeatedly during the execution of a process. Spacial locality states that data blocks from nearby addresses are likely to be subsequently accessed. Even though the number of cache misses is reduced by these principles, they are not eliminated.
 
 Obviously, data in the cache can be accessed much faster than data present only in memory.This is also true for multi-level caches where data accessed from the L1 cache will experience lower latencies, than data accessed from subsequent cache levels. These time differences are used to decide whether a specific portion of memory resides in the cache - implying that the corresponding data has been accessed recently. This resulting information leakage stemming from microarchitectural time differences when data is retrieved from cache rather than memory forms the basis of cache side channel attacks.
 
@@ -127,10 +141,8 @@ P2 Access data that belongs to same cache set as P1 data & x & x & {\bf 10-11 ns
 \end{tabular}
 }
 \end{center}
-We expected values of last column to be same for Row 1 and Row 2, as they should not affect access time for P1, but the reason they are different is because 
-\subsubsection {Challenges}
-\subsubsection {Results}
-\section {Attacks}
+We expected values of last column to be same for Row 1 and Row 2, as they should not affect access time for P1, but the reason they are different is because \textbf { Need to be completed }
+
 
 \section {Defence}
 
@@ -144,6 +156,13 @@ Unlike physical side channel attacks, software cache-based side channel  attacks
 \end{itemize}
 
 The above methods have been described in detail in \cite{wang2007new}. Another mitigation strategy employed in ARM achitectures is the presence of distinguished trustzone. In ............. to be completed by Arvind.
+
+
+\section { Conclusion }
+
+
+
+
 \bibliographystyle{IEEEbib}
 \bibliography{my}
 

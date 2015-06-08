@@ -48,9 +48,4 @@ John Tse and Alan~Jay Smith,
 \newblock {\em Computers, IEEE Transactions on}, vol. 47, no. 5, pp. 509--526,
   1998.
 
-\bibitem{intelhype}
-Intel,
-\newblock ``{Intel Hyperthreading},''
-  \url{http://www.intel.com/content/www/us/en/architecture-and-technology/hyper-threading/hyper-threading-technology.html}.
-
 \end{thebibliography}

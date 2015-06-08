@@ -1,52 +1,8 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: full_paper.aux
 The style file: IEEEbib.bst
 Database file #1: my.bib
+Warning--I didn't find a database entry for "intelhype"
 Warning--empty journal in aciccmez2006trace
 Warning--empty journal in banescu2011cache
 Warning--can't use both volume and number fields in wang2007new
-<<<<<<< HEAD
-You've used 9 entries,
-            1838 wiz_defined-function locations,
-            522 strings with 5179 characters,
-and the built_in function-call counts, 2114 in all, are:
-= -- 196
-> -- 69
-< -- 4
-+ -- 27
-- -- 18
-* -- 134
-:= -- 306
-add.period$ -- 10
-call.type$ -- 9
-change.case$ -- 9
-chr.to.int$ -- 0
-cite$ -- 12
-duplicate$ -- 107
-empty$ -- 223
-format.name$ -- 18
-if$ -- 497
-int.to.chr$ -- 0
-int.to.str$ -- 9
-missing$ -- 7
-newline$ -- 46
-num.names$ -- 9
-pop$ -- 42
-preamble$ -- 1
-purify$ -- 0
-quote$ -- 0
-skip$ -- 67
-stack$ -- 0
-substring$ -- 121
-swap$ -- 38
-text.length$ -- 4
-text.prefix$ -- 0
-top$ -- 0
-type$ -- 0
-warning$ -- 3
-while$ -- 20
-width$ -- 10
-write$ -- 98
-(There were 3 warnings)
-=======
-(There were 13 warnings)
->>>>>>> 79a5a5bc028efc1b48ae1195bf04b0a89e05fef6
+(There were 4 warnings)
