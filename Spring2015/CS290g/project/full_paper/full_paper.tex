@@ -86,6 +86,26 @@ strongly depend on the CPU micro-architecture.
 
 These three types of attacks are not limited to timing channels. Measuring power dissipation levels during the encryption process also offers more information about data access. However, this work would focus only on timing attacks.
 
+\section {Attacks}
+
+\section {Defence}
+
+Unlike physical side channel attacks, software cache-based side channel  attacks can impact a much wider spectrum of systems and users as these software attacks are very easy to perform and are effective on various platforms. This makes cache-based side channel attacks extremely attractive as a new weapon in the attacker’s arsenal. A thourough analysis of cache side channel attacks have revelaed cache interfearance as the main root cause. Several mitigation methods mostly in hardware have been devised to prevent leakage of side channel information. Some of them are
+
+\begin{itemize}
+\item \textbf {Partition Locked Cache} essentially achieves the effect of cache partitioning, but much more flexibly with less per-formance degradation. In partition locked cache, the cache lines of interest are locked in cache, creating a flexible private partition; these cache lines can not be evicted by other cache accesses not belonging to this private partition. This prevents both internal and external cache inerferences.
+
+\item \textbf {Random Permutation Cache} allows cache sharing by randomizing the resulting interference, so that no useful information about which cache line was evicted can be inferred. An attacker can observe another process’s cache access only if that process changes the attacker’s cache usage, i.e., evicts the attacker’s cache lines. If the process evicts its own cache lines, the attacker has no way to know that.  In random permutation cache, each time cache interference occurs, the interference is randomized in a way that carries no useful information. 
+
+\end{itemize}
+
+The above methods have been described in detail in \cite{wang2007new}. Another mitigation strategy employed in ARM achitectures is the presence of distinguished trustzone. In ............. to be completed by Arvind.
+
+
+
+
+
+
 \bibliographystyle{IEEEbib}
 \bibliography{my}
 
