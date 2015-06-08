@@ -56,12 +56,14 @@ int main(int argc,char *argv[])
     long cache_set_size = 0, cache_set_mask, cache_set_bits;
     long assoc = 0;
     long target_set = 0;
+    time_t ds;
     pthread_t th[8];
     cache_line_size = atol(argv[1]);
     cache_set_size = atol(argv[2]);
     assoc = atol(argv[3]);
     target_set = atol(argv[4]);
     memset(x,1,sizeof(x));
+    ds = time(NULL);
 
     cache_line_bits = get_no_bits_set(cache_line_size - 1);
     cache_set_bits = get_no_bits_set(cache_set_size - 1);
@@ -72,15 +74,16 @@ int main(int argc,char *argv[])
     base_addr = (long)(&x) & (cache_set_mask) & (cache_line_mask);
     stride = (1<<(cache_set_bits+cache_line_bits));
 
-    //base_addr += stride;
+    base_addr += stride;
     base_addr = base_addr | (target_set << cache_line_bits);
 
     /*if(base_addr < (long)x || base_addr > (long)(&x[CACHE_MAX-1])) {
         printf("Array is too small\n");
     }*/
+    
+    //printf("%p,%p\n",&x,&x[CACHE_MAX-1]);
 
-    printf("Stabilized\n");
-    printf("Base Addr:%p\n",base_addr);
+
 
     curr_addr = base_addr;
     for(i=0;i<assoc;i++) {
@@ -89,8 +92,13 @@ int main(int argc,char *argv[])
         curr_addr += stride;
         //printf("Addr:%p\n",curr_addr);
     }
-
-    printf("Threads Created\n");
+    
+    //printf("Stabilized\n");
+    //printf("Base Addr:%p\n",base_addr);
+    sleep(1);
+    ds += 3;
+    printf("ThreadsCreated:%d\n",ds);
+    fflush(stdout);
 
     /*while(1) {
         curr_addr = base_addr;
