@@ -41,4 +41,16 @@ Yuval Yarom and Katrina Falkner,
 \newblock in {\em 23rd USENIX Security Symposium (USENIX Security 14)}, San
   Diego, CA, Aug. 2014, pp. 719--732, USENIX Association.
 
+\bibitem{tse1998cpu}
+John Tse and Alan~Jay Smith,
+\newblock ``Cpu cache prefetching: Timing evaluation of hardware
+  implementations,''
+\newblock {\em Computers, IEEE Transactions on}, vol. 47, no. 5, pp. 509--526,
+  1998.
+
+\bibitem{intelhype}
+Intel,
+\newblock ``{Intel Hyperthreading},''
+  \url{http://www.intel.com/content/www/us/en/architecture-and-technology/hyper-threading/hyper-threading-technology.html}.
+
 \end{thebibliography}

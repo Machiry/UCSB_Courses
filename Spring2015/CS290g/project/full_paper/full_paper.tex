@@ -3,8 +3,6 @@
 %-----------------------
 
 \begin{document}
-
-
 \title{CACHEOMS: Practical Exploitation of \textbf{Cache} Side Channel \textbf{O}n \textbf{M}ultiprocessor \textbf{S}ystems}
 
 
@@ -18,42 +16,31 @@ E-mail: \texttt{\{machiry,varun\_kulkarni\}@cs.ucsb.edu}}
 \maketitle
 
 \begin{abstract}
-Cache side channel is well known attack on cryptographic implementations\cite{bernstein2005cache}\cite{aciccmez2006trace}\cite{banescu2011cache}. This is primarily based on observation that infrequently used information incurs a large timing penalty, thus revealing some information about the frequency of use of the memory blocks. This attack is straight forward on a single processor system with single level of cache, but current systems (both desktop and mobile) are multiprocessor where each processor has multilevel caches also there are some cache levels which are common to a subset of processors. Moreover, latest ARM processors have TrustZone support\cite{frenzel2010arm} which ensures System-On-Chip (SOC) wide security by avoiding shared cache access. In addition to this, there has been lot of work done both on Hardware and Software side to mitigate cache side channel\cite{180212}\cite{wang2007new}. It is high time we revisit and evaluate cache side channel, its bandwidth and implications\cite{184415}.\\
-We intend to discuss the attack and defense strategies involved in a cache side channel, specifically following are our goals:
-\begin{itemize}
-\item Investigate, understand and report cache side channel with examples. We aim to make the documentation simple enough to be understood by a computer science graduate without much knowledge of cryptography or computer architecture.
-\item Research on the recent improvements and state of art on cache side channel and clearly report the findings.
-\item Evaluate the applicability of these attacks on well known protocols on current multiprocessor systems, both on x86 and ARM.
-\end{itemize}
+Cache side channel is well known attack on cryptographic implementations\cite{bernstein2005cache}\cite{aciccmez2006trace}\cite{banescu2011cache}. This is primarily based on observation that infrequently used information incurs a large timing penalty, thus revealing some information about the frequency of use of the memory blocks. This attack is straight forward on a single processor system with single level of cache, but current systems (both desktop and mobile) are multiprocessor where each processor has multilevel caches also there are some cache levels which are common to a subset of processors. Moreover, latest ARM processors have TrustZone support\cite{frenzel2010arm} which ensures System-On-Chip (SOC) wide security by avoiding shared cache access. In addition to this, there has been lot of work done both on Hardware and Software side to mitigate cache side channel\cite{180212}\cite{wang2007new}. It is high time we revisit and evaluate cache side channel, its possibility on latest processors and implications\cite{184415}.\\
 \end{abstract}
 
 \section {Introduction}
+Memory access time is the main bottleneck for achieving maximum processor performance. Memory hierarchies are used to bridge this gap. Memory cache is the main component of the hierarchy. Most of the Processors have memory caches whose access time is several times less than main memory. On latest Intel I7 processor, access to L1 cache takes ~2 cycles, where as it takes ~360-400 cycles to access a byte from main memory. Memory Caches are continuously evolving and lot of research have been done to make these as fast as the corresponding processor. On the other hand, main memory access time is not decreasing accordingly. This makes an access to main memory to be easily distinguishable by measuring access time. The difference in the access time is the main idea based on which most of the cache side channel attacks are discovered. Recent improvements in cache technologies seems to decrease cache access time thus making main memory access extremely easy to detect. 
 
-The basic arithmetic operations (i.e. addition, multiplication, and 
-inversion) in prime and binary extension fields, $GF(p)$ and $GF(2^n)$, 
-have several applications in cryptography, such as decipherment 
-operation of RSA algorithm \cite{QC82:Fast}, Diffie-Hellman key exchange 
-algorithm \cite{DH76:New}, the Government Digital Signature Standard 
-\cite{NIST91:DSS} and also elliptic curve cryptography 
-\cite{K87:Elliptic,M93:Elliptic}. Recently, speeding up inversion operation
-in both fields has been gaining some attention since inversion is the
-most time consuming operation in elliptic curve cryptographic algorithms 
-when affine coordinates are selected \cite{K95:The,SOOS95:Fast,%
-K99:Fast,SK00:The,H01:Efficient}.
-
-In this paper, we will give and analyze multiplicative inversion algorithms
-for $GF(p)$ and $GF(2^n)$ which allow very fast and area-efficient, unified
-and scalable hardware
-implementations. The algorithms are based on the Montgomery inverse algorithms 
-given in \cite{K95:The}. 
+All known attacks are implemented on previous generation processors like Pentium III (cite from challenges), Pentium 4E (cite from challenges) and Athlon 64 (cite from challenges). Although, recent improvements in caches make cache side attacks more reliable, multi-core processors with multiple levels of cache makes exploiting cache side-channels non trivial. Moreover, recent processors have pre-fetching\cite{tse1998cpu} which thwarts most of the known attacks. In this project, we explore the feasibility cache timing attacks on latest multiprocessor based systems, discuss our findings and results. Specifically, following are our contributions:
+\begin{itemize}
+\item Investigate, understand and r\todonoteseport cache side channel with examples. We aim to make the documentation simple enough to be understood by a computer science graduate without much knowledge of cryptography or computer architecture.
+\item Implement cache timing attack on Latest Intel i7-930 processor and report our findings.
+\item Research on the recent improvements and state of art on cache side channel and clearly report the findings.
+\item Evaluate the applicability of these attacks on well known protocols on current multiprocessor systems, both on x86 and ARM.
+\item Investigate and report existing defense strategies to prevent cache side channel.
+\end{itemize}
+\end{Introduction}
 
 \section {Background}
 
-In this section we give a brief overview of the background needed to understand the attack presented in this work. After summarizing the design of cache architecture, a short explaination about different types of cache attacks are provided.
+In this section we give a brief overview of the background needed to understand the attack presented in this work. After summarizing the design of cache architecture, a short explanation about different types of cache attacks are provided.
 
 \subsection {Cache Design and Operation}
 
-A cache is a small memory placed between the CPU and RAM to reduce the big latency added by retreival of data. Modern processors usually have more than one level of cache to improve the efficiency of memory accesss.Most modern processes offer 3 levels of cache.with the first level (L1) being the closest to the CPU registers. Generally, L1 and L2 caches are each split into instruction caches and separate data caches. L3 usually stores both instructions and data.The cache size is much smaller than the number of directly addressable bytes in main memory. Hence a mapping strategy needs to be adopted.The cache associativity determines how the main memory blocks map into blocks of the cache.
+A cache is a small memory placed between the CPU and RAM to reduce the big latency added by retrieval of data. Modern processors usually have more than one level of cache to improve the efficiency of memory accesss.Most modern processes offer 3 levels of cache.with the first level (L1) being the closest to the CPU registers. Generally, L1 and L2 caches are each split into instruction caches and separate data caches. L3 usually stores both instructions and data.The cache size is much smaller than the number of directly addressable bytes in main memory. Hence a mapping strategy needs to be adopted.The cache associativity determines how the main memory blocks map into blocks of the cache.
+
+{\bf Varun: Put some picture of cache operation, explain associativity, cache replacement policy(invalidate, dirty bit)}
 
 When a memory reference is made by the CPU, the tag address of the main memory block is compared with all the tags in the corresponding set. If the tag is found then this reference qualifies as a cache hit. Meaning that there is no need to retrieve the data from main memory since it is already located in the cache, and the data can be immediately provided to the CPU. Conversely, if the tag is not found in the corresponding set then the memory reference qualifies as a cache miss.The caching mechanism operation is based on the principals of spatial and temporal locality, which help to minimize the number of
 cache misses. Temporal locality states that the same data blocks will likely be requested repeatedly during the execution of a process. Spacial locality states that data blocks from nearby addresses are likely to be subsequently accessed. Even though the number of cache
@@ -85,6 +72,61 @@ strongly depend on the CPU micro-architecture.
 \end {itemize}
 
 These three types of attacks are not limited to timing channels. Measuring power dissipation levels during the encryption process also offers more information about data access. However, this work would focus only on timing attacks.
+
+\section {Attack Implementation}
+In this section, we explain our implementation of an attack based on cache timing on Intel i7-930 processor. First, we describe the cache organization on this processor. Second, we explain our attack goal and strategy. Finally, our implementation along with challenges faced and results.
+\subsection {Cache Organization}
+Processor Intel i7-930 has 4 physical cores and has Hyper-threading support\cite{intelhype}, which exposes 8 (4 * 2) virtual cores. Cache on the processor has 3 levels, which is shared among these 8 virtual cores. Organization of various cache levels and corresponding properties is as shown in the below Table:
+\begin{center}
+\scalebox{0.6}{
+\begin{tabular}{ |c|c|c|c|c|c|c| } 
+ \hline
+ Cache Level & Type & Shared Virtual Cores & Size(Bytes) & Sets & Associativity & Line Size(Bytes)\\
+ \hline
+ L1 & Data & 0,4  & 32K & 64 & 8 & 64 \\
+ L1 & Instruction & 0,4 & 32K & 64 & 8 & 64 \\
+ L1 & Data & 1,5  & 32K & 64 & 8 & 64 \\
+ L1 & Instruction & 1,5 & 32K & 64 & 8 & 64 \\
+ L1 & Data & 2,6  & 32K & 64 & 8 & 64 \\
+ L1 & Instruction & 2,6 & 32K & 64 & 8 & 64 \\
+ L1 & Data & 3,7  & 32K & 64 & 8 & 64 \\
+ L1 & Instruction & 3,7 & 32K & 64 & 8 & 64 \\
+ \hline
+ L2 & Unified & 0,4  & 256K & 512 & 8 & 64 \\
+ L2 & Unified & 1,5  & 256K & 512 & 8 & 64 \\
+ L2 & Unified & 2,6  & 256K & 512 & 8 & 64 \\
+ L2 & Unified & 3,7  & 256K & 512 & 8 & 64 \\
+ \hline
+ L2 & Unified & All & 8192K & 8192 & 16 & 64 \\
+ \hline
+\end{tabular}
+}
+\end{center}
+Most of the known methods to find cache information of a system requires additional (usually $\texttt{root}$) privileges. However we wrote a python script($\texttt{get\_cpu\_cache\_info.py}$) which get details of entire cache organization of any system running *nix operating system, moreover $\textit{this script doesn't require \texttt{root} privileges}$. As you can see cache organization is non trivial, you may or may not be able to exploit cache timing side channel depending on virtual cores on which attack and victim process gets executed. Also note that cache sizes are considerably larger then key size of most of the cryptographic algorithms, which makes attacks based on capacity misses practically impossible.
+\subsection {Attack Goal and Strategy}
+In this subsection, we explain goal of the attack and strategy we used to perform the attack.
+\subsubsection {Attack Goal}
+The goal of the attack is to predict the cache set of a data item which the victim process is repeatedly accessing. To emulate the possibility of attacker ability to measure memory access time, the victim process outputs access time of the data item.
+\subsection {Strategy}
+Our strategy is to exploit delay due to conflict misses. Specifically, we launch an attack process which tries to fill up one cache set at a time. If the data item of victim process maps to the same cache set then we should see considerable increase in access time, otherwise access time should not be affected. We repeat this for all the sets in the cache and observe the access time of victim process, an increase in access time implies the cache set filled by attack process is same as the cache set of the data item which the victim process is trying to access.
+\subsection {Implementation}
+We measured the access time of data item as seen by a process(p1) when another process(p2) is trying to access data that belongs to both same and different cache set. We see following differences:
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Description & P1 Data item set & P2 Data item set & P1 Access Time\\
+\hline
+P2 Doesn't access any data & x & N/A & {\bf 6 ns}\\
+\hline
+P2 Access data belongs to different cache set as P1 data & x & y (y$\neq$x) & {\bf 8-9ns} \\
+\hline
+P2 Access data that belongs to same cache set as P1 data & x & x & {\bf 10-11 ns}\\
+\hline
+\end{tabular}
+\end{center}
+We expected values of last column to be same for Row 1 and Row 2, as they should not affect access time for P1, but the reason they are different is because 
+\subsubsection {Challenges}
+\subsubsection {Results}
 
 \bibliographystyle{IEEEbib}
 \bibliography{my}
