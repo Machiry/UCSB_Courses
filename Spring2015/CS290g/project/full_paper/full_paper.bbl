@@ -1,79 +1,44 @@
-\begin{thebibliography}{10}
+\begin{thebibliography}{1}
 
-\bibitem{QC82:Fast}
-J.-J. Quisquater and C.~Couvreur,
-\newblock ``Fast decipherment algorithm for {RSA} public-key cryptosystem,''
-\newblock {\em Electronics Letters}, vol. 18, no. 21, pp. 905--907, Oct. 1982.
+\bibitem{bernstein2005cache}
+Daniel~J Bernstein,
+\newblock ``Cache-timing attacks on aes,'' 2005.
 
-\bibitem{DH76:New}
-W.~Diffie and M.~E. Hellman,
-\newblock ``New directions in cryptography,''
-\newblock {\em IEEE Transactions on Information Theory}, vol. 22, pp. 644--654,
-  Nov. 1976.
+\bibitem{aciccmez2006trace}
+Onur Aci{\c{c}}mez and {\c{C}}etin~Kaya Ko{\c{c}},
+\newblock ``Trace-driven cache attacks on aes,''
+\newblock 2006.
 
-\bibitem{NIST91:DSS}
-Nation{al Institute for Standards and Technology},
-\newblock ``Digital signature standard {(DSS)},''
-\newblock {\em Federal Register}, vol. 56, pp. 169, Aug. 1991.
+\bibitem{banescu2011cache}
+Sebastian Banescu,
+\newblock ``Cache timing attacks,''
+\newblock 2011.
 
-\bibitem{K87:Elliptic}
-N.~Koblitz,
-\newblock ``Elliptic curve cryptosystems,''
-\newblock {\em Mathematics of Computation}, vol. 48, no. 177, pp. 203--209,
-  Jan. 1987.
+\bibitem{frenzel2010arm}
+Torsten Frenzel, Adam Lackorzynski, Alexander Warg, and Hermann H{\"a}rtig,
+\newblock ``Arm trustzone as a virtualization technique in embedded systems,''
+\newblock in {\em Proceedings of Twelfth Real-Time Linux Workshop, Nairobi,
+  Kenya}, 2010.
 
-\bibitem{M93:Elliptic}
-A.~J. Menezes,
-\newblock {\em Elliptic Curve Public Key Cryptosystems},
-\newblock Kluwer Academic Publishers, Boston, MA, 1993.
+\bibitem{180212}
+Taesoo Kim, Marcus Peinado, and Gloria Mainar-Ruiz,
+\newblock ``Stealthmem: System-level protection against cache-based side
+  channel attacks in the cloud,''
+\newblock in {\em Presented as part of the 21st USENIX Security Symposium
+  (USENIX Security 12)}, Bellevue, WA, 2012, pp. 189--204, USENIX.
 
-\bibitem{K95:The}
-B.~S. Ka{liski Jr.},
-\newblock ``The {M}ontgomery inverse and its applications,''
-\newblock {\em IEEE Transactions on Computers}, vol. 44, no. 8, pp. 1064--1065,
-  Aug. 1995.
+\bibitem{wang2007new}
+Zhenghong Wang and Ruby~B Lee,
+\newblock ``New cache designs for thwarting software cache-based side channel
+  attacks,''
+\newblock in {\em ACM SIGARCH Computer Architecture News}. ACM, 2007, vol.~35,
+  pp. 494--505.
 
-\bibitem{SOOS95:Fast}
-R.~Schroeppel, H.~Orman, S.~{O'Malley}, and O.~Spatscheck,
-\newblock ``Fast key exchange with elliptic curve systems,''
-\newblock in {\em Advances in Cryptology --- CRYPTO 95}, D.~Coppersmith, Ed.
-  1995, {Lecture Notes in Computer Science, No. 973}, pp. 43--56, Springer,
-  Berlin, Germany.
-
-\bibitem{K99:Fast}
-T.~Kobayashi and H.~Morita,
-\newblock ``Fast modular inversion algorithm to match any operand unit,''
-\newblock {\em IEICE Transactions on Fundamentals of Electronics,
-  Communications and Computer Sciences}, vol. E82--A, no. 5, pp. 733--740, May
-  1999.
-
-\bibitem{SK00:The}
-E.~Sava\c{s} and {\c{C}}.~K. Ko{\c{c}},
-\newblock ``The {M}ontgomery modular inverse - revisited,''
-\newblock {\em IEEE Transactions on Computers}, vol. 49, no. 7, pp. 763--766,
-  July 2000.
-
-\bibitem{H01:Efficient}
-M.~A. Hasan,
-\newblock ``Efficient computation of multiplicative inverses for cryptographic
-  applications,''
-\newblock Technical Report CORR 2001--03, Centre for Applied Cryptographic
-  Research, University of Waterloo, Canada, 2001.
-
-\bibitem{STK00:A}
-E.~Sava\c{s}, A.~F. Tenca, and {\c{C}}.~K. Ko{\c{c}},
-\newblock ``A scalable and unified multiplier architecture for finite fields
-  {GF}$(p)$ and {GF}$(2^m)$,''
-\newblock in {\em Cryptographic Hardware and Embedded Systems - CHES 2000},
-  \c{C}. K.~Ko\c{c} and C.~Paar, Eds. 2000, {Lecture Notes in Computer Science
-  No. 1965}, pp. 281--296, Springer, Berlin, Germany.
-
-\bibitem{LD99:Fast}
-J.~L{\'{o}}pez and R.~Dahab,
-\newblock ``Fast multiplication on elliptic curves over {GF}$(2^m)$ without
-  precomputation,''
-\newblock in {\em Cryptographic Hardware and Embedded Systems}, \c{C}.
-  K.~Ko\c{c} and C.~Paar, Eds. 1999, {Lecture Notes in Computer Science, No.
-  1717}, pp. 316--325, Springer, Berlin, Germany.
+\bibitem{184415}
+Yuval Yarom and Katrina Falkner,
+\newblock ``Flush+reload: A high resolution, low noise, l3 cache side-channel
+  attack,''
+\newblock in {\em 23rd USENIX Security Symposium (USENIX Security 14)}, San
+  Diego, CA, Aug. 2014, pp. 719--732, USENIX Association.
 
 \end{thebibliography}
