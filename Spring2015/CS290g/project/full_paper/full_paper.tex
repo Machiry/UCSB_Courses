@@ -1,5 +1,6 @@
 \documentclass[twocolumn]{IEEEtran}
 \usepackage{epsfig}
+\usepackage{url}
 %-----------------------
 
 \begin{document}
@@ -24,13 +25,13 @@ Memory access time is the main bottleneck for achieving maximum processor perfor
 
 All known attacks are implemented on previous generation processors like Pentium III (cite from challenges), Pentium 4E (cite from challenges) and Athlon 64 (cite from challenges). Although, recent improvements in caches make cache side attacks more reliable, multi-core processors with multiple levels of cache makes exploiting cache side-channels non trivial. Moreover, recent processors have pre-fetching\cite{tse1998cpu} which thwarts most of the known attacks. In this project, we explore the feasibility cache timing attacks on latest multiprocessor based systems, discuss our findings and results. Specifically, following are our contributions:
 \begin{itemize}
-\item Investigate, understand and r\todonoteseport cache side channel with examples. We aim to make the documentation simple enough to be understood by a computer science graduate without much knowledge of cryptography or computer architecture.
+\item Investigate, understand and report cache side channel with examples. We aim to make the documentation simple enough to be understood by a computer science graduate without much knowledge of cryptography or computer architecture.
 \item Implement cache timing attack on Latest Intel i7-930 processor and report our findings.
 \item Research on the recent improvements and state of art on cache side channel and clearly report the findings.
 \item Evaluate the applicability of these attacks on well known protocols on current multiprocessor systems, both on x86 and ARM.
 \item Investigate and report existing defense strategies to prevent cache side channel.
 \end{itemize}
-\end{Introduction}
+
 
 \section {Background}
 
