@@ -60,7 +60,7 @@ Ge~Heiser~Lee Liu, Yarom,
 
 \bibitem{ir2015aes}
 Sunar Irazoqui, Eisenbarth,
-\newblock ``A shared cache attack,''
+\newblock ``A shared cache attack that defies vm sandboxing,''
 \newblock in {\em 2015 IEEE Symposium on Security and Privacy}, 2015.
 
 \end{thebibliography}

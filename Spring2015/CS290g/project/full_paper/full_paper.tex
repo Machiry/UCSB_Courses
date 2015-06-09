@@ -58,6 +58,25 @@ Each block in the cache is in one of the below four states:
 
 \end{itemize}
 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=90mm]{2}
+\end{figure}
+
+ A cache is divided into blocks  of fixed size (B bytes).  Blocks, are grouped into a number (S) of sets such that each set has an equal number of blocks. The number (W) of blocks in a set denotes the associativity of a cache, and is usually a small power
+of 2. The total cache size is: $S\times W\times B$  bytes.
+
+
+More specifically, if we have a 4-way set associative cache like in Figure 1, then a main memory block can map to any of the 4 blocks of a given set. The set corresponding to a main memory block is determined from its physical address by splitting it into:
+
+\begin {itemize}
+\item a \textbf{tag address} taking $\log \frac{N}{S\times B}$  bits from the most significant part of the address;
+\item a \textbf{set number} taking $\log {S}$ bits from the middle part of the physical address;
+\item a\textbf{ block offset} taking $\log {B}$ bits from the least significant part of the physical address
+\end{itemize}
+
+
 When a memory reference is made by the CPU, the tag address of the main memory block is compared with all the tags in the corresponding set. If the tag is found then this reference qualifies as a cache hit. Meaning that there is no need to retrieve the data from main memory since it is already located in the cache, and the data can be immediately provided to the CPU. Conversely, if the tag is not found in the corresponding set then the memory reference qualifies as a cache miss.The caching mechanism operation is based on the principals of spatial and temporal locality, which help to minimize the number of
 cache misses. Temporal locality states that the same data blocks will likely be requested repeatedly during the execution of a process. Spacial locality states that data blocks from nearby addresses are likely to be subsequently accessed. Even though the number of cache misses is reduced by these principles, they are not eliminated.
 
@@ -93,7 +112,7 @@ In this section, we explain our implementation of an attack based on cache timin
 \subsection {Cache Organization}
 Processor Intel i7-930 has 4 physical cores and has Hyper-threading support\cite{intelhype}, which exposes 8 (4 * 2) virtual cores. Cache on the processor has 3 levels, which is shared among these 8 virtual cores. Organization of various cache levels and corresponding properties is as shown in the below Table:
 \begin{center}
-\scalebox{0.6}{
+\scalebox{0.5}{
 \begin{tabular}{ |c|c|c|c|c|c|c| } 
  \hline
  Cache Level & Type & Shared Virtual Cores & Size(Bytes) & Sets & Associativity & Line Size(Bytes)\\
@@ -127,7 +146,7 @@ Our strategy is to exploit delay due to conflict misses. Specifically, we launch
 \subsection {Implementation}
 We measured the access time of data item as seen by a process(p1) when another process(p2) is trying to access data that belongs to both same and different cache set. We see following differences:
 \begin{center}
-\scalebox{0.5}{
+\scalebox{0.47}{
 \begin{tabular}{|c|c|c|c|}
 \hline
 Description & P1 Data item set & P2 Data item set & P1 Access Time\\
