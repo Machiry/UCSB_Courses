@@ -177,7 +177,7 @@ Cache is not shared between 2-worlds, thus all the sensitive process can run in 
 
 \end{itemize}
 \subsection {Software Defences}
-In this section, we briefly explain most commaonly used software defences:
+In this section, we briefly explain most commonly used software defences:
 \begin{itemize}
 \item \textbf{Random Delay} Since most of the attacks rely on timing difference to be successful, sensitive process can introduce random delay to hinder these at the cost of computation delay.
 \item \textbf{Dynamic Software Diversity}\cite{crane2015thwarting} In this technique, we create a large number of unique program execution paths by automatically generating diversified replicas for parts of an input program. Replicas derived from the same original program  fragment have different implementations, but perform semantically equivalent computations. At runtime we then randomly and frequently switch between these replicas.
@@ -185,7 +185,7 @@ In this section, we briefly explain most commaonly used software defences:
 
 \section {Conclusion and Future Work}
 
-The timing variations in encryption timings exploited by cache attacks are primarily due to cache misses. These attacks are applicable to cipher implementations based on LUTs namely AES and DES. Due to heirarchical memory model, subsequent access to LUT's are performed in variable amounts of time resulting in leakage of side channel information. Once the attacker gets an approximate idea the size of look up table in the cache set based on cache evictions, he can then resort to brute force to determine the key for the corresponding cipher implementation. This same methodology can be applied to the cloud wherein the virtual machines co-resident on the same core display similar behavior and thus leak side channel information. Several such attempts have been succesfull and have been discussed in  \cite{sc2015lastlevel}.  Similar strategies have been employed to perform a shared cache attack that work across cores and has been discussed recently in \cite{ir2015aes}.
+The timing variations in encryption timings exploited by cache attacks are primarily due to cache misses. These attacks are applicable to cipher implementations based on LUTs namely AES and DES. Due to heirarchical memory model, subsequent access to LUT's are performed in variable amounts of time resulting in leakage of side channel information. Once the attacker gets an approximate idea the size of look up table in the cache set based on cache evictions, he can then resort to brute force to determine the key for the corresponding cipher implementation. This same methodology can be applied to the cloud wherein the virtual machines co-resident on the same core display similar behavior and thus leak side channel information. Several such attempts have been successful and have been discussed in  \cite{sc2015lastlevel}.  Similar strategies have been employed to perform a shared cache attack that work across cores and has been discussed recently in \cite{ir2015aes}.
 
 
 
