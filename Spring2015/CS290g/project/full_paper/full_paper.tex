@@ -144,8 +144,8 @@ Our strategy is to exploit delay due to conflict misses. Specifically, we launch
 \subsection {Implementation}
 We measured the access time of data item as seen by a process(p1) when another process(p2) is trying to access data that belongs to both same and different cache set. We see following differences:
 \begin{center}
-\scalebox{0.47}{
-\begin{tabular}{|c|c|c|c|}
+\scalebox{0.4}{
+\begin{tabular}{p{5cm}p{5cm}p{5cm}p{5cm}}
 \hline
 Description & P1 Data item set & P2 Data item set & P1 Access Time\\
 \hline
@@ -185,8 +185,9 @@ In this section, we briefly explain most commonly used software defences:
 
 \section {Conclusion and Future Work}
 
-The timing variations in encryption timings exploited by cache attacks are primarily due to cache misses. These attacks are applicable to cipher implementations based on LUTs namely AES and DES. Due to heirarchical memory model, subsequent access to LUT's are performed in variable amounts of time resulting in leakage of side channel information. Once the attacker gets an approximate idea the size of look up table in the cache set based on cache evictions, he can then resort to brute force to determine the key for the corresponding cipher implementation. This same methodology can be applied to the cloud wherein the virtual machines co-resident on the same core display similar behavior and thus leak side channel information. Several such attempts have been successful and have been discussed in  \cite{sc2015lastlevel}.  Similar strategies have been employed to perform a shared cache attack that work across cores and has been discussed recently in \cite{ir2015aes}.
+The attack strategies as illustrated in the preceding sections are very simple to implement even in modern processors. However there are several constraints such as  the attacker and victim process should be scheduled on the same core so that shared L1 cache can be exploited for cache interferences. Even in cases where the attacker and victim processes are on different cores, a similar kind of attack can be constructed  based on cache interferences in the shared L3 cache. Such attacks have been discussed in detail in \cite{sc2015lastlevel}. Our work concentrates primarily on shared L1 caches. These attacks can be extended to break cipher implementations based on LUTs namely AES and DES. Due to heirarchical memory model, subsequent access to LUT's are performed in variable amounts of time resulting in leakage of side channel information. Once the attacker gets an approximate idea the size of look up table in the cache set based on cache evictions, he can then resort to brute force to determine the key for the corresponding cipher implementation.
 
+The same methodology can be employed in the cloud wherein the virtual machines co-resident on the same core display similar behavior and thus leak side channel information. Several such attempts have been successful and have been discussed in  \cite{sc2015lastlevel}.  Similar strategies can be constructed to perform a shared cache attack that work across cores and has been discussed recently in \cite{ir2015aes}.
 
 
 
