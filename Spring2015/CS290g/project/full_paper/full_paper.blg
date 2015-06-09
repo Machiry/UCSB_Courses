@@ -1,6 +1,4 @@
-This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
-Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
-The top-level auxiliary file: full_paper.aux
+This is BibTeX, Version 0.99dThe top-level auxiliary file: full_paper.aux
 The style file: IEEEbib.bst
 Database file #1: my.bib
 Warning--empty journal in aciccmez2006trace
@@ -10,45 +8,4 @@ Too many commas in name 1 of "Liu,Yarom,Ge,Heiser,Lee" for entry sc2015lastlevel
 while executing---line 1012 of file IEEEbib.bst
 Too many commas in name 1 of "Liu,Yarom,Ge,Heiser,Lee" for entry sc2015lastlevel
 while executing---line 1012 of file IEEEbib.bst
-You've used 12 entries,
-            1838 wiz_defined-function locations,
-            535 strings with 5634 characters,
-and the built_in function-call counts, 2670 in all, are:
-= -- 231
-> -- 94
-< -- 5
-+ -- 37
-- -- 25
-* -- 167
-:= -- 393
-add.period$ -- 13
-call.type$ -- 12
-change.case$ -- 12
-chr.to.int$ -- 0
-cite$ -- 15
-duplicate$ -- 143
-empty$ -- 298
-format.name$ -- 25
-if$ -- 626
-int.to.chr$ -- 0
-int.to.str$ -- 12
-missing$ -- 10
-newline$ -- 61
-num.names$ -- 12
-pop$ -- 62
-preamble$ -- 1
-purify$ -- 0
-quote$ -- 0
-skip$ -- 76
-stack$ -- 0
-substring$ -- 121
-swap$ -- 45
-text.length$ -- 5
-text.prefix$ -- 0
-top$ -- 0
-type$ -- 0
-warning$ -- 3
-while$ -- 23
-width$ -- 14
-write$ -- 129
 (There were 2 error messages)

@@ -19,7 +19,8 @@ E-mail: \texttt{\{machiry,varun\_kulkarni\}@cs.ucsb.edu}}
 \maketitle
 
 \begin{abstract}
-Cache side channel is well known attack on cryptographic implementations\cite{bernstein2005cache}\cite{aciccmez2006trace}\cite{banescu2011cache}. This is primarily based on observation that infrequently used information incurs a large timing penalty, thus revealing some information about the frequency of use of the memory blocks. This attack is straight forward on a single processor system with single level of cache, but current systems (both desktop and mobile) are multiprocessor where each processor has multilevel caches also there are some cache levels which are common to a subset of processors. Moreover, latest ARM processors have TrustZone support\cite{frenzel2010arm} which ensures System-On-Chip (SOC) wide security by avoiding shared cache access. In addition to this, there has been lot of work done both on Hardware and Software side to mitigate cache side channel\cite{180212}\cite{wang2007new}. It is high time we revisit and evaluate cache side channel, its possibility on latest processors and implications\cite{184415}.\\
+Cache side channel is well known attack on cryptographic implementations\cite{bernstein2005cache}\cite{aciccmez2006trace}\cite{banescu2011cache}. This is primarily based on observation that infrequently used information incurs a large timing penalty, thus revealing some information about the frequency of use of the memory blocks. This attack is straight forward on a single processor system with single level of cache, but current systems (both desktop and mobile) are multiprocessor where each processor has multilevel caches. Also,
+there are some cache levels which are common to a subset of processors. Moreover, latest ARM processors have TrustZone support\cite{frenzel2010arm} which ensures System-On-Chip (SOC) wide security by avoiding shared cache access. In addition to this, there has been lot of work done both on Hardware and Software side to mitigate cache side channel\cite{180212}\cite{wang2007new}. It is high time we revisit and evaluate cache side channel, its possibility on latest processors and implications\cite{184415}.\\
 \end{abstract}
 
 \section {Introduction}
@@ -138,7 +139,7 @@ Most of the known methods to find cache information of a system requires additio
 \subsection {Attack Goal and Strategy}
 In this subsection, we explain goal of the attack and strategy we used to perform the attack.
 \subsubsection {Attack Goal}
-The goal of the attack is to predict the cache set of a data item which the victim process is repeatedly accessing. To emulate the possibility of attacker ability to measure memory access time, the victim process outputs access time of the data item.
+The goal of the attack is to predict the cache set of a data item which the victim process is accessing repeatedly. To emulate the possibility of attacker's ability to measure memory access time, the victim process outputs access time of the data item.
 \subsubsection {Strategy}
 Our strategy is to exploit delay due to conflict misses. Specifically, we launch an attack process which tries to fill up one cache set at a time. If the data item of victim process maps to the same cache set then we should see considerable increase in access time, otherwise access time should not be affected. We repeat this for all the sets in the cache and observe the access time of victim process, an increase in access time implies the cache set filled by attack process is same as the cache set of the data item which the victim process is trying to access.
 \subsection {Implementation}
