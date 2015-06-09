@@ -29,8 +29,6 @@ All known attacks are implemented on previous generation processors like Pentium
 \begin{itemize}
 \item Investigate, understand and report cache side channel with examples. We aim to make the documentation simple enough to be understood by a computer science graduate without much knowledge of cryptography or computer architecture.
 \item Implement cache timing attack on Latest Intel i7-930 processor and report our findings.
-\item Research on the recent improvements and state of art on cache side channel and clearly report the findings.
-\item Evaluate the applicability of these attacks on well known protocols on current multiprocessor systems, both on x86 and ARM.
 \item Investigate and report existing defense strategies to prevent cache side channel.
 \end{itemize}
 
@@ -41,7 +39,7 @@ In this section we give a brief overview of the background needed to understand 
 
 \subsection {Cache Design and Operation}
 
-A cache is a small memory placed between the CPU and RAM to reduce the big latency added by retrieval of data. Modern processors usually have more than one level of cache to improve the efficiency of memory accesss.Most modern processes offer 3 levels of cache.with the first level (L1) being the closest to the CPU registers. Generally, L1 and L2 caches are each split into instruction caches and separate data caches. L3 usually stores both instructions and data.The cache size is much smaller than the number of directly addressable bytes in main memory. Hence a mapping strategy needs to be adopted.The cache associativity determines how the main memory blocks map into blocks of the cache. The below figure depicts the differences between direct mapped cache and an associatve cache memory
+A cache is a small memory placed between the CPU and RAM to reduce the big latency added by retrieval of data. Modern processors usually have more than one level of cache to improve the efficiency of memory access. Most modern processes offer 3 levels of cache.with the first level (L1) being the closest to the CPU registers. Generally, L1 and L2 caches are each split into instruction caches and separate data caches. L3 usually stores both instructions and data.The cache size is much smaller than the number of directly addressable bytes in main memory. Hence a mapping strategy needs to be adopted.The cache associativity determines how the main memory blocks map into blocks of the cache. The below figure depicts the differences between direct mapped cache and an associative cache memory
 
 \begin{figure}[H]
   \centering
@@ -108,7 +106,7 @@ strongly depend on the CPU micro-architecture.
 These three types of attacks are not limited to timing channels. Measuring power dissipation levels during the encryption process also offers more information about data access. However, this work would focus only on timing attacks.
 
 \section {Attack Implementation}
-In this section, we explain our implementation of an attack based on cache timing on Intel i7-930 processor. First, we describe the cache organization on this processor. Second, we explain our attack goal and strategy. Finally, our implementation along with challenges faced and results.
+In this section, we explain our implementation of an attack based on cache timing on Intel i7-930 processor. First, we describe the cache organization on this processor. Second, we explain our attack goal and strategy. Finally, we describe our implementation.
 \subsection {Cache Organization}
 Processor Intel i7-930 has 4 physical cores and has Hyper-threading support\cite{intelhype}, which exposes 8 (4 * 2) virtual cores. Cache on the processor has 3 levels, which is shared among these 8 virtual cores. Organization of various cache levels and corresponding properties is as shown in the below Table:
 \begin{center}
@@ -141,7 +139,7 @@ Most of the known methods to find cache information of a system requires additio
 In this subsection, we explain goal of the attack and strategy we used to perform the attack.
 \subsubsection {Attack Goal}
 The goal of the attack is to predict the cache set of a data item which the victim process is repeatedly accessing. To emulate the possibility of attacker ability to measure memory access time, the victim process outputs access time of the data item.
-\subsection {Strategy}
+\subsubsection {Strategy}
 Our strategy is to exploit delay due to conflict misses. Specifically, we launch an attack process which tries to fill up one cache set at a time. If the data item of victim process maps to the same cache set then we should see considerable increase in access time, otherwise access time should not be affected. We repeat this for all the sets in the cache and observe the access time of victim process, an increase in access time implies the cache set filled by attack process is same as the cache set of the data item which the victim process is trying to access.
 \subsection {Implementation}
 We measured the access time of data item as seen by a process(p1) when another process(p2) is trying to access data that belongs to both same and different cache set. We see following differences:
@@ -160,21 +158,30 @@ P2 Access data that belongs to same cache set as P1 data & x & x & {\bf 10-11 ns
 \end{tabular}
 }
 \end{center}
-We expected values of last column to be same for Row 1 and Row 2, as they should not affect access time for P1, but the reason they are different is because \textbf { Need to be completed }
-
-
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=90mm]{chart}
+\end{figure}
+The chart above shows graphical representation of access time difference. We expected access time to be same for first and second bar in the chart, as they should not affect access time for victim process, but the reason they are different is because of simultaneous access to cache. L1-Cache allows a single access per clock, thus when multiple process tries to access same cache module, they will be serialized and thus the delay. But the delay is quite noticeable in Row 3 when both process tries to access same cache set. This delay is due to L1-Cache miss penalty. Our idea is to run a process which tries to fill up an entire cache set and measure the delay experienced by victim process. If the set is same then the delay should be atleast 10 ns. We have implemented this attack in C and wrote a single wrapper python script $\texttt{l1\_timing\_attack.py}$ which drives the attack and provides the result.
 \section {Defence}
-
-Unlike physical side channel attacks, software cache-based side channel  attacks can impact a much wider spectrum of systems and users as these software attacks are very easy to perform and are effective on various platforms. This makes cache-based side channel attacks extremely attractive as a new weapon in the attacker’s arsenal. A thourough analysis of cache side channel attacks have revelaed cache interfearance as the main root cause. Several mitigation methods mostly in hardware have been devised to prevent leakage of side channel information. Some of them are
-
+There have been many defences developed in both Hardware and Software to protect against all Cache side channel attacks. This section briefly describes them and suggest the reader to refer the cited work for more details. Cache interference is the general term used to describe all side channels because of shared cache.
+\subsection {Hardware Defences}
+In this section, we briefly explain existing Hardware defences\cite{wang2007new}.
 \begin{itemize}
-\item \textbf {Partition Locked Cache} essentially achieves the effect of cache partitioning, but much more flexibly with less per-formance degradation. In partition locked cache, the cache lines of interest are locked in cache, creating a flexible private partition; these cache lines can not be evicted by other cache accesses not belonging to this private partition. This prevents both internal and external cache inerferences.
+\item \textbf {Partition Locked Cache} essentially achieves the effect of cache partitioning, but much more flexibly with less performance degradation. In partition locked cache, the cache lines of interest are locked in cache, creating a flexible private partition; these cache lines can not be evicted by other cache accesses not belonging to this private partition. This prevents both internal and external cache interferences.
 
 \item \textbf {Random Permutation Cache} allows cache sharing by randomizing the resulting interference, so that no useful information about which cache line was evicted can be inferred. An attacker can observe another process’s cache access only if that process changes the attacker’s cache usage, i.e., evicts the attacker’s cache lines. If the process evicts its own cache lines, the attacker has no way to know that.  In random permutation cache, each time cache interference occurs, the interference is randomized in a way that carries no useful information. 
 
-\end{itemize}
+\item \textbf{ARM TrustZone}\cite{frenzel2010arm} is a system-wide protection mechanism introduced by ARM. It provides two virtual processors backed by hardware based access control. This lets the application core switch between two states, referred to as worlds (to reduce confusion with other names for capability domains), in order to prevent information from leaking from the more trusted world to the less trusted world. This world switch is generally orthogonal to all other capabilities of the processor, thus each world can operate independently of the other while using the same core. Memory and peripherals are then made aware of the operating world of the core and may use this to provide access control to secrets and code on the device. \\
+Cache is not shared between 2-worlds, thus all the sensitive process can run in secure world thus thwarting all interference attacks.
 
-The above methods have been described in detail in \cite{wang2007new}. Since most of the attacks rely on timing difference to be succesfull, these can be thwarted by introducing random delays in the encryption process. Another mitigation strategy employed in ARM achitectures is the presence of distinguished trustzone. 
+\end{itemize}
+\subsection {Software Defences}
+In this section, we briefly explain most commaonly used software defences:
+\begin{itemize}
+\item \textbf{Random Delay} Since most of the attacks rely on timing difference to be successful, sensitive process can introduce random delay to hinder these at the cost of computation delay.
+\item \textbf{Dynamic Software Diversity}\cite{crane2015thwarting} In this technique, we create a large number of unique program execution paths by automatically generating diversified replicas for parts of an input program. Replicas derived from the same original program  fragment have different implementations, but perform semantically equivalent computations. At runtime we then randomly and frequently switch between these replicas.
+\end{itemize}
 
 \section {Conclusion and Future Work}
 

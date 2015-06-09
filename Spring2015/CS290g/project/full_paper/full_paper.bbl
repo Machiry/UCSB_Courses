@@ -53,6 +53,14 @@ Intel,
 \newblock ``{Intel Hyperthreading},''
   \url{http://www.intel.com/content/www/us/en/architecture-and-technology/hyper-threading/hyper-threading-technology.html}.
 
+\bibitem{crane2015thwarting}
+Stephen Crane, Andrei Homescu, Stefan Brunthaler, Per Larsen, and Michael
+  Franz,
+\newblock ``Thwarting cache side-channel attacks through dynamic software
+  diversity,''
+\newblock in {\em Network And Distributed System Security Symposium, NDSS},
+  2015, vol.~15.
+
 \bibitem{sc2015lastlevel}
 Ge~Heiser~Lee Liu, Yarom,
 \newblock ``Last level cache side-channel attacks are practical,''

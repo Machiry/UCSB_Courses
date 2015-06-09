@@ -171,7 +171,7 @@ for i in range(0,int(level_info['1'][0].sets)):
     occupy_pd.kill()
     #print target_timings
     if(target_no_entries > threshold_num):
-        print '[+] Set '+ str(i)+ ' seems to the target set'
+        print '[+] Set '+ str(i)+ ' seems to be the target set'
         found = True
         break
     else:
