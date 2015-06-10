@@ -23,9 +23,9 @@ Cache side channel is well known attack on cryptographic implementations\cite{be
 \end{abstract}
 
 \section {Introduction}
-Memory access time is the main bottleneck for achieving maximum processor performance. Memory hierarchies are used to bridge this gap. Memory cache is the main component of the hierarchy. Most of the Processors have memory caches whose access time is several times less than main memory. On latest Intel I7 processor, access to L1 cache takes ~2 cycles, where as it takes ~360-400 cycles to access a byte from main memory. Memory Caches are continuously evolving and lot of research have been done to make these as fast as the corresponding processor. On the other hand, main memory access time is not decreasing accordingly. This makes an access to main memory to be easily distinguishable by measuring access time. The difference in the access time is the main idea based on which most of the cache side channel attacks are discovered. Recent improvements in cache technologies seems to decrease cache access time thus making main memory access extremely easy to detect. 
+Memory access time is the main bottleneck for achieving maximum processor performance. Memory hierarchy is used to decrease the bottleneck. Memory cache is the main component of the hierarchy. Most of the Processors have memory caches whose access time is several times less than main memory. On latest Intel I7 processor, access to L1 cache takes ~2 cycles, where as it takes ~360-400 cycles to access a byte from main memory. Memory Caches are continuously evolving and lot of research have been done to make these as fast as the corresponding processor. On the other hand, main memory access time is not decreasing accordingly. This makes an access to main memory to be easily distinguishable by measuring access time. The difference in the access time is the main idea based on which most of the cache side channel attacks are discovered. Recent improvements in cache technologies seems to decrease cache access time thus making main memory access extremely easy to detect. 
 
-All known attacks are implemented on previous generation processors like Pentium III (cite from challenges), Pentium 4E (cite from challenges) and Athlon 64 (cite from challenges). Although, recent improvements in caches make cache side attacks more reliable, multi-core processors with multiple levels of cache makes exploiting cache side-channels non trivial. Moreover, recent processors have pre-fetching\cite{tse1998cpu} which thwarts most of the known attacks. In this project, we explore the feasibility cache timing attacks on latest multiprocessor based systems, discuss our findings and results. Specifically, following are our contributions:
+All known attacks are implemented on previous generation processors like Pentium III (cite from challenges), Pentium 4E (cite from challenges) and Athlon 64 (cite from challenges). Although, recent improvements in caches make cache side attacks more reliable, multi-core processors with multiple levels of cache makes exploiting cache side-channels non-trivial. Moreover, recent processors have pre-fetching\cite{tse1998cpu} which thwarts most of the known attacks. In this project, we explore the feasibility of cache timing attacks on latest multiprocessor based systems, discuss our findings and results. Specifically, following are our contributions:
 \begin{itemize}
 \item Investigate, understand and report cache side channel with examples. We aim to make the documentation simple enough to be understood by a computer science graduate without much knowledge of cryptography or computer architecture.
 \item Implement cache timing attack on Latest Intel i7-930 processor and report our findings.
@@ -39,7 +39,18 @@ In this section we give a brief overview of the background needed to understand 
 
 \subsection {Cache Design and Operation}
 
-A cache is a small memory placed between the CPU and RAM to reduce the big latency added by retrieval of data. Modern processors usually have more than one level of cache to improve the efficiency of memory access. Most modern processes offer 3 levels of cache.with the first level (L1) being the closest to the CPU registers. Generally, L1 and L2 caches are each split into instruction caches and separate data caches. L3 usually stores both instructions and data.The cache size is much smaller than the number of directly addressable bytes in main memory. Hence a mapping strategy needs to be adopted.The cache associativity determines how the main memory blocks map into blocks of the cache. The below figure depicts the differences between direct mapped cache and an associative cache memory
+A cache is a small memory placed between the CPU and Main Memory(RAM) to reduce access time. Modern processors usually have more than one level of cache (~3 levels) with increasing access time. The first level (L1) cache has the least access time. To avoid data access(frequently modified) from affecting instructions(less frequently modified) L1 cache is split into instruction cache and data cache. The cache size is much smaller than the number of directly addressable bytes in main memory. Hence a mapping strategy needs to be adopted. A cache is divided into blocks  of fixed size (B bytes).  Blocks, are grouped into a number of sets(S) such that each set has an equal number of blocks. The number (W) of blocks in a set denotes the associativity of a cache, and is usually a small power
+of 2. The total cache size is: $S\times W\times B$  bytes.
+
+
+More specifically, if we have a 4-way set associative cache like in Figure 1, then a main memory block can map to any of the 4 blocks of a given set. The set corresponding to a main memory block is determined from its physical address by splitting it into:
+
+\begin {itemize}
+\item a \textbf{tag address} taking $\log \frac{N}{S\times B}$  bits from the most significant part of the address;
+\item a \textbf{set number} taking $\log {S}$ bits from the middle part of the physical address;
+\item a\textbf{ block offset} taking $\log {B}$ bits from the least significant part of the physical address
+\end{itemize}
+ The cache associativity determines how the main memory blocks map into blocks of the cache. The below figure depicts the differences between direct mapped cache (no associativity or zero associativity) and an associative cache memory
 
 \begin{figure}[H]
   \centering
@@ -62,23 +73,10 @@ Each block in the cache is in one of the below four states:
   \includegraphics[width=90mm]{2}
 \end{figure}
 
- A cache is divided into blocks  of fixed size (B bytes).  Blocks, are grouped into a number (S) of sets such that each set has an equal number of blocks. The number (W) of blocks in a set denotes the associativity of a cache, and is usually a small power
-of 2. The total cache size is: $S\times W\times B$  bytes.
-
-
-More specifically, if we have a 4-way set associative cache like in Figure 1, then a main memory block can map to any of the 4 blocks of a given set. The set corresponding to a main memory block is determined from its physical address by splitting it into:
-
-\begin {itemize}
-\item a \textbf{tag address} taking $\log \frac{N}{S\times B}$  bits from the most significant part of the address;
-\item a \textbf{set number} taking $\log {S}$ bits from the middle part of the physical address;
-\item a\textbf{ block offset} taking $\log {B}$ bits from the least significant part of the physical address
-\end{itemize}
-
-
 When a memory reference is made by the CPU, the tag address of the main memory block is compared with all the tags in the corresponding set. If the tag is found then this reference qualifies as a cache hit. Meaning that there is no need to retrieve the data from main memory since it is already located in the cache, and the data can be immediately provided to the CPU. Conversely, if the tag is not found in the corresponding set then the memory reference qualifies as a cache miss.The caching mechanism operation is based on the principals of spatial and temporal locality, which help to minimize the number of
 cache misses. Temporal locality states that the same data blocks will likely be requested repeatedly during the execution of a process. Spacial locality states that data blocks from nearby addresses are likely to be subsequently accessed. Even though the number of cache misses is reduced by these principles, they are not eliminated.
 
-Obviously, data in the cache can be accessed much faster than data present only in memory.This is also true for multi-level caches where data accessed from the L1 cache will experience lower latencies, than data accessed from subsequent cache levels. These time differences are used to decide whether a specific portion of memory resides in the cache - implying that the corresponding data has been accessed recently. This resulting information leakage stemming from microarchitectural time differences when data is retrieved from cache rather than memory forms the basis of cache side channel attacks.
+Obviously, data in the cache can be accessed much faster than data present only in memory. This is also true for multi-level caches where data accessed from the L1 cache will experience lower latencies, than data accessed from subsequent cache levels. These time differences are used to decide whether a specific portion of memory resides in the cache - implying that the corresponding data has been accessed recently. This resulting information leakage stemming from microarchitectural time differences when data is retrieved from cache rather than memory forms the basis of cache side channel attacks.
 
 \subsection { Types of Cache Side Channel Attacks }
 
