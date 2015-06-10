@@ -19,8 +19,7 @@ E-mail: \texttt{\{machiry,varun\_kulkarni\}@cs.ucsb.edu}}
 \maketitle
 
 \begin{abstract}
-Cache side channel is well known attack on cryptographic implementations\cite{bernstein2005cache}\cite{aciccmez2006trace}\cite{banescu2011cache}. This is primarily based on observation that infrequently used information incurs a large timing penalty, thus revealing some information about the frequency of use of the memory blocks. This attack is straight forward on a single processor system with single level of cache, but current systems (both desktop and mobile) are multiprocessor where each processor has multilevel caches. Also,
-there are some cache levels which are common to a subset of processors. Moreover, latest ARM processors have TrustZone support\cite{frenzel2010arm} which ensures System-On-Chip (SOC) wide security by avoiding shared cache access. In addition to this, there has been lot of work done both on Hardware and Software side to mitigate cache side channel\cite{180212}\cite{wang2007new}. It is high time we revisit and evaluate cache side channel, its possibility on latest processors and implications\cite{184415}.\\
+Cache side channel is well known attack on cryptographic implementations\cite{bernstein2005cache}\cite{aciccmez2006trace}\cite{banescu2011cache}. This is primarily based on observation that infrequently used information incurs a large timing penalty, thus revealing some information about the frequency of use of the memory blocks. This attack is straight forward on a single processor system with single level of cache, but current systems (both desktop and mobile) are multiprocessor where each processor has multilevel caches also there are some cache levels which are common to a subset of processors. Moreover, latest ARM processors have TrustZone support\cite{frenzel2010arm} which ensures System-On-Chip (SOC) wide security by avoiding shared cache access. In addition to this, there has been lot of work done both on Hardware and Software side to mitigate cache side channel\cite{180212}\cite{wang2007new}. It is high time we revisit and evaluate cache side channel, its possibility on latest processors and implications\cite{184415}.\\
 \end{abstract}
 
 \section {Introduction}
@@ -107,7 +106,7 @@ strongly depend on the CPU micro-architecture.
 These three types of attacks are not limited to timing channels. Measuring power dissipation levels during the encryption process also offers more information about data access. However, this work would focus only on timing attacks.
 
 \section {Attack Implementation}
-In this section, we explain our implementation of an attack based on cache timing on Intel i7-930 processor. First, we describe the cache organization on this processor. Second, we explain our attack goal and strategy. Finally, we describe our implementation.
+In this section, we explain our implementation of an attack based on cache timing on Intel i7-930 processor. First, we describe the cache organization on this processor. Second, we explain our attack goal and strategy. Finally, we describe our implementation and challenges.
 \subsection {Cache Organization}
 Processor Intel i7-930 has 4 physical cores and has Hyper-threading support\cite{intelhype}, which exposes 8 (4 * 2) virtual cores. Cache on the processor has 3 levels, which is shared among these 8 virtual cores. Organization of various cache levels and corresponding properties is as shown in the below Table:
 \begin{center}
@@ -139,7 +138,7 @@ Most of the known methods to find cache information of a system requires additio
 \subsection {Attack Goal and Strategy}
 In this subsection, we explain goal of the attack and strategy we used to perform the attack.
 \subsubsection {Attack Goal}
-The goal of the attack is to predict the cache set of a data item which the victim process is accessing repeatedly. To emulate the possibility of attacker's ability to measure memory access time, the victim process outputs access time of the data item.
+The goal of the attack is to predict the cache set of a data item which the victim process is repeatedly accessing. To emulate the possibility of attacker ability to measure memory access time, the victim process outputs access time of the data item.
 \subsubsection {Strategy}
 Our strategy is to exploit delay due to conflict misses. Specifically, we launch an attack process which tries to fill up one cache set at a time. If the data item of victim process maps to the same cache set then we should see considerable increase in access time, otherwise access time should not be affected. We repeat this for all the sets in the cache and observe the access time of victim process, an increase in access time implies the cache set filled by attack process is same as the cache set of the data item which the victim process is trying to access.
 \subsection {Implementation}
@@ -164,6 +163,13 @@ P2 Access data that belongs to same cache set as P1 data & x & x & {\bf 10-11 ns
   \includegraphics[width=90mm]{chart}
 \end{figure}
 The chart above shows graphical representation of access time difference. We expected access time to be same for first and second bar in the chart, as they should not affect access time for victim process, but the reason they are different is because of simultaneous access to cache. L1-Cache allows a single access per clock, thus when multiple process tries to access same cache module, they will be serialized and thus the delay. But the delay is quite noticeable in Row 3 when both process tries to access same cache set. This delay is due to L1-Cache miss penalty. Our idea is to run a process which tries to fill up an entire cache set and measure the delay experienced by victim process. If the set is same then the delay should be atleast 10 ns. We have implemented this attack in C and wrote a single wrapper python script $\texttt{l1\_timing\_attack.py}$ which drives the attack and provides the result.
+\subsection {Challenges}
+We faced several challenges during our implementation, In this section we will explain them briefly and also mention few considerations for implementing Cache timing attacks.
+\begin{itemize}
+\item \textbf{Ensuring execution on L1-Cache shared cores}: As mentioned before our processor (i7-930) is Multi-core, for L1 attack to be successful both attack and victim process should run on cores which share the same L1 cache. However, scheduling of processes is managed by underlying operating system and it is not trivial to modify the scheduling. But, We were able to implement the attack by using $\texttt{taskset}$ command, by using which we can force the process to be executed on a particular core. 
+\item \textbf{Attack resolution decreases with bigger caches}: Our processor has 32K Bytes L1-Cache, this is much more than the key size of most of the cryptographic algorithms. This makes all attacks based on capacity misses hard if not impossible. Moreover, Cache Line sizes and sets are increasing which increases the guessing effort thus reducing attack resolution. Cache side-channel attacks should take this into consideration.
+\item \textbf{Asymmetric cache parameters}: Recent caches have assymetric parameters, for instance: Cache line size of L1 Cache is different from L3 Cache, this makes it hard especially for Last level cache attacks to correctly predict the data being accessed.
+\end{itemize}
 \section {Defence}
 There have been many defences developed in both Hardware and Software to protect against all Cache side channel attacks. This section briefly describes them and suggest the reader to refer the cited work for more details. Cache interference is the general term used to describe all side channels because of shared cache.
 \subsection {Hardware Defences}
@@ -185,13 +191,7 @@ In this section, we briefly explain most commonly used software defences:
 \end{itemize}
 
 \section {Conclusion and Future Work}
-
-The attack strategies as illustrated in the preceding sections are very simple to implement even in modern processors. However there are several constraints such as  the attacker and victim process should be scheduled on the same core so that shared L1 cache can be exploited for cache interferences. Even in cases where the attacker and victim processes are on different cores, a similar kind of attack can be constructed  based on cache interferences in the shared L3 cache. Such attacks have been discussed in detail in \cite{sc2015lastlevel}. Our work concentrates primarily on shared L1 caches. These attacks can be extended to break cipher implementations based on LUTs namely AES and DES. Due to heirarchical memory model, subsequent access to LUT's are performed in variable amounts of time resulting in leakage of side channel information. Once the attacker gets an approximate idea the size of look up table in the cache set based on cache evictions, he can then resort to brute force to determine the key for the corresponding cipher implementation.
-
-The same methodology can be employed in the cloud wherein the virtual machines co-resident on the same core display similar behavior and thus leak side channel information. Several such attempts have been successful and have been discussed in  \cite{sc2015lastlevel}.  Similar strategies can be constructed to perform a shared cache attack that work across cores and has been discussed recently in \cite{ir2015aes}.
-
-
-
+Due to hierarchical memory model and difference in access time, many cryptographic implementations can be attacked to leak information related to private keys. There are many attacks demonstrated the feasibility of these attacks. Most of the known attacks are implemented on older processors. We implemented a simple attack on Latest Intel i7-930 Multi-core processor, and learned that there are several constraints such as the attacker and victim process should be scheduled on the same core so that shared L1 cache can be exploited for cache interferences. Moreover, there are several promising Hardware and Software defences which make exploitation of cache timing based side-channels extremely hard. However, recent work\cite{sc2015lastlevel}\cite{ir2015aes} has shown that a timing attack can be constructed  based on cache interferences in the shared L3 cache. The same methodology can be employed in the cloud wherein the virtual machines co-resident on the same core display similar behaviour and thus leak side channel information\cite{sc2015lastlevel}. We witness an interesting juncture of arms race, but from the recent works we believe that implementing reliable cache timing attacks is getting increasingly difficult.
 \bibliographystyle{IEEEbib}
 \bibliography{my}
 
