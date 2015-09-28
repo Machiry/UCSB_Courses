@@ -1,5 +1,5 @@
-/* cache_timer.c */ 
 #include <stdio.h> 
+#include <string.h>
 #include <sys/types.h> 
 #include <time.h>
 #include <pthread.h>
@@ -97,7 +97,7 @@ int main(int argc,char *argv[])
     //printf("Base Addr:%p\n",base_addr);
     sleep(1);
     ds += 3;
-    printf("ThreadsCreated:%d\n",ds);
+    printf("ThreadsCreated:%d\n",(int)ds);
     fflush(stdout);
 
     /*while(1) {

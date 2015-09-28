@@ -102,7 +102,7 @@ int main(int argc, char* argv[])
             
         //printf("%f,%d,%d,%d,%d,%d,%d,%d,%d\n",sec,steps,SAMPLE,stride,limit,stride,steps*SAMPLE*stride*(((limit-1)/stride)+1),(((limit-1)/stride)+1),steps*SAMPLE*stride);
         
-        printf("%d:%4.0f\n",time(NULL),(double)(sec*1000000000)/(steps*CACHE_MAX));
+        printf("%d:%4.0f\n",(int)time(NULL),(double)(sec*1000000000)/(steps*CACHE_MAX));
         fflush(stdout);
        }
     //}
