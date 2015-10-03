@@ -98,8 +98,8 @@ new WithState(78)
 // Let's test out what we can do with this.  Replace `???` below to
 // make the assertions hold:
 
-val obj1 = new WithState(???)
-val obj2 = ???
+val obj1 = new WithState(1)
+val obj2 = new WithState(20)
 
 assert(obj1.withState(1, 2) == 4)
 assert(obj2.withState(5, 10) == 35)

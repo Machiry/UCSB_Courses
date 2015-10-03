@@ -62,7 +62,7 @@ new HoldValue(7)
 
 val instance = new HoldValue(8)
 assert(instance.value == 8)
-assert(instance.value + 2 == ???)
+assert(instance.value + 2 == 10)
 
 // The names of the parameters become the names of the accessors.
 
@@ -70,6 +70,7 @@ assert(instance.value + 2 == ???)
 // `fooValue` of type `Int`.  This definition should make the
 // assertion below hold.
 
+class Foo(val fooValue: Int)
 assert(new Foo(8).fooValue == 8)
 
 // Now, what if we wanted a constructor that does something more than set
@@ -94,7 +95,7 @@ assert(instance3.fieldPrime == 12)
 // Try it yourself.  Make an instance of `UsefulConstructor` that would
 // allow the assertion below to hold
 
-val instance2: UsefulConstructor = ???
+val instance2: UsefulConstructor = new UsefulConstructor(-5)
 
 assert(instance2.fieldPrime == 5)
 

@@ -25,6 +25,10 @@ MyObject.helper(8)
 // Try it out yourself.  Define an object below named `NewObject` and a method
 // `myMethod` that allows the assertion below to pass:
 
+object NewObject {
+  def myMethod(x: Int): Int = x
+}
+
 assert(NewObject.myMethod(7) == 7)
 
 // Because `object` is really just defining a class, we can still extend other
