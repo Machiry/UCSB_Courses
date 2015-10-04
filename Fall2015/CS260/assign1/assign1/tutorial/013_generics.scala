@@ -158,6 +158,8 @@ def applyHead2[T, U](list: MyList2[T], function: T => U): U = function(list.head
 
 // DEFINE `applySecond` HERE
 
+def applySecond[T, U](list: MyList2[T], function: T => U): U = function(list.tail.head)
+
 assert(applySecond(Cell2("foo", Cell2("bar", Cell2("baz", Empty2()))),
                    (s: String) => s.charAt(1)) == 'a')
 assert(applySecond(Cell2(1.5, Cell2(2.5, Cell2(3.5, Empty2()))),

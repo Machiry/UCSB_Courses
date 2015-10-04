@@ -177,12 +177,16 @@ assert(f2(7) == 11)
 
 // Now try out some of this yourself.  Get the assertions below to pass:
 
-def doSomething(x: Int, function: Int => String): String = ???
+def doSomething(x: Int, function: Int => String): String = {
+    function(x)
+}
 
 assert(doSomething(5, (i: Int) => i.toString) == "5")
 assert(doSomething(7, (i: Int) => (i + 5).toString) == "12")
 
-def retSomething(x: Int): Int => Int = ???
+def retSomething(x: Int): Int => Int = {
+    (y: Int) => x*y
+}
 
 // these assertions call `retSomething`, and then call the result of `retSomething`
 assert(retSomething(5)(5) == 25)

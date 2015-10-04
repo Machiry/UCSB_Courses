@@ -47,9 +47,9 @@ assert((Set(1, 2, 3) ++ Seq(4, 5, 6)) == Set(1, 2, 3, 4, 5, 6))
 // assertions hold:
 
 val baseSet = Set(1, 2, 3)
-val set1: Set[Int] = ???
-val set2: Set[Int] = ???
-val set3: Set[Int] = ???
+val set1: Set[Int] = baseSet + 7
+val set2: Set[Int] = baseSet - 1
+val set3: Set[Int] = baseSet - 2
 
 assert(set1.contains(7))
 assert(!set2.contains(1))
@@ -128,15 +128,15 @@ assert(gotten2.isEmpty)
 // Now try it yourself.  Use `apply` to get the value for the key `3` below
 // from the map `m1`
 
-assert(??? == 4)
+assert(m1(3) == 4)
 
 // Use `get` to get `7` from `m1`:
 
-assert(??? == None)
+assert(m1.get(7) == None)
 
 // Use `get` to get `3` from `m1`:
 
-assert(??? == Some(4))
+assert(m1.get(3) == Some(4))
 
 // Now for some additional operations on `Map`s.  The familiar operations
 // `filter`, `map`, and `foldLeft` are all there.  A key difference is
@@ -164,6 +164,6 @@ assert(Map(1 -> 2, 3 -> 4).mapValues(_ + 1) == Map(1 -> 3, 3 -> 5))
 // Now try it yourself.  Fill in the `???` below with code in order
 // to make the assertions pass.
 
-assert(Map(1 -> 2, 3 -> 4).mapValues(???) == Map(1 -> -2, 3 -> -4))
-assert(Map(1 -> 2, 3 -> 4).filterKeys(???) == Map(3 -> 4))
+assert(Map(1 -> 2, 3 -> 4).mapValues(_ * -1) == Map(1 -> -2, 3 -> -4))
+assert(Map(1 -> 2, 3 -> 4).filterKeys(_ > 1) == Map(3 -> 4))
 

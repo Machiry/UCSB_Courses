@@ -18,7 +18,7 @@ abstract class ComparableItem {
 
 class MyInteger(val value: Int) extends ComparableItem {
                                                             // YOU DON'T HAVE TO FILL THIS ONE IN
-  def compare(first: ComparableItem, second: ComparableItem): Int = ??? // compare the integers
+  def compare(first: ComparableItem, second: ComparableItem): Int = 1 // compare the integers
 }
 
 // The above code works great, assuming you're ok with enforcing that
@@ -47,7 +47,7 @@ trait ComparableItemTrait {
 trait MyNumberTrait
 
 class MyIntegerClass(val value: Int) extends ComparableItemTrait with MyNumberTrait {
-  def compare(first: ComparableItemTrait, second: ComparableItemTrait): Int = ???
+  def compare(first: ComparableItemTrait, second: ComparableItemTrait): Int = 1
 }
 
 // We must first use `extends`, and then `with`.  If we wanted to extend from
@@ -84,6 +84,9 @@ trait Base {
 }
 
 // DEFINE MyTrait BELOW
+trait MyTrait extends Base {
+    def unknown(): Int = 9
+}
 
 class Working extends MyTrait {
   def result(): Int = known

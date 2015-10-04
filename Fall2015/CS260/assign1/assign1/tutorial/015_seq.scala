@@ -128,7 +128,9 @@ assert(asStrings(List(1, 2, 3)) == List("1", "2", "3"))
 // list, where each element is the result of adding 1 to the element in
 // the other list
 
-def addOneToEach(ints: List[Int]): List[Int] = ???
+def addOneToEach(ints: List[Int]): List[Int] = {
+    if (ints.isEmpty) List() else ints.head+1 :: addOneToEach(ints.tail)
+}
 
 assert(addOneToEach(List()) == List())
 assert(addOneToEach(List(1)) == List(2))
@@ -172,9 +174,9 @@ assert(List(2.5, 3.0, 4.2).map(_.floor) == List(2.0, 3.0, 4.0))
 // Try it yourself.  Fill in the `???` with code below to make the
 // assertions hold:
 
-assert(List(1, 2, 3).map(???) == List(6, 7, 8))
-assert(List(1, 2, 3).map(???) == List("1", "2", "3"))
-assert(List(Some(1), Some(2), Some(3)).map(???) == List(1, 2, 3))
+assert(List(1, 2, 3).map(_ + 5) == List(6, 7, 8))
+assert(List(1, 2, 3).map(_.toString) == List("1", "2", "3"))
+assert(List(Some(1), Some(2), Some(3)).map(_.get) == List(1, 2, 3))
 
 // Overall, `map` often tends to be the most common operation used over
 // `Seq`, both for this class and beyond.  Whenever we have the general
@@ -246,7 +248,14 @@ assert(evens(List(2, 4, 6)) == List(2, 4, 6))
 // Implement this below, in order to allow the following assertions
 // to pass
 
-def lengthThree(input: List[String]): List[String] = ???
+def lengthThree(input: List[String]): List[String] = {
+    input match {
+        case Nil => List()
+        case head :: tail if (head.length == 3) =>
+        head :: lengthThree(tail)
+        case _ :: tail => lengthThree(tail)
+    }
+}
 
 assert(lengthThree(List("moo", "cow", "bull")) == List("moo", "cow"))
 assert(lengthThree(List("foo", "bar", "baz")) == List("foo", "bar", "baz"))
@@ -277,9 +286,9 @@ assert(List("moo", "cow", "bull").filter(_.length == 3) == List("moo", "cow"))
 // Try it yourself.  Replace the `???` below with code in order to make
 // the assertions pass:
 
-assert(List(1, 2, 3).filter(???) == List(1, 3))
-assert(List("apple", "asparagus", "bannana").filter(???) == List("apple", "asparagus"))
-assert(List(2, 5, 7, 9, 10).filter(???) == List(2, 5))
+assert(List(1, 2, 3).filter(_ % 2 == 1) == List(1, 3))
+assert(List("apple", "asparagus", "bannana").filter(_.startsWith("a")) == List("apple", "asparagus"))
+assert(List(2, 5, 7, 9, 10).filter(_ < 7) == List(2, 5))
 
 // `filter` is another very common operation, commonly used in a variety of situations.
 // `filter` abstracts over the following imperative-style pattern:
@@ -388,7 +397,7 @@ assert((myFlatMap(List(1, 2, 3), (i: Int) => List(i - 1, i, i + 1)) ==
 // Now try it yourself.  Fill in the `???` below to make the assertion pass.
 
 def allItemsPurchased2(customers: List[Customer]): List[Item] =
-  myFlatMap(customers, (c: Customer) => ???)
+  myFlatMap(customers, (c: Customer) => c.purchaseHistory)
 
 assert(allItemsPurchased(database) == allItemsPurchased2(database))
 
@@ -399,13 +408,13 @@ assert(allItemsPurchased(database) == allItemsPurchased2(database))
 // HINT: if `flatMap` were to always return only single-element lists, then it
 //       would behave just like `map` would.
 def myMapUsingFlatMap[A, B](input: List[A], function: A => B): List[B] =
-  myFlatMap(input, (item: A) => ???)
+  myFlatMap(input, (item: A) => List(function(item)))
 
 // HINT: if `flatMap` were to return either empty lists or single-element lists
 //       depending on what the provided function returns for a given element, then
 //       it would behave just like `filter` would.
 def myFilterUsingFlatMap[A](input: List[A], function: A => Boolean): List[A] =
-  myFlatMap(input, (item: A) => ???)
+  myFlatMap(input, (item: A) => if (function(item)) List(item) else List())
 
 assert((myMap(List(1, 2, 3), (i: Int) => i + 1) ==
         myMapUsingFlatMap(List(1, 2, 3), (i: Int) => i + 1)))
@@ -736,11 +745,12 @@ assert(Seq(1, 2, 3, 4).foldLeft(0)(_ + _) == 10)
 
 // hint: List[T](), makes an empty list of type T
 
-assert(Seq("moo", "cow", "bull").foldRight(???)(???) == "moocowbull")
-assert(Seq(1, 2, 3).foldLeft(???)(???) == List(3, 2, 1)) // don't use reverse
+assert(Seq("moo", "cow", "bull").foldRight("")(_ + _) == "moocowbull")
+
+assert(Seq(1, 2, 3).foldLeft(List[Int]())((i1,i2) => List(i2) ++ i1) == List(3, 2, 1)) // don't use reverse
 
 // hint: Strings have a `length` method
-assert(Seq("moo", "cow", "bull").foldRight(???)(???) == List(3, 3, 4))
+assert(Seq("moo", "cow", "bull").foldRight(List[Int]())((a,b) => List(a.length) ++ b) == List(3, 3, 4))
 
 
 // One last operator is worth discussing explicitly on `Seq`.  Say we

@@ -30,7 +30,7 @@ assert(add2(1)(2) == 3)
 // Try it yourself.  Use the same process to implement `mul`:
 
 val mul1 = (x: Int, y: Int) => x * y
-val mul2: Int => (Int => Int) = ???
+val mul2: Int => (Int => Int) = (x:Int) => (y:Int) => x * y
 
 assert(mul1(2, 3) == 6)
 assert(mul2(2)(3) == 6)
@@ -70,6 +70,7 @@ assert(concatMoo("two") == "mootwo")
 // assertions to pass:
 
 // DEFINE `sum2` HERE
+def sum2(x:Int)(y:Int): Int = x+y
 
 assert(sum2(1)(2) == 3)
 assert((sum2(1) _)(2) == 3)

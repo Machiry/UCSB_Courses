@@ -98,8 +98,8 @@ object TrackingApply {
 class TrackingApply
 
 // Make the assertion below hold by replacing `???` with code
-val first: TrackingApply = ???
-val second: TrackingApply = ???
+val first: TrackingApply = TrackingApply()
+val second: TrackingApply = TrackingApply()
 assert(TrackingApply.count == 2)
 
 // In addition to `apply`, there is also `unapply`, which, from an intuitive

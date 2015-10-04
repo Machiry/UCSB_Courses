@@ -177,8 +177,8 @@ randomOption("moo").map(s => s + "cow").map(s => assert(s.endsWith("cow")))
 // Now try it yourself.  Fill in the `???` below to make the assertions
 // always hold.
 
-randomOption(7).map(???).map(i => assert(i == 14))
-randomOption("foo").map(???).map(s => assert(s.length == 6))
+randomOption(7).map(i => i + 7).map(i => assert(i == 14))
+randomOption("foo").map(i => i + "oof").map(s => assert(s.length == 6))
 
 // `map` is useful for chaining calls which behave on null.
 // But what if we reach a point where we want a non-null value?
@@ -235,8 +235,8 @@ def fiveOrAddFive2(i: Option[Int]): Int =
 val obj1: Option[Int] = Some(1)
 val obj2: Option[Int] = None
 
-assert(obj1.map(???).getOrElse(???) == 3)
-assert(obj2.map(???).getOrElse(???) == 3)
+assert(obj1.map(i => i + 2).getOrElse(3) == 3)
+assert(obj2.map(i => i + 4).getOrElse(3) == 3)
 
 // Before we end our lesson on `Option`, let's take a 
 // short digression to experiment with `getOrElse` a bit
@@ -255,7 +255,7 @@ Some(1).getOrElse( {
 // assertion.
 
 assert(mutable == 0)
-assert(mutable == 1)
+//assert(mutable == 1)
 
 // Surprised?  The snippet of code above doesn't change the
 // value of `mutable`.  It's as if the code passed to
@@ -355,7 +355,7 @@ assert(iterator == 10)
 // Now try it yourself.  Fix the `broken` method below to
 // make the assertions pass.  You should modify _only_ `broken`:
 
-def broken[T](i: Int, ifLess: T, ifMore: T): T =
+def broken[T](i: Int, ifLess: => T, ifMore: => T): T =
   if (i < 10) ifLess else ifMore
 
 var brokenMutable = 0

@@ -64,7 +64,13 @@ val retval =
 // Now try it yourself.  Finish the method below to make the assertions
 // hold:
 
-def myMin(x: Int, y: Int): Int = ???
+def myMin(x: Int, y: Int): Int = {
+    if (x <= y) {
+        x
+    } else {
+        y
+    }
+}
 
 assert(myMin(1, 2) == 1)
 assert(myMin(2, 1) == 1)
