@@ -209,7 +209,9 @@ object defaultvalue{
 // Object
 
 case class Object( className:String, var2value:Map[Var,Value] ) {
-  // ...
+  def update(vr:Var, vl:Value): Object = {
+    new Object(className, var2value + ((vr, vl)))
+  }
 }
 
 //——————————————————————————————————————————————————————————————————————————————

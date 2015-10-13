@@ -37,9 +37,10 @@ object Concrete {
   }
 }
 
-package cs260.lwnn.concrete.interpreter {
+package cs260.lwnn.concrete.interpreter
 
 import cs260.lwnn.concrete.domains.{Kont, Locals}
+import cs260.lwnn.concrete.helpers.Helpers
 import cs260.lwnn.syntax.Stmt
 
 //——————————————————————————————————————————————————————————————————————————————
@@ -52,14 +53,105 @@ import cs260.lwnn.syntax.Stmt
 case class State( so:Option[Stmt], locls:Locals, heap:Heap, κs:Seq[Kont] ) {
   // is this a final state (i.e., the program has terminated)?
   def fin: Boolean =
-    // ...
+    so.isEmpty && κs.isEmpty
 
   // we define η here so that we have access to ρ and σ without
   // needing to pass them in as parameters.
   def η( e:Exp ): Value =
-    // ...
+    e match {
+
+      case Nums(ns) =>
+        ℤ( Random.shuffle(ns.toList).head )
+
+      case Bools(bs) =>
+        Bool(Random.shuffle(bs.toList).head)
+
+      case Strs(sts) =>
+        Str(Random.shuffle(sts.toList).head)
+
+      case Nulls =>
+        Null
+
+      case Var(x) =>
+        locls[x]
+
+      case Access(e,x) =>
+        (heap(η(e))._2)(x)
+
+      case Binop(op, e1, e2) =>
+        op match {
+          case ⌜+⌝ => η(e1) + η(e2)
+          case ⌜−⌝ => η(e1) − η(e2)
+          case ⌜×⌝ => η(e1) × η(e2)
+          case ⌜÷⌝ => η(e1) ÷ η(e2)
+          case ⌜<⌝ => η(e1) < η(e2)
+          case ⌜≤⌝ => η(e1) ≤ η(e2)
+          case ⌜∧⌝ => η(e1) ∧ η(e2)
+          case ⌜∨⌝ => η(e1) ∨ η(e2)
+          case ⌜≈⌝ => η(e1) ≈ η(e2)
+          case ⌜≠⌝ => η(e1) ≠ η(e2)
+        }
+
+    }
+
 
   // the state transition relation.
   def next: State =
-    // ...
+    so match {
+      case Some(s) =>
+        s match {
+          // rule 1
+          case Assign(x, e) =>
+            State(None, locls + (x -> η(e)), heap, κs)
+          // rule 2
+          case Update(e1, x, e2) => {
+            val a = η(e1)
+            val o = heap(a).update(x, η(e2))
+            State(None, locls, heap + (a -> o), κs)
+          }
+          // rule 3
+          case Call(x, e, mn, args) => {
+            val a = η(e)
+            val args_val = args.map(e => η(e))
+            val call_ret = Helpers.call(x, a, heap, mn, args_val, locls)
+            State(None, call_ret._1, heap, call_ret._2 ++ κs)
+          }
+          // rule 4
+          case New(x, cn, args) => {
+            val args_val = args.map(e => η(e))
+            val cons_ret = Helpers.constructor(x, cn, args_val, locls, heap)
+            State(None, cons_ret._1, cons_ret._2, cons_ret._3 ++ κs)
+          }
+          // rule 5 and 6
+          case If(e, ss1, ss2) =>
+            η(e) match {
+              case Bool(n) if n => State(None, locls, heap, Helpers.toSK(ss1) ++ κs)
+              case _ => State(None, locls, heap, Helpers.toSK(ss2) ++ κs)
+            }
+          // rules 7 and 8
+          case While(e, ss) =>
+            η(e) match {
+              case Bool(n) if n =>
+                State(None, locls, heap, (Helpers.toSK(ss) :+ WhileK(e, ss)) ++ κs)
+              case _ => State(None, locls, heap, κs)
+            }
+        }
+
+      case None =>
+        κs.head match {
+          // rule 9
+          case RetK(x, e, locs) =>
+            State(None, locs + (x -> η(e)), heap, κs.tail)
+          // rule 10
+          case StmtK(s1) =>
+            State(Some(s1), locls, heap, κs.tail)
+
+          // rules 11 and 12
+          case wk@WhileK(e, ss) =>
+            η(e) match {
+              case Bool(n) if n => State(None, locls, heap, (toSK(ss) :+ wk) ++ κs.tail)
+              case _ => State(None, locls, heap, κs.tail)
+            }
+        }
+    }
 }
