@@ -1,5 +1,7 @@
 package cs260.lwnn.concrete.helpers
 
+import cs260.lwnn.concrete.domains.θ.MethodMap
+import cs260.lwnn.concrete.domains.θ.FieldMap
 import cs260.lwnn.syntax._
 import cs260.lwnn.util._
 import cs260.lwnn.concrete.domains._
@@ -15,9 +17,9 @@ object Helpers {
   def toSK( ss:Seq[Stmt] ): Seq[Kont] =
     ss map ( StmtK(_) )
 
-  def initclass(new_class:Class): (Map[Var,Type], Map[MethodName,Method]) = {
-    val superflds =  θ(new_class.supercn)._1
-    val supermethods = θ(new_class.supercn)._2
+  def initclass(class_map:Map[String, (FieldMap, MethodMap)], new_class:Class): (Map[Var,Type], Map[MethodName,Method]) = {
+    val superflds =  class_map(new_class.supercn)._1
+    val supermethods = class_map(new_class.supercn)._2
     val localflds = new_class.fields.foldRight(Map[Var,Type]())((toadd:Decl, accu:Map[Var,Type]) => accu + ((toadd.x, toadd.τ)))
     val localmethods = new_class.methods.foldRight(Map[MethodName,Method]())((toadd:Method, accu:Map[MethodName,Method]) => accu + ((toadd.mn, toadd)))
     val fields = superflds ++ localflds
@@ -26,7 +28,7 @@ object Helpers {
   }
 
   def initstate( p:Program ): State = {
-    val new_theta_map = p.classes.foldLeft(Map("TopClass" -> (Map[Var, Type](), Map[MethodName, Method]())))((accu:Map[ClassName, (Map[Var, Type], Map[MethodName, Method])], cl:Class) => accu + ((cl.cn, initclass(cl))))
+    val new_theta_map = p.classes.foldLeft(Map("TopClass" -> (Map[Var, Type](), Map[MethodName, Method]())))((accu:Map[ClassName, (Map[Var, Type], Map[MethodName, Method])], cl:Class) => accu + ((cl.cn, initclass(accu, cl))))
     θ.targetMap = new_theta_map
     // Name of first class
     val cn = p.classes(0).cn
