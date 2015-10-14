@@ -39,7 +39,6 @@ case class Locals( x2val:Map[Var, Value] ) {
     x2val(x)
 
   def +( xv:(Var, Value) ): Locals = {
-    assert( x2val contains xv._1 )
     Locals( x2val + xv )
   }
 }
@@ -52,7 +51,6 @@ case class Heap( addr2obj:Map[Address, Object] ) {
     addr2obj(addr)
 
   def +( xv:(Address, Object) ): Heap = {
-    assert( addr2obj contains xv._1 )
     Heap( addr2obj + xv )
   }
 }
@@ -76,82 +74,155 @@ sealed abstract class Value {
 case class Bool( n:Boolean ) extends Value {
   // All other operations are not supported for Bool
 
-  def ∧( b:Bool ) =
-    Bool(n&&b.n)
+  override def ∧( v:Value ) = {
+    v match {
+      case b: Bool =>
+        Bool(n&&b.n)
+      case _ => sys.error("undefined behavior")
+    }
+  }
 
-  def ∨( b:Bool ) =
-    Bool(n||b.n)
+  override def ∨( v:Value ) = {
+    v match {
+      case b: Bool =>
+        Bool(n||b.n)
+      case _ => sys.error("undefined behavior")
+    }
+  }
 
-  def ≈( b:Bool ) =
-    Bool( if (n == b.n) true else false )
+  override def ≈( v:Value ) = {
+    v match {
+      case b: Bool =>
+        Bool(n == b.n)
+      case _ => sys.error("undefined behavior")
+    }
+  }
 
-  def ≠( b:Bool ) =
-    Bool( if (n != b.n) true else false )
+  override def ≠( v:Value ) = {
+    v match {
+      case b: Bool =>
+        Bool(n != b.n)
+      case _ => sys.error("undefined behavior")
+    }
+  }
 
   override def toString =
     n.toString
-}
-
-object Bool {
-  def apply(n:Boolean): Bool = Bool(n)
 }
 
 case class ℤ( n:BigInt ) extends Value {
 
-  def +( z:ℤ ) =
-    ℤ( n + z.n )
+  override def +( v:Value ) = {
+    v match {
+      case z: ℤ =>
+        ℤ(n + z.n)
+      case _ => sys.error("undefined behavior")
+    }
+  }
 
-  def −( z:ℤ ) =
-    ℤ( n - z.n )
+  override def −( v:Value ) = {
+    v match {
+      case z: ℤ =>
+        ℤ(n - z.n)
+      case _ => sys.error("undefined behavior")
+    }
+  }
 
-  def ×( z:ℤ ) =
-    ℤ( n * z.n )
+  override def ×( v:Value ) = {
+    v match {
+      case z: ℤ =>
+        ℤ(n * z.n)
+      case _ => sys.error("undefined behavior")
+    }
+  }
 
-  def ÷( z:ℤ ) =
-    ℤ( n / z.n )
+  override def ÷( v:Value ) = {
+    v match {
+      case z: ℤ =>
+        ℤ(n / z.n)
+      case _ => sys.error("undefined behavior")
+    }
+  }
 
-  def <( z:ℤ ) =
-    Bool(n < z.n)
+  override def <( v:Value ) = {
+    v match {
+      case z: ℤ =>
+        Bool(n < z.n)
+      case _ => sys.error("undefined behavior")
+    }
+  }
 
-  def ≤( z:ℤ ) =
-    Bool(n <= z.n)
+  override def ≤( v:Value ) = {
+    v match {
+      case z: ℤ =>
+        Bool(n <= z.n)
+      case _ => sys.error("undefined behavior")
+    }
+  }
 
-  def ≈( z:ℤ ) =
-    Bool(n == z.n)
+  override def ≈( v:Value ) = {
+    v match {
+      case z: ℤ =>
+        Bool(n == z.n)
+      case _ => sys.error("undefined behavior")
+    }
+  }
 
-  def ≠( z:ℤ ) =
-    Bool(n != z.n)
+  override def ≠( v:Value ) = {
+    v match {
+      case z: ℤ =>
+        Bool(n != z.n)
+      case _ => sys.error("undefined behavior")
+    }
+  }
 
   override def toString =
     n.toString
 }
 
-object ℤ {
-  def apply( n:Int ): ℤ = ℤ( BigInt(n) )
-}
-
 case class Str( str:String ) extends Value {
-  def +( str1:Str ) =
-    Str(str + str1.str)
+  override def +( v:Value ) = {
+    v match {
+      case str1: Str =>
+        Str(str + str1.str)
+      case _ => sys.error("undefined behavior")
+    }
+  }
 
-  def <( str1:Str ) =
-    Bool(str < str1.str)
+  override def <( v:Value ) = {
+    v match {
+      case str1:Str =>
+        Bool(str < str1.str)
+      case _ => sys.error("undefined behavior")
+    }
+  }
 
-  def ≤( str1:Str ) =
-    Bool(str <= str1.str)
+  override def ≤( v:Value ) = {
+    v match {
+      case str1:Str =>
+        Bool(str <= str1.str)
+      case _ => sys.error("undefined behavior")
+    }
+  }
 
-  def ≈( str1:Str ) =
-    Bool(str == str1.str)
+  override def ≈( v:Value ) = {
+    v match {
+      case str1:Str =>
+        Bool(str == str1.str)
+      case _ => sys.error("undefined behavior")
+    }
+  }
 
-  def ≠( str1:Str ) =
-    Bool(str != str1.str)
+  override def ≠( v:Value ) = {
+    v match {
+      case str1:Str =>
+        Bool(str != str1.str)
+      case _ => sys.error("undefined behavior")
+    }
+  }
 
   override def toString =
     str
-}
-
-object Str {
-  def apply(str:String): Str = Str(str)
 }
 
 sealed abstract class Reference extends Value
@@ -159,14 +230,24 @@ sealed abstract class Reference extends Value
 case class Address( loc:BigInt ) extends Reference {
   // Note: All other operations are not allowed on Address value
 
-  def ≈( addr:Reference ) = addr match {
-    case nonnull:Address => Bool(loc == nonnull.loc)
-    case _ => Bool(false)
+  override def ≈( v:Value ) = {
+    v match {
+      case addr:Reference => addr match {
+        case nonnull:Address => Bool(loc == nonnull.loc)
+        case _ => Bool(false)
+      }
+      case _ => sys.error("undefined behavior")
+    }
   }
 
-  def ≠( addr:Reference ) = addr match {
-    case nonnull:Address => Bool(loc != nonnull.loc)
-    case _ => Bool(true)
+  override def ≠( v:Value ) = {
+    v match {
+      case addr:Reference => addr match {
+        case nonnull:Address => Bool(loc != nonnull.loc)
+        case _ => Bool(true)
+      }
+      case _ => sys.error("undefined behavior")
+    }
   }
 
   override def toString =
@@ -182,14 +263,24 @@ object Address {
 case object Null extends Reference {
   // Note: All other operations are not allowed on Address value
 
-  def ≈( addr:Reference ) = addr match {
-    case nonnull:Address => Bool(false)
-    case _ => Bool(true)
+  override def ≈( v:Value ) = {
+    v match {
+      case addr:Reference => addr match {
+        case nonnull:Address => Bool(false)
+        case _ => Bool(true)
+      }
+      case _ => sys.error("undefined behavior")
+    }
   }
 
-  def ≠( addr:Reference ) = addr match {
-    case nonnull:Address => Bool(true)
-    case _ => Bool(false)
+  override def ≠( v:Value ) = {
+    v match {
+      case addr:Reference => addr match {
+        case nonnull:Address => Bool(true)
+        case _ => Bool(false)
+      }
+      case _ => sys.error("undefined behavior")
+    }
   }
 
   override def toString =
@@ -198,9 +289,9 @@ case object Null extends Reference {
 
 object defaultvalue{
   def apply(t:Type): Value = t match {
-    case in:ℤ => ℤ(0)
-    case bo:Bool => Bool(false)
-    case st:Str => Str("")
+    case IntT => ℤ(0)
+    case BoolT => Bool(false)
+    case StrT => Str("")
     case _ => Null
   }
 }

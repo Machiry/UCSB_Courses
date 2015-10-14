@@ -1,3 +1,4 @@
+package cs260.lwnn.concrete.interpreter
 import cs260.lwnn.syntax._
 import cs260.lwnn.util._
 import cs260.lwnn.concrete.domains._
@@ -37,7 +38,7 @@ object Concrete {
   }
 }
 
-package cs260.lwnn.concrete.interpreter
+
 
 import cs260.lwnn.concrete.domains.{Kont, Locals}
 import cs260.lwnn.concrete.helpers.Helpers
@@ -69,14 +70,19 @@ case class State( so:Option[Stmt], locls:Locals, heap:Heap, κs:Seq[Kont] ) {
       case Strs(sts) =>
         Str(Random.shuffle(sts.toList).head)
 
-      case Nulls =>
+      case Nulls() =>
         Null
 
-      case Var(x) =>
-        locls[x]
+      case v @ Var(x) =>
+        locls(v)
 
-      case Access(e,x) =>
-        (heap(η(e))._2)(x)
+      case Access(e,x) => {
+        val a_val = η(e)
+        a_val match {
+          case a:Address =>
+            heap(a).var2value(x)
+        }
+      }
 
       case Binop(op, e1, e2) =>
         op match {
@@ -105,16 +111,24 @@ case class State( so:Option[Stmt], locls:Locals, heap:Heap, κs:Seq[Kont] ) {
             State(None, locls + (x -> η(e)), heap, κs)
           // rule 2
           case Update(e1, x, e2) => {
-            val a = η(e1)
-            val o = heap(a).update(x, η(e2))
-            State(None, locls, heap + (a -> o), κs)
+            val a_val = η(e1)
+            a_val match {
+              case a:Address => {
+                val o = heap(a).update(x, η(e2))
+                State(None, locls, heap + (a -> o), κs)
+              }
+            }
           }
           // rule 3
           case Call(x, e, mn, args) => {
-            val a = η(e)
-            val args_val = args.map(e => η(e))
-            val call_ret = Helpers.call(x, a, heap, mn, args_val, locls)
-            State(None, call_ret._1, heap, call_ret._2 ++ κs)
+            val a_val = η(e)
+            a_val match {
+              case a:Address => {
+                val args_val = args.map(e => η(e))
+                val call_ret = Helpers.call(x, a, heap, mn, args_val, locls)
+                State(None, call_ret._1, heap, call_ret._2 ++ κs)
+              }
+            }
           }
           // rule 4
           case New(x, cn, args) => {
@@ -135,6 +149,11 @@ case class State( so:Option[Stmt], locls:Locals, heap:Heap, κs:Seq[Kont] ) {
                 State(None, locls, heap, (Helpers.toSK(ss) :+ WhileK(e, ss)) ++ κs)
               case _ => State(None, locls, heap, κs)
             }
+          // Implement printing: copied from IMP implementation.
+          case Print(e) => {
+            println(s.id + ":" + η(e))
+            State(None, locls, heap, κs)
+          }
         }
 
       case None =>
