@@ -15,7 +15,7 @@ case object θ {
   type FieldMap = Map[Var, Type]
   type MethodMap = Map[MethodName, Method]
 
-  var targetMap:Map[String, (FieldMap, MethodMap)] = Map[String, (FieldMap, MethodMap)](("TopClass", (Map[Var, Type](), Map[MethodName, Method]())))
+  var targetMap:Map[String, (FieldMap, MethodMap)] = Map[String, (FieldMap, MethodMap)]()
 
   def apply(className:String): (FieldMap, MethodMap) =
     targetMap(className)
@@ -39,6 +39,8 @@ case class Locals( x2val:Map[Var, Value] ) {
     x2val(x)
 
   def +( xv:(Var, Value) ): Locals = {
+    // Note: you cannot and should not update self.
+    assert(xv._1.name != "self")
     Locals( x2val + xv )
   }
 }
@@ -138,8 +140,14 @@ case class ℤ( n:BigInt ) extends Value {
 
   override def ÷( v:Value ) = {
     v match {
-      case z: ℤ =>
-        ℤ(n / z.n)
+      case z: ℤ => {
+        //Check for divide by zero
+        if( z.n != 0) {
+          ℤ(n / z.n)
+        } else {
+          sys.error("Trying to divide by Zero: Undefined Behavior")
+        }
+      }
       case _ => sys.error("undefined behavior")
     }
   }
@@ -301,7 +309,7 @@ object defaultvalue{
 
 case class Object( className:String, var2value:Map[Var,Value] ) {
   def update(vr:Var, vl:Value): Object = {
-    new Object(className, var2value + ((vr, vl)))
+    Object(className, var2value + ((vr, vl)))
   }
 }
 

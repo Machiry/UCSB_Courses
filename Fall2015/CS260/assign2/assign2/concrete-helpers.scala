@@ -37,7 +37,7 @@ object Helpers {
     // fields of the first class
     val flds = θ(cn)._1.foldRight(Map[Var,Value]())((newfld:(Var, Type), accu:Map[Var,Value]) => accu + ((newfld._1, defaultvalue(newfld._2))))
     // new heap
-    val newHeap = new Heap(Map((a, Object(cn, flds))))
+    val newHeap = Heap(Map((a, Object(cn, flds))))
     // get constructor
     val constructor = θ(cn)._2(cn)
     // new continuation stack
@@ -45,7 +45,7 @@ object Helpers {
     // initilize locals
     val localvals = constructor.params.foldRight(Map[Var, Value]())((currd:Decl, accu:Map[Var, Value]) => accu + ((currd.x, defaultvalue(currd.τ))))
 
-    val newlocals = new Locals(localvals + ((constructor.params(0).x, a)))
+    val newlocals = Locals(localvals + ((constructor.params(0).x, a)))
     // Return the initial state
     State(None, newlocals, newHeap, ks)
   }
@@ -57,7 +57,7 @@ object Helpers {
     // Get current method
     val curr_method = methods(mn)
     // Create new continuation stack
-    val new_ks = toSK(curr_method.body) :+ new RetK(x, curr_method.rete, curr_locals)
+    val new_ks = toSK(curr_method.body) :+ RetK(x, curr_method.rete, curr_locals)
 
     // first update everything with default value
     var new_locals = curr_method.params.splitAt(1)._1.foldRight(Map[Var, Value]())((currd:Decl, accu:Map[Var, Value]) => accu + ((currd.x, defaultvalue(currd.τ))))
@@ -66,7 +66,7 @@ object Helpers {
     // next, zip params and v and replace the default value with passed value
     new_locals = (curr_method.params.splitAt(1)._2 zip v).foldRight(new_locals)((par_val:(Decl,Value), accu:Map[Var, Value]) => accu + ((par_val._1.x, par_val._2)))
 
-    (new Locals(new_locals), new_ks)
+    (Locals(new_locals), new_ks)
   }
 
   def constructor(x:Var, mn:ClassName, v:Seq[Value], curr_locals:Locals, curr_heap:Heap): (Locals, Heap, Seq[Kont]) = {
@@ -84,7 +84,7 @@ object Helpers {
     val constructor_meth = methods(mn)
 
     // New continuation stack
-    val new_ks = toSK(constructor_meth.body) :+ new RetK(x, constructor_meth.rete, curr_locals)
+    val new_ks = toSK(constructor_meth.body) :+ RetK(x, constructor_meth.rete, curr_locals)
 
     // first update everything with default value
     var new_locals = constructor_meth.params.splitAt(1)._1.foldRight(Map[Var, Value]())((currd:Decl, accu:Map[Var, Value]) => accu + ((currd.x, defaultvalue(currd.τ))))
@@ -93,6 +93,6 @@ object Helpers {
     // next, zip params and v and replace the default value with passed value
     new_locals = (constructor_meth.params.splitAt(1)._2 zip v).foldRight(new_locals)((par_val:(Decl,Value), accu:Map[Var, Value]) => accu + ((par_val._1.x, par_val._2)))
 
-    (new Locals(new_locals), new_heap, new_ks)
+    (Locals(new_locals), new_heap, new_ks)
   }
 }

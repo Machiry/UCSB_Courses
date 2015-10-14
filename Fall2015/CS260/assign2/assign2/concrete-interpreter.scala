@@ -81,6 +81,8 @@ case class State( so:Option[Stmt], locls:Locals, heap:Heap, κs:Seq[Kont] ) {
         a_val match {
           case a:Address =>
             heap(a).var2value(x)
+
+          case _ => sys.error("Invalid Object to Access : undefined behavior")
         }
       }
 
@@ -98,6 +100,7 @@ case class State( so:Option[Stmt], locls:Locals, heap:Heap, κs:Seq[Kont] ) {
           case ⌜≠⌝ => η(e1) ≠ η(e2)
         }
 
+      case _ => sys.error("Invalid Expression to Evaluate : undefined behavior")
     }
 
 
@@ -117,6 +120,7 @@ case class State( so:Option[Stmt], locls:Locals, heap:Heap, κs:Seq[Kont] ) {
                 val o = heap(a).update(x, η(e2))
                 State(None, locls, heap + (a -> o), κs)
               }
+              case _ => sys.error("Invalid Object to update: undefined behavior")
             }
           }
           // rule 3
@@ -128,6 +132,7 @@ case class State( so:Option[Stmt], locls:Locals, heap:Heap, κs:Seq[Kont] ) {
                 val call_ret = Helpers.call(x, a, heap, mn, args_val, locls)
                 State(None, call_ret._1, heap, call_ret._2 ++ κs)
               }
+              case _ => sys.error("Invalid Object to call a method on: undefined behavior")
             }
           }
           // rule 4
@@ -171,6 +176,8 @@ case class State( so:Option[Stmt], locls:Locals, heap:Heap, κs:Seq[Kont] ) {
               case Bool(n) if n => State(None, locls, heap, (toSK(ss) :+ wk) ++ κs.tail)
               case _ => State(None, locls, heap, κs.tail)
             }
+
+          case _ => sys.error("Invalid Item in Continuation Stack: undefined behavior")
         }
     }
 }
