@@ -156,7 +156,7 @@ case class State( so:Option[Stmt], locls:Locals, heap:Heap, κs:Seq[Kont] ) {
             }
           // Implement printing: copied from IMP implementation.
           case Print(e) => {
-            println(s.id + ":" + η(e))
+            println(η(e))
             State(None, locls, heap, κs)
           }
         }
