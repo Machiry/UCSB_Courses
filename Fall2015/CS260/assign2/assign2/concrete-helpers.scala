@@ -59,12 +59,13 @@ object Helpers {
     // Create new continuation stack
     val new_ks = toSK(curr_method.body) :+ RetK(x, curr_method.rete, curr_locals)
 
-    // first update everything with default value
-    var new_locals = curr_method.params.splitAt(1)._1.foldRight(Map[Var, Value]())((currd:Decl, accu:Map[Var, Value]) => accu + ((currd.x, defaultvalue(currd.τ))))
+    // first update everything wit
+    // h default value
+    var new_locals = curr_method.params.tail.foldRight(Map[Var, Value]())((currd:Decl, accu:Map[Var, Value]) => accu + ((currd.x, defaultvalue(currd.τ))))
     // Add self i.e first parameter
-    new_locals = new_locals + ((curr_method.params(0).x, a))
+    new_locals = new_locals + ((curr_method.params.head.x, a))
     // next, zip params and v and replace the default value with passed value
-    new_locals = (curr_method.params.splitAt(1)._2 zip v).foldRight(new_locals)((par_val:(Decl,Value), accu:Map[Var, Value]) => accu + ((par_val._1.x, par_val._2)))
+    new_locals = (curr_method.params.tail zip v).foldRight(new_locals)((par_val:(Decl,Value), accu:Map[Var, Value]) => accu + ((par_val._1.x, par_val._2)))
 
     (Locals(new_locals), new_ks)
   }
@@ -87,11 +88,11 @@ object Helpers {
     val new_ks = toSK(constructor_meth.body) :+ RetK(x, constructor_meth.rete, curr_locals)
 
     // first update everything with default value
-    var new_locals = constructor_meth.params.splitAt(1)._1.foldRight(Map[Var, Value]())((currd:Decl, accu:Map[Var, Value]) => accu + ((currd.x, defaultvalue(currd.τ))))
+    var new_locals = constructor_meth.params.tail.foldRight(Map[Var, Value]())((currd:Decl, accu:Map[Var, Value]) => accu + ((currd.x, defaultvalue(currd.τ))))
     // Add self i.e first parameter
-    new_locals = new_locals + ((constructor_meth.params(0).x, a))
+    new_locals = new_locals + ((constructor_meth.params.head.x, a))
     // next, zip params and v and replace the default value with passed value
-    new_locals = (constructor_meth.params.splitAt(1)._2 zip v).foldRight(new_locals)((par_val:(Decl,Value), accu:Map[Var, Value]) => accu + ((par_val._1.x, par_val._2)))
+    new_locals = (constructor_meth.params.tail zip v).foldRight(new_locals)((par_val:(Decl,Value), accu:Map[Var, Value]) => accu + ((par_val._1.x, par_val._2)))
 
     (Locals(new_locals), new_heap, new_ks)
   }
