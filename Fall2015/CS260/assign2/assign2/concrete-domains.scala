@@ -96,7 +96,7 @@ case class Bool( n:Boolean ) extends Value {
     v match {
       case b: Bool =>
         Bool(n == b.n)
-      case _ => sys.error("undefined behavior")
+      case _ => Bool(false)
     }
   }
 
@@ -104,7 +104,7 @@ case class Bool( n:Boolean ) extends Value {
     v match {
       case b: Bool =>
         Bool(n != b.n)
-      case _ => sys.error("undefined behavior")
+      case _ => Bool(true)
     }
   }
 
@@ -172,7 +172,7 @@ case class ℤ( n:BigInt ) extends Value {
     v match {
       case z: ℤ =>
         Bool(n == z.n)
-      case _ => sys.error("undefined behavior")
+      case _ => Bool(false)
     }
   }
 
@@ -180,7 +180,7 @@ case class ℤ( n:BigInt ) extends Value {
     v match {
       case z: ℤ =>
         Bool(n != z.n)
-      case _ => sys.error("undefined behavior")
+      case _ => Bool(true)
     }
   }
 
@@ -217,7 +217,7 @@ case class Str( str:String ) extends Value {
     v match {
       case str1:Str =>
         Bool(str == str1.str)
-      case _ => sys.error("undefined behavior")
+      case _ => Bool(false)
     }
   }
 
@@ -225,7 +225,7 @@ case class Str( str:String ) extends Value {
     v match {
       case str1:Str =>
         Bool(str != str1.str)
-      case _ => sys.error("undefined behavior")
+      case _ => Bool(true)
     }
   }
 
@@ -244,7 +244,7 @@ case class Address( loc:BigInt ) extends Reference {
         case nonnull:Address => Bool(loc == nonnull.loc)
         case _ => Bool(false)
       }
-      case _ => sys.error("undefined behavior")
+      case _ => Bool(false)
     }
   }
 
@@ -254,7 +254,7 @@ case class Address( loc:BigInt ) extends Reference {
         case nonnull:Address => Bool(loc != nonnull.loc)
         case _ => Bool(true)
       }
-      case _ => sys.error("undefined behavior")
+      case _ => Bool(true)
     }
   }
 
@@ -277,7 +277,7 @@ case object Null extends Reference {
         case nonnull:Address => Bool(false)
         case _ => Bool(true)
       }
-      case _ => sys.error("undefined behavior")
+      case _ => Bool(false)
     }
   }
 
@@ -287,7 +287,7 @@ case object Null extends Reference {
         case nonnull:Address => Bool(true)
         case _ => Bool(false)
       }
-      case _ => sys.error("undefined behavior")
+      case _ => Bool(true)
     }
   }
 

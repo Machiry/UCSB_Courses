@@ -3,6 +3,10 @@ import cs260.lwnn.syntax._
 import cs260.lwnn.util._
 import cs260.lwnn.concrete.domains._
 import cs260.lwnn.concrete.helpers.Helpers._
+import cs260.lwnn.concrete.domains.{Kont, Locals}
+import cs260.lwnn.concrete.helpers.Helpers
+import cs260.lwnn.syntax.Stmt
+
 import scala.util._
 
 import TypeAliases._
@@ -38,11 +42,6 @@ object Concrete {
   }
 }
 
-
-
-import cs260.lwnn.concrete.domains.{Kont, Locals}
-import cs260.lwnn.concrete.helpers.Helpers
-import cs260.lwnn.syntax.Stmt
 
 //——————————————————————————————————————————————————————————————————————————————
 // State, transition rules, and η
