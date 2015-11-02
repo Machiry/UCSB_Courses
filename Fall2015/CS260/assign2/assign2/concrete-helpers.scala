@@ -14,9 +14,11 @@ import TypeAliases._
 
 object Helpers {
 
+  // Section 2.3.6
   def toSK( ss:Seq[Stmt] ): Seq[Kont] =
     ss map ( StmtK(_) )
 
+  // Section 2.3.5 initclass
   def initclass(class_map:Map[String, (FieldMap, MethodMap)], new_class:Class): (Map[Var,Type], Map[MethodName,Method]) = {
     val superflds =  class_map(new_class.supercn)._1
     val supermethods = class_map(new_class.supercn)._2
@@ -27,6 +29,7 @@ object Helpers {
     (fields, methods)
   }
 
+  // Section 2.3.5 initstate
   def initstate( p:Program ): State = {
     val new_theta_map = p.classes.foldLeft(Map("TopClass" -> (Map[Var, Type](), Map[MethodName, Method]())))((accu:Map[ClassName, (Map[Var, Type], Map[MethodName, Method])], cl:Class) => accu + ((cl.cn, initclass(accu, cl))))
     θ.targetMap = new_theta_map
@@ -42,14 +45,16 @@ object Helpers {
     val constructor = θ(cn)._2(cn)
     // new continuation stack
     val ks = toSK(constructor.body)
-    // initilize locals
-    val localvals = constructor.params.foldRight(Map[Var, Value]())((currd:Decl, accu:Map[Var, Value]) => accu + ((currd.x, defaultvalue(currd.τ))))
 
-    val newlocals = Locals(localvals + ((constructor.params(0).x, a)))
+    // initialize locals
+    val localvals = constructor.params.tail.foldRight(Map[Var, Value]())((currd:Decl, accu:Map[Var, Value]) => accu + ((currd.x, defaultvalue(currd.τ))))
+    // Add self
+    val newlocals = Locals(localvals + ((constructor.params.head.x, a)))
     // Return the initial state
     State(None, newlocals, newHeap, ks)
   }
 
+  // Section 2.3.2 call
   def call(x:Var, a:Address, curr_heap:Heap, mn:MethodName, v:Seq[Value], curr_locals:Locals): (Locals, Seq[Kont]) = {
     // Get class name
     val cn = curr_heap(a).className
@@ -59,8 +64,7 @@ object Helpers {
     // Create new continuation stack
     val new_ks = toSK(curr_method.body) :+ RetK(x, curr_method.rete, curr_locals)
 
-    // first update everything wit
-    // h default value
+    // first update everything except for self, with default value
     var new_locals = curr_method.params.tail.foldRight(Map[Var, Value]())((currd:Decl, accu:Map[Var, Value]) => accu + ((currd.x, defaultvalue(currd.τ))))
     // Add self i.e first parameter
     new_locals = new_locals + ((curr_method.params.head.x, a))
@@ -70,6 +74,7 @@ object Helpers {
     (Locals(new_locals), new_ks)
   }
 
+  // Section 2.3.3 construct
   def constructor(x:Var, mn:ClassName, v:Seq[Value], curr_locals:Locals, curr_heap:Heap): (Locals, Heap, Seq[Kont]) = {
     // Fresh address
     val a = Address()

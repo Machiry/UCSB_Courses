@@ -53,17 +53,17 @@ case class Heap( /* ... */ ) {
 
 sealed abstract class Value {
   def is_⊥ : Boolean
-  def ⊔( v:Value ): Value
-  def +( v:Value ): Value
-  def −( v:Value ): Value
-  def ×( v:Value ): Value
-  def ÷( v:Value ): Value
-  def <( v:Value ): Value
-  def ≤( v:Value ): Value
-  def ∧( v:Value ): Value
-  def ∨( v:Value ): Value
-  def ≈( v:Value ): Value
-  def ≠( v:Value ): Value
+  def ⊔( v:Value ): Value = sys.error("undefined behavior")
+  def +( v:Value ): Value = sys.error("undefined behavior")
+  def −( v:Value ): Value = sys.error("undefined behavior")
+  def ×( v:Value ): Value = sys.error("undefined behavior")
+  def ÷( v:Value ): Value = sys.error("undefined behavior")
+  def <( v:Value ): Value = sys.error("undefined behavior")
+  def ≤( v:Value ): Value = sys.error("undefined behavior")
+  def ∧( v:Value ): Value = sys.error("undefined behavior")
+  def ∨( v:Value ): Value = sys.error("undefined behavior")
+  def ≈( v:Value ): Value = sys.error("undefined behavior")
+  def ≠( v:Value ): Value = sys.error("undefined behavior")
 }
 
 // we'll use the {+,0,−} abstract domain with the following lattice:
@@ -83,122 +83,277 @@ sealed abstract class AInt {
 
   def ÷( v:AInt ): AInt = TOP
 
-  def <( v:AInt ): Set[Boolean] = Set(true, false)
+  def <( v:AInt ): Set[Boolean] = Bool.⊤
 
-  def ≤( v:AInt ): Set[Boolean] = Set(true, false)
+  def ≤( v:AInt ): Set[Boolean] = Bool.⊤
 
   def ≈( v:AInt ): Set[Boolean] = v match {
     case ZERO => v ≈ this
-    case _ => TOP
+    case _ => Bool.⊤
   }
 
   def ≠( v:AInt ): Set[Boolean] = v match {
     case ZERO => v ≠ this
-    case _ => TOP
+    case _ => Bool.⊤
   }
 }
 
+//No need to do anything for TOP, default behavior is fine.
 case object TOP extends AInt
 
-case object BOT extends AInt
+case object BOT extends AInt {
+  override def +( v:AInt ): AInt = BOT
 
-case object NEG extends AInt {
+  override def −( v:AInt ): AInt = BOT
 
+  override def ×( v:AInt ): AInt = BOT
+
+  override def ÷( v:AInt ): AInt = BOT
+
+  override def <( v:AInt ): Set[Boolean] = Bool.⊥
+
+  override def ≤( v:AInt ): Set[Boolean] = Bool.⊥
+
+  override def ≈( v:AInt ): Set[Boolean] = Bool.⊥
+
+  override def ≠( v:AInt ): Set[Boolean] = Bool.⊥
 }
 
-case object POS extends AInt {
+case object NEG extends AInt {
   override def +( v:AInt ): AInt = v match {
-    case NEG | BOT | TOP => TOP
-    case _ => POS
+    case POS => TOP
+    case NEG => NEG
+    case _ => v + NEG
   }
 
   override def −( v:AInt ): AInt = v match {
-    case POS | BOT | TOP => TOP
-    case _ => POS
+    case POS => NEG
+    case NEG => TOP
+    case _ => v − NEG
   }
 
   override def ×( v:AInt ): AInt = v match {
-    case BOT | TOP => TOP
-    case _ => v
+    case POS => NEG
+    case NEG => POS
+    case _ => v × NEG
+  }
+
+  override def ÷( v:AInt ): AInt = v match {
+    case POS => NEG
+    case NEG => POS
+    case _ => v ÷ NEG
+  }
+
+  override def <( v:AInt ): Set[Boolean] = v match {
+    case POS => Set(true)
+    case NEG => Bool.⊤
+    case _ => v < NEG
+  }
+
+  override def ≤( v:AInt ): Set[Boolean] = v match {
+    case POS => Set(true)
+    case NEG => Bool.⊤
+    case _ => v ≤ NEG
+  }
+
+  override def ≈( v:AInt ): Set[Boolean] = v match {
+    case POS => Set(false)
+    case NEG => Bool.⊤
+    case _ => v ≈ NEG
+  }
+
+  override def ≠( v:AInt ): Set[Boolean] = v match {
+    case POS => Set(true)
+    case NEG => Bool.⊤
+    case _ => v ≠ NEG
+  }
+}
+
+object POS extends AInt {
+  override def +( v:AInt ): AInt = v match {
+    case POS => POS
+    case NEG => TOP
+    case _ => v + POS
+  }
+
+  override def −( v:AInt ): AInt = v match {
+    case POS => TOP
+    case NEG => POS
+    case _ => v − POS
+  }
+
+  override def ×( v:AInt ): AInt = v match {
+    case POS => POS
+    case NEG => NEG
+    case _ => v × POS
   }
 
   override def ÷( v:AInt ): AInt = v match {
     case POS => POS
     case NEG => NEG
-    case _ => TOP
+    case _ => v ÷ POS
   }
 
   override def <( v:AInt ): Set[Boolean] = v match {
-    case NEG | ZERO => Set(false)
-    case _ => Set(true, false)
+    case POS => Bool.⊤
+    case NEG => Set(false)
+    case _ => v < POS
   }
 
   override def ≤( v:AInt ): Set[Boolean] = v match {
-    case NEG | ZERO => Set(false)
-    case _ => Set(true, false)
+    case POS => Bool.⊤
+    case NEG => Set(false)
+    case _ => v ≤ POS
+  }
+
+  override def ≈( v:AInt ): Set[Boolean] = v match {
+    case NEG => Set(false)
+    case POS => Bool.⊤
+    case _ => v ≈ POS
+  }
+
+  override def ≠( v:AInt ): Set[Boolean] = v match {
+    case NEG => Set(true)
+    case POS => Bool.⊤
+    case _ => v ≠ POS
   }
 }
 
 case object ZERO extends AInt {
-  override def +( v:AInt ): AInt = v
+
+  override def +( v:AInt ): AInt = v match {
+    case POS | NEG | ZERO => v
+    case _ => v + ZERO
+
+  }
 
   override def −( v:AInt ): AInt = v match {
-    case NEG => POS
     case POS => NEG
+    case NEG => POS
     case ZERO => ZERO
-    case _ => TOP
+    case _ => v − ZERO
   }
 
   override def ×( v:AInt ): AInt = v match {
-    case BOT | TOP => TOP
-    case _ => ZERO
+    case POS | NEG | ZERO => ZERO
+    case _ => v × ZERO
   }
 
   override def ÷( v:AInt ): AInt = v match {
-    case ZERO | BOT => TOP
-    case _ => ZERO
+    case POS | NEG => ZERO
+    case ZERO => TOP
+    case _ => v ÷ ZERO
   }
 
   override def <( v:AInt ): Set[Boolean] = v match {
-    case NEG => Set(true)
-    case POS | ZERO => Set(false)
-    case _ => Set(true, false)
+    case POS => Set(true)
+    case NEG | ZERO => Set(false)
+    case _ => v < ZERO
   }
 
   override def ≤( v:AInt ): Set[Boolean] = v match {
-    case NEG | ZERO => Set(true)
-    case POS => Set(true)
-    case _ => Set(true, false)
+    case POS | ZERO => Set(true)
+    case NEG => Set(false)
+    case _ => v ≤ ZERO
   }
 
  override def ≈( v:AInt ): Set[Boolean] = v match {
    case ZERO => Set(true)
    case POS | NEG => Set(false)
-   case _ => Set(true, false)
+   case _ => v ≈ ZERO
  }
 
   override def ≠( v:AInt ): Set[Boolean] = v match {
     case ZERO => Set(false)
     case POS | NEG => Set(true)
-    case _ => Set(true, false)
+    case _ => v ≈ ZERO
   }
 }
 
+case class ℤ( vs: Set[AInt] ) extends Value {
+  override def +( v:Value ) = v match {
+    case z: ℤ => ℤ(for (x ← vs; y ← z.vs) yield x + y)
+    case _ => sys.error("undefined behavior: Cannot add non-Z to Z")
+  }
 
-sealed abstract class ℤ extends Value 
-// ...
+  override def −( v:Value ) = v match {
+    case z: ℤ => ℤ(for ( x ← vs ; y ← z.vs ) yield x − y)
+    case _ => sys.error("undefined behavior: Cannot subtract non-Z from Z")
+  }
+
+  override def ×( v:Value ) = v match {
+    case z: ℤ => ℤ(for ( x ← vs ; y ← z.vs ) yield x × y)
+    case _ => sys.error("undefined behavior: Cannot multiply non-Z into Z")
+  }
+
+  override def ÷( v:Value ) = v match {
+    case z: ℤ => ℤ(for ( x ← vs ; y ← z.vs ) yield x ÷ y)
+    case _ => sys.error("undefined behavior: Cannot divide Z by non-Z")
+  }
+
+  override def <( v:Value ) = v match {
+    case z: ℤ => Bool((for ( x ← vs ; y ← z.vs ) yield x < y).flatten)
+    case _ => sys.error("undefined behavior: Cannot compare Z by non-Z")
+  }
+
+  override def ≤( v:Value ) = v match {
+    case z: ℤ => Bool((for ( x ← vs ; y ← z.vs ) yield x ≤ y).flatten)
+    case _ => sys.error("undefined behavior: Cannot compare Z by non-Z")
+  }
+
+  override def ≈( v:Value ) = v match {
+    case z: ℤ => Bool((for ( x ← vs ; y ← z.vs ) yield x ≈ y).flatten)
+    case _ => sys.error("undefined behavior: Cannot compare Z by non-Z")
+  }
+
+  override def ≠( v:Value ) = v match {
+    case z: ℤ => Bool((for ( x ← vs ; y ← z.vs ) yield x ≠ y).flatten)
+    case _ => sys.error("undefined behavior: Cannot compare Z by non-Z")
+  }
+
+  override def toString =
+    "{ " + vs.mkString(", ") + " }"
+}
 
 object ℤ {
-  val ⊤ = // ...
-  val ⊥ = // ...
+  val ⊤ = TOP
+  val ⊥ = BOT
 
   def α( ns:Set[BigInt] ): ℤ =
-    // ...
+    ℤ( ns map (n ⇒ if (n < 0) NEG else if (n == 0) ZERO else POS) )
+
+  def α( n: BigInt ): ℤ =
+    α(Set(n))
 }
 
 // we'll use the (𝒫({true, false}), ⊆) abstract domain.
 case class Bool( bs:Set[Boolean] ) extends Value {
-  // ...
+
+  override def ∧( v:Value ): Value = {
+    v match {
+      case b: Bool => Bool(for ( x ← bs ; y ← b.bs ) yield (x && y))
+      case _ => sys.error("undefined behavior")
+    }
+
+  }
+  override def ∨( v:Value ): Value = {
+    v match {
+      case b: Bool => Bool(for ( x ← bs ; y ← b.bs ) yield (x || y))
+      case _ => sys.error("undefined behavior")
+    }
+  }
+  override def ≈( v:Value ): Value = {
+    v match {
+      case b: Bool => Bool(for ( x ← bs ; y ← b.bs ) yield (x == y))
+      case _ => Bool(Set(false))
+    }
+  }
+  override def ≠( v:Value ): Value = {
+    v match {
+      case b: Bool => Bool(for ( x ← bs ; y ← b.bs ) yield (x != y))
+      case _ => Bool(Set(true))
+    }
+  }
 
   override def toString =
     if ( bs.size == 1 ) bs.head.toString
@@ -206,13 +361,11 @@ case class Bool( bs:Set[Boolean] ) extends Value {
 }
 
 object Bool {
-  val ⊤ = // ...
-  val ⊥ = // ...
-  val True = // ...
-  val False = // ...
+  val ⊤ = Bool(Set(true, false))
+  val ⊥ = Bool(Set())
 
   def α( bs:Set[Boolean] ): Bool =
-    // ...
+    Bool(bs)
 }
 
 // for strings we'll use the {⊥,⊤} domain s.t. ⊥ means no string and ⊤

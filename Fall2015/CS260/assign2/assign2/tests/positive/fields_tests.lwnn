@@ -1,0 +1,42 @@
+class A {
+    def A(b:B) = {
+        b := new B(6);
+        if(b.c.d.i = 6) {
+            print "OK";
+        } else {
+            print "b.c.d.i=6 Comparision Failed";
+        };
+        
+        b := new B();
+        if(b.c.d.i = 0) {
+            print "OK";
+        } else {
+            print "b.c.d.i=0 Comparision Failed";
+        };
+    }
+}
+
+class D {
+    fields i: int;
+    def D(j: int) = {
+        self.i := j;
+    }
+}
+
+class C {
+    fields d: D;
+    def C(k: int, z: D) = {
+        z := new D(k);
+        self.d := z;
+    }
+    
+}
+
+class B {
+    fields c: C;
+    def B(b: int, n: C) = {
+        n := new C(b);
+        self.c := n;
+    }
+}
+

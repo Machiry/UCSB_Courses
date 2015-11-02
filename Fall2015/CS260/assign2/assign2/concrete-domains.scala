@@ -41,6 +41,8 @@ case class Locals( x2val:Map[Var, Value] ) {
   def +( xv:(Var, Value) ): Locals = {
     // Note: you cannot and should not update self.
     assert(xv._1.name != "self")
+    // All locals should be declared as parameters.
+    assert(x2val contains xv._1)
     Locals( x2val + xv )
   }
 }
