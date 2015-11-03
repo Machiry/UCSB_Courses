@@ -60,19 +60,24 @@ case class Locals( x2val:Map[Var, Value] ) {
 // continuation stacks) and two different methods for updating the
 // heap (ditto).
 
-case class Heap(addr2obj:Map[Address, Set[Object]], addr2kont:Map[Address, Set[Kont]] ) {
-  def getObjs( addr:Address ): Set[Object] =
+case class Heap(addr2obj:Map[Address, Object], addr2kont:Map[Address, Set[Seq[Kont]]] ) {
+  def getObj( addr:Address ): Object =
     addr2obj(addr)
 
-  def getKont( addr:Address ): Set[Kont] =
+  def getKont( addr:Address ): Set[Seq[Kont]] =
     addr2kont(addr)
 
-  def addObj( xv:(Address, Set[Object]) ): Heap = {
+  def addObj( xv:(Address, Object) ): Heap = {
     Heap( addr2obj + xv, addr2kont )
   }
 
-  def addKont( xv:(Address, Set[Kont]) ): Heap = {
-    Heap( addr2obj, addr2kont + xv)
+  def addKont( xv:(Address, Seq[Kont]) ): Heap = {
+    val curr_ks: Option[Set[Seq[Kont]]] = addr2kont.get(xv._1)
+    var updated_ks = Set(xv._2)
+    if (curr_ks.isDefined) {
+      updated_ks = curr_ks.get ++ updated_ks
+    }
+    Heap(addr2obj, addr2kont + ((xv._1, updated_ks)))
   }
 }
 
@@ -427,7 +432,7 @@ sealed abstract class ABool {
 
 case object TRUE extends ABool {
 
-  def ∧(v:ABool): ABool = {
+  override def ∧(v:ABool): ABool = {
     v match {
       case TRUE => TRUE
       case FALSE => FALSE
@@ -435,14 +440,14 @@ case object TRUE extends ABool {
     }
   }
 
-  def ∨(v:ABool): ABool = {
+  override def ∨(v:ABool): ABool = {
     v match {
       case TRUE | FALSE => TRUE
       case _ => v ∨ TRUE
     }
   }
 
-  def ≈(v:ABool): ABool = {
+  override def ≈(v:ABool): ABool = {
     v match {
       case TRUE => TRUE
       case FALSE => FALSE
@@ -450,7 +455,7 @@ case object TRUE extends ABool {
     }
   }
 
-  def ≠(v:ABool): ABool = {
+  override def ≠(v:ABool): ABool = {
     v match {
       case TRUE => FALSE
       case FALSE => TRUE
@@ -463,14 +468,14 @@ case object TRUE extends ABool {
 
 case object FALSE extends ABool {
 
-  def ∧(v:ABool): ABool = {
+  override def ∧(v:ABool): ABool = {
     v match {
       case TRUE | FALSE => FALSE
       case _ => v ∧ FALSE
     }
   }
 
-  def ∨(v:ABool): ABool = {
+  override def ∨(v:ABool): ABool = {
     v match {
       case TRUE => TRUE
       case FALSE => FALSE
@@ -478,7 +483,7 @@ case object FALSE extends ABool {
     }
   }
 
-  def ≈(v:ABool): ABool = {
+  override def ≈(v:ABool): ABool = {
     v match {
       case TRUE => FALSE
       case FALSE => TRUE
@@ -486,7 +491,7 @@ case object FALSE extends ABool {
     }
   }
 
-  def ≠(v:ABool): ABool = {
+  override def ≠(v:ABool): ABool = {
     v match {
       case TRUE => TRUE
       case FALSE => FALSE
@@ -551,10 +556,10 @@ object Bool {
   val ⊤ = BTOP
   val ⊥ = BBOT
 
-  def α( ns:Set[Boolean] ): ℤ =
+  def α( ns:Set[Boolean] ): Bool =
     Bool( ns map (n ⇒ if (n) TRUE else FALSE) )
 
-  def α( n: Boolean ): ℤ =
+  def α( n: Boolean ): Bool =
     α(Set(n))
 }
 
@@ -665,7 +670,7 @@ object Str {
   def α( strs:Set[String] ): Str =
     Str( strs map (n ⇒ if (n == None) SBOT else STOP) )
 
-  def α( n: String ): ℤ =
+  def α( n: String ): Str =
     α(Set(n))
 }
 
