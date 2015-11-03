@@ -20,8 +20,12 @@ object Helpers {
     // ...
 
   // section 2.3.4
-  def defaultvalue( τ:Type ): Value =
-    // ...
+  def defaultvalue( τ:Type ): Value =  τ match {
+    case IntT => ℤ.α(0)
+    case BoolT => Bool.α(false)
+    case StrT => Str.α("")
+    case _ => Reference.Null
+  }
 
   // section 2.3.5
   def initstate( p:Program ): State =
@@ -33,9 +37,19 @@ object Helpers {
 
   // section 2.3.7
   def toSK( ss:Seq[Stmt] ): Seq[Kont] =
-    // ...
+    ss map ( StmtK(_) )
 
   // section 2.3.8
-  def update( σ:Heap, as:Set[Address], x:Var, v:Value ): Heap =
-    // ...
+  def update( σ:Heap, as:Set[Address], x:Var, v:Value ): Heap = {
+    if (as.size == 1 && σ.getObjs(as(0)).size == 1) {
+      σ.addObj(as(0), Set(σ.getObjs(as(0)).head + (x, v)))
+    } else {
+
+    }
+  }
+
+  def update_addr(σ:Heap, curr_addr:Address, x:Var, v:Value): Heap = {
+    σ.getObjs(curr_addr).foldRight(Set[Object]())((curr_obj:Object, accu:Set[Object]) => accu + (curr_obj ⊔ (curr_obj + ((x, v)))))
+  }
+
 }
