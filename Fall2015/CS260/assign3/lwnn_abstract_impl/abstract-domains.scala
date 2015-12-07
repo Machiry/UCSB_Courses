@@ -90,18 +90,18 @@ case class Heap(addr2obj:Map[Address, Object], addr2kont:Map[Address, Set[Seq[Ko
 // have them return a ⊥ value.
 
 sealed abstract class Value {
-  def is_⊥ : Boolean = true
-  def ⊔( v:Value ): Value = sys.error("undefined behavior")
-  def +( v:Value ): Value = sys.error("undefined behavior")
-  def −( v:Value ): Value = sys.error("undefined behavior")
-  def ×( v:Value ): Value = sys.error("undefined behavior")
-  def ÷( v:Value ): Value = sys.error("undefined behavior")
-  def <( v:Value ): Value = sys.error("undefined behavior")
-  def ≤( v:Value ): Value = sys.error("undefined behavior")
-  def ∧( v:Value ): Value = sys.error("undefined behavior")
-  def ∨( v:Value ): Value = sys.error("undefined behavior")
-  def ≈( v:Value ): Value = sys.error("undefined behavior")
-  def ≠( v:Value ): Value = sys.error("undefined behavior")
+  def is_⊥ : Boolean
+  def ⊔( v:Value ): Value
+  def +( v:Value ): Value
+  def −( v:Value ): Value
+  def ×( v:Value ): Value
+  def ÷( v:Value ): Value
+  def <( v:Value ): Value
+  def ≤( v:Value ): Value
+  def ∧( v:Value ): Value
+  def ∨( v:Value ): Value
+  def ≈( v:Value ): Value
+  def ≠( v:Value ): Value
 }
 
 // we'll use the {+,0,−} abstract domain with the following lattice:
@@ -136,7 +136,7 @@ sealed abstract class AInt {
 
   def ÷( v:AInt ): AInt = {
     v match {
-      case BOT => BOT
+      case BOT | ZERO => BOT
       case _ => TOP
     }
   }
@@ -171,7 +171,9 @@ sealed abstract class AInt {
 }
 
 //No need to do anything for TOP, default behavior is fine.
-case object TOP extends AInt
+case object TOP extends AInt {
+  override def toString = "TOP"
+}
 
 case object BOT extends AInt {
   override def +( v:AInt ): AInt = BOT
@@ -189,106 +191,122 @@ case object BOT extends AInt {
   override def ≈( v:AInt ): ABool = Bool.⊥
 
   override def ≠( v:AInt ): ABool = Bool.⊥
+
+  override def toString = "BOT"
 }
 
 case object NEG extends AInt {
   override def +( v:AInt ): AInt = v match {
     case POS => TOP
     case NEG => NEG
-    case _ => v + NEG
+    case ZERO => NEG
+    case TOP => TOP
+    case BOT => BOT
   }
 
   override def −( v:AInt ): AInt = v match {
     case POS => NEG
     case NEG => TOP
-    case _ => v − NEG
+    case ZERO => NEG
+    case TOP => TOP
+    case BOT => BOT
   }
 
   override def ×( v:AInt ): AInt = v match {
     case POS => NEG
     case NEG => POS
-    case _ => v × NEG
+    case ZERO => ZERO
+    case TOP => TOP
+    case BOT => BOT
   }
 
   override def ÷( v:AInt ): AInt = v match {
     case POS => NEG
     case NEG => POS
-    case _ => v ÷ NEG
+    case ZERO | BOT => BOT
+    case TOP => TOP
   }
 
   override def <( v:AInt ): ABool = v match {
-    case POS => TRUE
-    case NEG => Bool.⊤
-    case _ => v < NEG
+    case POS | ZERO => TRUE
+    case NEG | TOP => Bool.⊤
+    case BOT => Bool.⊥
   }
 
   override def ≤( v:AInt ): ABool = v match {
-    case POS => TRUE
-    case NEG => Bool.⊤
-    case _ => v ≤ NEG
+    case POS | ZERO => TRUE
+    case NEG | TOP => Bool.⊤
+    case BOT => Bool.⊥
   }
 
   override def ≈( v:AInt ): ABool = v match {
-    case POS => FALSE
-    case NEG => Bool.⊤
-    case _ => v ≈ NEG
+    case POS | ZERO => FALSE
+    case NEG | TOP => Bool.⊤
+    case BOT => Bool.⊥
   }
 
   override def ≠( v:AInt ): ABool = v match {
-    case POS => TRUE
-    case NEG => Bool.⊤
-    case _ => v ≠ NEG
+    case POS | ZERO => TRUE
+    case NEG | TOP => Bool.⊤
+    case BOT => Bool.⊥
   }
+
+  override def toString = "NEG"
 }
 
 object POS extends AInt {
   override def +( v:AInt ): AInt = v match {
-    case POS => POS
-    case NEG => TOP
-    case _ => v + POS
+    case POS | ZERO => POS
+    case NEG | TOP => TOP
+    case BOT => BOT
   }
 
   override def −( v:AInt ): AInt = v match {
-    case POS => TOP
-    case NEG => POS
-    case _ => v − POS
+    case POS | TOP => TOP
+    case NEG | ZERO => POS
+    case BOT => BOT
   }
 
   override def ×( v:AInt ): AInt = v match {
     case POS => POS
     case NEG => NEG
-    case _ => v × POS
+    case ZERO => ZERO
+    case TOP => TOP
+    case BOT => BOT
   }
 
   override def ÷( v:AInt ): AInt = v match {
     case POS => POS
     case NEG => NEG
-    case _ => v ÷ POS
+    case ZERO | BOT => BOT
+    case TOP => TOP
   }
 
   override def <( v:AInt ): ABool = v match {
-    case POS => Bool.⊤
-    case NEG => FALSE
-    case _ => v < POS
+    case ZERO | NEG => FALSE
+    case POS | TOP => Bool.⊤
+    case BOT => Bool.⊥
   }
 
   override def ≤( v:AInt ): ABool = v match {
-    case POS => Bool.⊤
-    case NEG => FALSE
-    case _ => v ≤ POS
+    case ZERO | NEG => FALSE
+    case POS | TOP => Bool.⊤
+    case BOT => Bool.⊥
   }
 
   override def ≈( v:AInt ): ABool = v match {
-    case NEG => FALSE
-    case POS => Bool.⊤
-    case _ => v ≈ POS
+    case NEG | ZERO => FALSE
+    case POS | TOP => Bool.⊤
+    case BOT => Bool.⊥
   }
 
   override def ≠( v:AInt ): ABool = v match {
-    case NEG => TRUE
-    case POS => Bool.⊤
-    case _ => v ≠ POS
+    case NEG | ZERO => TRUE
+    case POS | TOP => Bool.⊤
+    case BOT => Bool.⊥
   }
+
+  override def toString = "POS"
 }
 
 case object ZERO extends AInt {
@@ -312,93 +330,121 @@ case object ZERO extends AInt {
   }
 
   override def ÷( v:AInt ): AInt = v match {
-    case POS | NEG => ZERO
-    case ZERO => BOT
-    case _ => v ÷ ZERO
+    case POS | NEG | TOP => ZERO
+    case ZERO | BOT  => BOT
   }
 
   override def <( v:AInt ): ABool = v match {
     case POS => TRUE
     case NEG | ZERO => FALSE
-    case _ => v < ZERO
+    case TOP => Bool.⊤
+    case BOT => Bool.⊥
   }
 
   override def ≤( v:AInt ): ABool = v match {
     case POS | ZERO => TRUE
     case NEG => FALSE
-    case _ => v ≤ ZERO
+    case TOP => Bool.⊤
+    case BOT => Bool.⊥
   }
 
  override def ≈( v:AInt ): ABool = v match {
    case ZERO => TRUE
    case POS | NEG => FALSE
-   case _ => v ≈ ZERO
+   case TOP => Bool.⊤
+   case BOT => Bool.⊥
  }
 
   override def ≠( v:AInt ): ABool = v match {
     case ZERO => FALSE
     case POS | NEG => TRUE
-    case _ => v ≈ ZERO
+    case TOP => Bool.⊤
+    case BOT => Bool.⊥
   }
+
+  override def toString = "ZERO"
 }
 
 case class ℤ( vs: Set[AInt] ) extends Value {
+
+  override def is_⊥ = {
+    vs.size == 1 && vs.head == BOT
+  }
+
+  override def ⊔( v:Value ): Value = {
+    v match {
+      case z: ℤ => ℤ(vs ++ z.vs)
+      case _ => ℤ(Set(ℤ.⊥))
+    }
+  }
+
+  override def ∧( v:Value ): Value = {
+    ℤ(Set(ℤ.⊥))
+  }
+
+  override def ∨( v:Value ): Value = {
+    ℤ(Set(ℤ.⊥))
+  }
+
   override def +( v:Value ) = v match {
     case z: ℤ => ℤ(for (x ← vs; y ← z.vs) yield x + y)
-    case _ => sys.error("undefined behavior: Cannot add non-Z to Z")
+    case _ => ℤ(Set(ℤ.⊥))
   }
 
   override def −( v:Value ) = v match {
     case z: ℤ => ℤ(for ( x ← vs ; y ← z.vs ) yield x − y)
-    case _ => sys.error("undefined behavior: Cannot subtract non-Z from Z")
+    case _ => ℤ(Set(ℤ.⊥))
   }
 
   override def ×( v:Value ) = v match {
     case z: ℤ => ℤ(for ( x ← vs ; y ← z.vs ) yield x × y)
-    case _ => sys.error("undefined behavior: Cannot multiply non-Z into Z")
+    case _ => ℤ(Set(ℤ.⊥))
   }
 
   override def ÷( v:Value ) = v match {
     case z: ℤ => ℤ(for ( x ← vs ; y ← z.vs ) yield x ÷ y)
-    case _ => sys.error("undefined behavior: Cannot divide Z by non-Z")
+    case _ => ℤ(Set(ℤ.⊥))
   }
 
   override def <( v:Value ) = v match {
     case z: ℤ => Bool(for ( x ← vs ; y ← z.vs ) yield x < y)
-    case _ => sys.error("undefined behavior: Cannot compare Z by non-Z")
+    case _ => ℤ(Set(ℤ.⊥))
   }
 
   override def ≤( v:Value ) = v match {
     case z: ℤ => Bool(for ( x ← vs ; y ← z.vs ) yield x ≤ y)
-    case _ => sys.error("undefined behavior: Cannot compare Z by non-Z")
+    case _ => ℤ(Set(ℤ.⊥))
   }
 
   override def ≈( v:Value ) = v match {
     case z: ℤ => Bool(for ( x ← vs ; y ← z.vs ) yield x ≈ y)
-    case _ => sys.error("undefined behavior: Cannot compare Z by non-Z")
+    case _ => ℤ(Set(ℤ.⊥))
   }
 
   override def ≠( v:Value ) = v match {
     case z: ℤ => Bool(for ( x ← vs ; y ← z.vs ) yield x ≠ y)
-    case _ => sys.error("undefined behavior: Cannot compare Z by non-Z")
+    case _ => ℤ(Set(ℤ.⊥))
   }
 
   override def toString =
-    "{ " + vs.mkString(", ") + " }"
+    "{ " + vs.mkString(":: ") + " }"
 }
 
 object ℤ {
   val ⊤ = TOP
   val ⊥ = BOT
 
-  def α( ns:Set[BigInt] ): ℤ =
-    ℤ( ns map (n ⇒ if (n < 0) NEG else if (n == 0) ZERO else POS) )
+  def α( ns:Set[BigInt] ): ℤ = {
+    ℤ(ns map (n ⇒ if (n < 0) NEG else if (n == 0) ZERO else POS))
+  }
 
-  def α( n: BigInt ): ℤ =
+  def α( n: BigInt ): ℤ = {
     α(Set(n))
+  }
 }
 
 sealed abstract class ABool {
+
 
   def ∧(v:ABool): ABool = {
     v match {
@@ -436,14 +482,14 @@ case object TRUE extends ABool {
     v match {
       case TRUE => TRUE
       case FALSE => FALSE
-      case _ => v ∧ TRUE
+      case _ => v
     }
   }
 
   override def ∨(v:ABool): ABool = {
     v match {
       case TRUE | FALSE => TRUE
-      case _ => v ∨ TRUE
+      case _ => v
     }
   }
 
@@ -451,7 +497,7 @@ case object TRUE extends ABool {
     v match {
       case TRUE => TRUE
       case FALSE => FALSE
-      case _ => v ≈ TRUE
+      case _ => v
     }
   }
 
@@ -459,7 +505,7 @@ case object TRUE extends ABool {
     v match {
       case TRUE => FALSE
       case FALSE => TRUE
-      case _ => v ≠ TRUE
+      case _ => v
     }
   }
 
@@ -471,7 +517,7 @@ case object FALSE extends ABool {
   override def ∧(v:ABool): ABool = {
     v match {
       case TRUE | FALSE => FALSE
-      case _ => v ∧ FALSE
+      case _ => v
     }
   }
 
@@ -479,7 +525,7 @@ case object FALSE extends ABool {
     v match {
       case TRUE => TRUE
       case FALSE => FALSE
-      case _ => v ∨ FALSE
+      case _ => v
     }
   }
 
@@ -487,7 +533,7 @@ case object FALSE extends ABool {
     v match {
       case TRUE => FALSE
       case FALSE => TRUE
-      case _ => v ≈ FALSE
+      case _ => v
     }
   }
 
@@ -495,7 +541,7 @@ case object FALSE extends ABool {
     v match {
       case TRUE => TRUE
       case FALSE => FALSE
-      case _ => v ≠ FALSE
+      case _ => v
     }
   }
 
@@ -521,6 +567,22 @@ case object BTOP extends ABool {
 
 // we'll use the (𝒫({true, false}), ⊆) abstract domain.
 case class Bool( bs:Set[ABool] ) extends Value {
+  override def is_⊥ = {
+    bs.size == 1 && bs.head == BBOT
+  }
+
+  override def ⊔( v:Value ): Value = {
+    v match {
+      case b: Bool => Bool(bs ++ b.bs)
+      case _ => Bool(Set(BBOT))
+    }
+  }
+  override def +( v:Value ): Value = Bool(Set(BBOT))
+  override def −( v:Value ): Value = Bool(Set(BBOT))
+  override def ×( v:Value ): Value = Bool(Set(BBOT))
+  override def ÷( v:Value ): Value = Bool(Set(BBOT))
+  override def <( v:Value ): Value = Bool(Set(BBOT))
+  override def ≤( v:Value ): Value = Bool(Set(BBOT))
 
   override def ∧( v:Value ): Value = {
     v match {
@@ -549,7 +611,7 @@ case class Bool( bs:Set[ABool] ) extends Value {
   }
 
   override def toString =
-    "{ " + bs.mkString(", ") + " }"
+    "{ " + bs.mkString(":: ") + " }"
 }
 
 object Bool {
@@ -634,33 +696,50 @@ case object SBOT extends AStr {
 // for strings we'll use the {⊥,⊤} domain s.t. ⊥ means no string and ⊤
 // means any string, so the ordering is ⊥ ⊑ ⊤.
 case class Str(ss: Set[AStr]) extends Value {
+
+  override def is_⊥ = {
+    ss.size == 1 && ss.head == SBOT
+  }
+
+  override def ⊔( v:Value ): Value = {
+    v match {
+      case s: Str => Str(s.ss ++ ss)
+      case _ => Str(Set(SBOT))
+    }
+  }
+  override def −( v:Value ): Value = Str(Set(SBOT))
+  override def ×( v:Value ): Value = Str(Set(SBOT))
+  override def ÷( v:Value ): Value = Str(Set(SBOT))
+  override def ∧( v:Value ): Value = Str(Set(SBOT))
+  override def ∨( v:Value ): Value = Str(Set(SBOT))
+
   override def +( v:Value ) = v match {
     case s: Str => Str(for (x ← ss; y ← s.ss) yield x + y)
-    case _ => sys.error("undefined behavior: Cannot add non-Str to Str")
+    case _ => Str(Set(SBOT))
   }
 
   override def <( v:Value ) = v match {
     case s: Str => Bool(for ( x ← ss ; y ← s.ss ) yield x < y)
-    case _ => sys.error("undefined behavior: Cannot compare str by non-str")
+    case _ => Bool(Set(Bool.⊥))
   }
 
   override def ≤( v:Value ) = v match {
     case s: Str => Bool(for ( x ← ss ; y ← s.ss ) yield x ≤ y)
-    case _ => sys.error("undefined behavior: Cannot compare str by non-str")
+    case _ => Bool(Set(Bool.⊥))
   }
 
   override def ≈( v:Value ) = v match {
     case s: Str => Bool(for ( x ← ss ; y ← s.ss ) yield x ≈ y)
-    case _ => sys.error("undefined behavior: Cannot compare str by non-str")
+    case _ => Bool(Set(Bool.⊥))
   }
 
   override def ≠( v:Value ) = v match {
     case s: Str => Bool(for ( x ← ss ; y ← s.ss ) yield x ≠ y)
-    case _ => sys.error("undefined behavior: Cannot compare str by non-str")
+    case _ => Bool(Set(Bool.⊥))
   }
 
   override def toString =
-    "{ " + ss.mkString(", ") + " }"
+    "{ " + ss.mkString(":: ") + " }"
 }
 
 object Str {
@@ -677,7 +756,38 @@ object Str {
 // for convenience we'll keep a set of addresses and separately a
 // boolean indicating whether the reference could also be Null.
 case class Reference( as:Set[Address], nil:Boolean = false ) extends Value {
-  // ...
+
+  override def is_⊥ = {
+    as.size == 0 && !nil
+  }
+
+  override def ⊔( v:Value ): Value = {
+    v match {
+      case r: Reference => Reference(as ++ r.as, nil||r.nil)
+      case _ => Reference.⊥
+    }
+  }
+  override def +( v:Value ): Value = Reference.⊥
+  override def −( v:Value ): Value = Reference.⊥
+  override def ×( v:Value ): Value = Reference.⊥
+  override def ÷( v:Value ): Value = Reference.⊥
+  override def <( v:Value ): Value = Bool(Set(Bool.⊥))
+  override def ≤( v:Value ): Value = Bool(Set(Bool.⊥))
+  override def ∧( v:Value ): Value = Reference.⊥
+  override def ∨( v:Value ): Value = Reference.⊥
+  override def ≈( v:Value ): Value = {
+    v match {
+      case r: Reference => Bool.α(r.as == as && r.nil == nil)
+      case _ => Bool(Set(Bool.⊥))
+    }
+  }
+  override def ≠( v:Value ): Value = {
+    v match {
+      case r: Reference => Bool.α(r.as != as && r.nil != nil)
+      case _ => Bool(Set(Bool.⊥))
+    }
+  }
+
 
   override def toString =
     if ( as.isEmpty && nil ) "null"
@@ -710,15 +820,16 @@ case class Address( loc:Int ) {
 case class Object( cn:ClassName, flds:Map[Var, Value] ) {
   def ⊔( o:Object ): Object = {
     assert(o.cn == cn)
-    val newflds = flds.foldRight(Map[Var, Value]())((currfld:(Var, Value), accu:Map[Var,Value]) => accu + ((currfld._1,  currfld._2 ⊔ o.flds(currfld._1))))
+    val newflds = flds.foldRight(Map[Var, Value]())((currfld:(Var, Value), accu:Map[Var,Value]) => accu + ((currfld._1, currfld._2 ⊔ o.flds(currfld._1))))
     Object(cn, newflds)
   }
 
   def apply( x:Var ): Value =
     flds(x)
 
-  def +( xv:(Var, Value) ): Object =
-    Object( cn, flds + xv )
+  def +( xv:(Var, Value) ): Object = {
+    Object(cn, flds + xv)
+  }
 }
 
 //——————————————————————————————————————————————————————————————————————————————

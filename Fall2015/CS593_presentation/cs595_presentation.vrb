@@ -1,0 +1,11 @@
+\frametitle{Example}
+Simple Password checker:
+\begin{lstlisting}[basicstyle=\ttfamily]
+if (l==h)
+  out = 1;
+else
+  out = 0;
+\end{lstlisting}
+Relation computed by DISCO would be:\\
+$R = (\bar{h} = l \land l - h \leq -1) \lor (\bar{h} = l \land l - h \geq 1) \lor (h = l \land \bar{h} - l \leq -1) \lor (h = l \land l - \bar{h} \leq -1)$. \\
+To compute password entropy after one guess, Lets consider $E = (l == 0)$, then the constraint $R_{2}$ computed by DISCO would be: $R_{2} = (\bar{h} = 0 \land 0 - h \leq -1) \lor (\bar{h} = 0 \land 0 - h \geq 1) \lor (h = 0 \land \bar{h} - 0 \leq -1) \lor (h = 0 \land 0 - \bar{h} \leq -1)$\\

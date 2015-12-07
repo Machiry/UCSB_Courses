@@ -1,0 +1,89 @@
+class A {
+    def A(b:B, s: string) = {
+        b := new B(0);
+
+        if (null = b ) {
+            print "you should not see this";
+        };
+        if (b = null) {
+            print "you should not see this";
+        };
+
+        if (b != null) {
+            print "OK";
+        }
+        else {
+            print "b != null Failed";
+        };
+        
+        if (null != b) {
+            print "OK";
+        }
+        else {
+            print "null != b Failed";
+        };
+        
+        if (null = null) {
+            print "OK";
+        }
+        else {
+            print "null = null Failed";
+        };
+        
+        if (b.a = null) {
+            print "b.a = null Failed";
+        } else {
+            print "OK";
+        };
+        
+        if(b.a = b) {
+            print "b.a = b Failed";
+        } else {
+            print "OK";
+        };
+        
+        if(b.a != b) {
+            print "OK";
+        } else {
+            print "b.a != b Failed";
+        };
+        
+        if(b.a <= b.a) {
+            print "OK";
+        } else {
+            print "b.a <= b.a Failed";
+        };
+        
+        s := "Hello";
+        if(s = "Hello") {
+            print "OK";
+        } else {
+            print "s = Hello Failed";
+        };
+        s := s + "World";
+        if("Hello" < s) {
+            print "OK";
+        } else {
+            print "Hello < s Failed";
+        };
+        
+        if (s = "HelloWorld") {
+            print "OK";
+        } else {
+            print "s = HelloWorld Failed";
+        };
+        
+    }
+}
+class B {
+    fields a: int;
+    def B(b: int) = {
+        self.a := b;
+        if(self = null) {
+            print "you should not see this";
+        };
+        if(null = self) {
+            print "you should not see this";
+        };
+    }
+}

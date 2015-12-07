@@ -181,7 +181,7 @@ case class State( so:Option[Stmt], locls:Locals, heap:Heap, κs:Seq[Kont] ) {
             val a_val = η(e1)
             a_val match {
               // TODO: Need to handle Null
-              case a:Reference if a.as.size > 0 => Set(copy(so=None, heap = Helpers.update(heap, a.as, x, η(e1))))
+              case a:Reference if a.as.size > 0 => Set(copy(so=None, heap = Helpers.update(heap, a.as, x, η(e2))))
               case _ => Set()
             }
           }
@@ -221,6 +221,11 @@ case class State( so:Option[Stmt], locls:Locals, heap:Heap, κs:Seq[Kont] ) {
               case n:Bool if n.bs.contains(FALSE) || n.bs.contains(BTOP) => Set(copy(so=None))
               case _ => Set()
             }
+
+          case Print(e) => {
+            println(η(e))
+            Set(copy(so=None))
+          }
 
         }
       case None =>

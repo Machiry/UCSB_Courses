@@ -1,7 +1,7 @@
 class Main {
   def Main(a:A) = {
     a := new A();
-    a.set(2, 4);
+    a.set(2,0);
     print a.a;
     print a.b;
   }

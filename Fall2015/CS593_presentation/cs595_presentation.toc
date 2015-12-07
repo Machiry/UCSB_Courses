@@ -1,0 +1,6 @@
+\beamer@endinputifotherversion {3.24pt}
+\beamer@sectionintoc {1}{Motivation}{3}{0}{1}
+\beamer@sectionintoc {2}{Idea Overview}{4}{0}{2}
+\beamer@sectionintoc {3}{Approach Details}{6}{0}{3}
+\beamer@subsectionintoc {3}{1}{DisQUANT}{6}{0}{3}
+\beamer@subsectionintoc {3}{2}{Computing Quantitative Information flow metrics}{16}{0}{3}

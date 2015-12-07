@@ -1,0 +1,352 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass{beamer}
+
+\mode<presentation> {
+
+% The Beamer class comes with a number of default slide themes
+% which change the colors and layouts of slides. Below this is a list
+% of all the themes, uncomment each in turn to see what they look like.
+
+%\usetheme{default}
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+%\usetheme{Dresden}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+%\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+% As well as themes, the Beamer class has a number of color themes
+% for any slide theme. Uncomment each of these in turn to see how it
+% changes the colors of your current slide theme.
+
+%\usecolortheme{albatross}
+%\usecolortheme{beaver}
+%\usecolortheme{beetle}
+%\usecolortheme{crane}
+%\usecolortheme{dolphin}
+%\usecolortheme{dove}
+%\usecolortheme{fly}
+%\usecolortheme{lily}
+%\usecolortheme{orchid}
+%\usecolortheme{rose}
+%\usecolortheme{seagull}
+%\usecolortheme{seahorse}
+%\usecolortheme{whale}
+%\usecolortheme{wolverine}
+
+%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+
+%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{algorithm,algorithmic}
+\usepackage{listings}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[Constraint Based Leak Detection]{Automatic Discovery and Quantification of Information Leaks} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author{Aravind Machiry} % Your name
+\institute[UC Santa Barbara] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+University of California \\ % Your institution for the title page
+\medskip
+\textit{machiry@cs.ucsb.edu} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+\begin{document}
+
+\defverbatim[colored]\lst{%
+\begin{lstlisting}[basicstyle=\ttfamily]
+int l = 0;
+for(int i=0; i<n; i++) {
+	if(h[i] > h[l])
+		l = i;
+}
+\end{lstlisting}
+}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+\begin{frame}
+\frametitle{Overview} % Table of contents slide, comment this block out to remove it
+\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+%------------------------------------------------
+\section{Motivation} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{Existing Works}
+\begin{itemize}
+\item Assume equivalence relation is given.
+\item Only provide the number of secret/high bits leaked.
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\section{Idea Overview}
+\begin{frame}
+\frametitle{In this paper}
+Given a program:
+\begin{itemize}
+\item Automated way to find equivalence classes (DISCO) and their sizes (QUANT).
+\item Answer various questions:
+\begin{itemize}
+\item Number of leaked bits.
+\item Successful guess probability.
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+%------------------------------------------------
+\begin{frame}
+\frametitle{Notations}
+They model a Program $P$ as a transition system ($S$,$T$,$I$,$F$):
+\begin{itemize}
+\item $S$: a set of program states.
+\item $T$: a finite set of transitions, each transition $\tau \in T$ is associated with a binary transition relation $\rho_{\tau} \subseteq S x S$.
+\item $I$: a set of initial states, $I \subseteq S$ and $I = I_{hi} x I_{lo}$.
+\item $F$: a set of final states, $F \subseteq S$ and $F = F_{hi} x F_{lo}$.
+\item $\sigma$: A program computation. Which is a sequence of program states $s_{1},s_{2},...,s_{n}$, where $s_{1} \in I$ and $s_{n} \in F$. All consecutive pairs of states should be a valid transition.
+\item $\pi$: A program path. Which is a non-empty sequence of program transitions i.e $\pi \in T^{+}$. $\pi = \tau_{1},\tau_{2},...,\tau_{n}$, Such that for each $1 \leq i < n$, if $(s_{1},s_{2}) \in \rho_{\tau_{i}}$, $(s_{1}^{1},s_{2}^{1}) \in \rho_{\tau_{i+1}}$ then $s_{2} = s_{1}^{1}$.
+\end{itemize}
+\end{frame}
+
+\section{Approach Details}
+\subsection{DisQUANT}
+\begin{frame}
+\frametitle{Finding Equivalence Classes (DISCO)}
+Equivalence Relation of High inputs is modelled as integer constraint on them. i.e $R : I_{hi} x I_{hi} \rightarrow \{true,false\}$
+\begin{block}{Example}
+Consider High inputs: $H = h_{1}$, $h_{2}$.\\
+An example relation as constraint would be: $R(H,\bar{H}) = (h_{1} \leq \bar{h_{2}} \land h_{1} > h_{2}) \lor (\bar{h_{1}} \leq \bar{h_{2}} \land h_{1} \geq h_{2})$.\\
+If we want to find equivalence class of High inputs:$(1,2)$, then replace $\bar{h_{1}} = 1$, $\bar{h_{2}} = 2$ in the above constraint resulting in : $(h_{1} \leq 2 \land h_{1} > h_{2}) \lor (h_{1} \geq h_{2})$. \\
+All possible values of $h_{1}$, $h_{2}$, which satisfy the second constraint belong to the same equivalence class.
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{DISCO: $Leak_{p}$}
+Notations:
+\begin{itemize}
+\item $R$: Equivalence relation over $I_{hi}$, i.e $R \subseteq I_{hi} x I_{hi}$
+\begin{itemize}
+\item $All_{hi} = I_{hi}  x  I_{hi}$ : Constant output program. All inputs belong to same equivalent class. \textbf{Non-inference}
+\item $=_{hi}  \equiv  \{(s_{hi},s_{hi}) \mid s_{hi} \in I_{hi}\}$: Each input belong to its own class. \textbf{Leaks everything}.
+\end{itemize}
+\item $E$ or Experiments: Set of Low inputs ($E \in I_{lo}$, can be controlled by the attacker) used to compute various metrics. This models the threat model, one wants to use to compute various information flow metrics.
+\end{itemize}
+\begin{block}{$Leak_{p}$}
+There is an information leak in Program $P$ w.r.t $R$, if there is a pair of program paths $\pi$ and $\eta$ that start from initial states with $R$-equivalent high components and equal low components in $E$, and lead to final states with different low components: $\exists s, t \in I   \exists s', t' \in F : (s, s') \in \rho_{\pi} \land (t, t') \in \rho_{\eta} \land s_{lo} = t_{lo} \land (s_{hi}, t_{hi}) \in R \land s_{lo} \in E \land s'_{lo} \neq t'_{lo}$
+
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{DISCO: $Confine_{p}$ and $Refine_{p}$}
+\begin{block}{$Confine_{p}(R, E)$}
+This relation indicates if $R$ correctly over-approximates the maximal information that is leaked when Program $P$ is run on the experiments E.\\
+In short there are no leaks:
+$\forall \pi, \eta \in T^{+} : \neg Leak_{p}(R, E, \pi, \eta)$.\\
+The largest equivalence relation $R$ with $Confine_{p}(R, E)$ is the most precise charecterization of the leaked information, denoted by \textbf{$\approx_{E}$}.\\
+$\approx_{E} \equiv \bigcup\{R \mid Confine_{p}(R, E)\}$.
+\end{block}
+\begin{block}{$Refine_{E}(\pi, \eta)$}
+This represents refinement of Relation $R$ w.r.t paths $\pi$ and $\eta$. In short, creates new equivalence classes such that there is no leak w.r.t $\pi$ and $\eta$.\\
+$Refine_{E}(\pi, \eta) \equiv \{(s_{hi}, t_{hi}) \mid \forall s, t \in I \forall s', t' \in F : (s, s') \in \rho_{\pi} \land (t, t') \in \rho_{\eta} \land s_{lo} = t_{lo} \land s_{lo} \in E \to s'_{lo} = t'_{lo}\}$.
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Finding Equivalence Classes (DISCO): Overview}
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+\STATE P = Program to Test
+\STATE R = $I_{hi} x I_{hi}$
+\WHILE{exists $\pi, \eta \in T^{+}: Leak_{P}(R, E, \pi, \eta)$}
+\STATE $R = R \cap Refine_{E}(\pi, \eta)$
+\ENDWHILE
+\STATE $R = R  \cup =_{I_{hi}}$ // Adding identity relation for deterministic programs.
+\end{algorithmic}
+\caption{Overview of Disco}
+\label{alg:seq}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+\frametitle{Implementation Details (DISCO) 1}
+For a given program $P$, a modified version $\bar{P}$ is created where every variable $x$ is replaced with $\bar{x}$. Then $Leak_{p}$ is implemented as:
+\begin{block}{$Leak_{p}$}
+\textbf{if} ($l=\bar{l} \land l \in E \land (h,\bar{h}) \in R$) \\
+$\quad P(h, l)$\\
+$\quad \bar{P}(\bar{h}, \bar{l})$\\
+$\quad$ \textbf{if} $l \neq \bar{l}$\\
+$\quad$ $\quad$ \textbf{error}
+\end{block}
+Here, reachability of \textbf{error} indicates possibility of leak. Model checker $ARMC$ is used, when \textbf{error} is reached this results in counter-example as paths $\pi$ in $P$ and $\eta$ in $\bar{P}$ along with a formula in $\textbf{linear arithmetic}$ that characterizes all initial states i.e pairs of $((h, l), (\bar{h}, \bar{l}))$ i.e $\bar{R}$.
+\end{frame}
+
+\begin{frame}
+\frametitle{Implementation Details (DISCO) 2}
+Let $\bar{R_{E}}$ be projected high inputs from $\bar{R}$. In short, $\bar{R_{E}}$ characterizes all pairs of high inputs from which the error state can be reached with an experiment from $E$. Then \\
+$\bar{R_{E}} \equiv \{(h, \bar{h}) \mid \exists l \in E : ((h,l), (\bar{h}, l)) \in \bar{R}\}$. 
+\begin{block}{$Refine_{E}(\pi,\eta)$}
+Given $\bar{R_{E}}$, $Refine_{E}$ can be defined as:\\
+$Refine_{E}(\pi, \eta) \equiv I_{hi} x I_{hi} \setminus \bar{R_{E}}$ or $I_{hi} x I_{hi} \land \neg (\bar{R_{E}})$.
+\end{block}
+\begin{block}{To Note}
+\begin{itemize}
+\item $h, l, \bar{h}, \bar{l}$ and $\bar{R_{E}}$ are linear arithmetic constraints.
+\item $E$ is defined also as a constraint. Ex: $E = i_{lo}^{1} > 0 \land i_{lo}^{2} < 2^{31} \land i_{lo}^{2} \geq 0 $.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example}
+Consider the example below:
+\lst
+They unroll the loop with every $h[i]$ replaced by $h_{i}$.
+\begin{block}{Equivalence Class Constraint (after DISCO with n = 3)}
+$ R \equiv (h_{1} < h_{3} \land h_{2} < h_{3} \land \bar{h_{1}} < \bar{h_{3}} \land \bar{h_{2}} < \bar{h_{3}}) \lor (\bar{h_{1}} < \bar{h_{3}} \land \bar{h_{3}} \leq \bar{h_{2}} \land h_{1} < h_{2} \land h_{3} \leq h_{2}) \lor ...$
+Refer paper for complete formula. The first conjunction represents equivalence class of inputs where element $h_{3}$ is the greatest.
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Finding Equivalence Classes Sizes (QUANT): Overview}
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+\STATE i = 1
+\STATE $Q = I_{hi} \leftarrow$ All Inputs satisfy this constraint
+\WHILE{$Q \neq \emptyset \leftarrow $ Is $Q$ satisfiable }
+\STATE $s_{i} =$ select in $Q \leftarrow$ Find an input that satisfies $Q$
+\STATE $n_{i} = Count([s_{i}]_{R})$
+\STATE $Q = Q \land \neg ([s_{i}]_{R})$
+\STATE $i = i + 1$
+\ENDWHILE
+\RETURN $\{n_{1},n_{2},...,n_{i-1}\}$
+\end{algorithmic}
+\caption{Overview of QUANT}
+\label{alg:quant}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+\frametitle{Implementation Details (QUANT)}
+\begin{block}{$Q \neq \emptyset$}
+Satisfiability check of Q.
+\end{block}
+\begin{block}{select in $Q$}
+Assignment of high inputs which satisfy $Q$.
+\end{block}
+\begin{block}{$Count([s_{i}]_{R})$}
+Count number of solutions that satisfy $R$ when its $\bar{}$ inputs are replaced by $s_{i}$. They use LATTE (Lattice Point Enumeration Tool).
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example}
+Consider the case where $(\bar{h_{1}}, \bar{h_{2}},\bar{h_{3}}) = (1, 2, 3)$, Replacing corresponding values in $R$, gives us:
+$R = (h_{1} < h_{3} \land h_{2} < h_{3} \land 1 < 3 \land 2 < 3) \lor false \lor false ... = (h_{1} < h_{3} \land h_{2} < h_{3})$\\ which is the constraint for all high inputs which belong to the same class as $(1,2,3)$. \\
+Limiting to 32-bit numbers i.e $0 \leq h_{1},h_{2},h_{3} \leq 2^{32}-1$ size of the equivalence class or number of solutions to the above constraint are $26409387495531407161709035520$
+\end{frame}
+
+\subsection{Computing Quantitative Information flow metrics}
+\begin{frame}
+\frametitle{Information flow metrics 1}
+Consider $p: I_{hi} \rightarrow R$, probability distribution of high inputs.
+\begin{block}{Guessing Entropy (average number of guesses) : $G$ or $G(U)$}
+Let all high inputs be arranged in their decreasing order of distribution. $p(I_{hi}^{i}) \geq p(I_{hi}^{j})$ whenever $i \leq j$. \\
+$G = \sum_{1 \leq i \leq |I_{hi}|} i.p(I_{hi}^{i})$
+\end{block}
+\begin{block}{Guessing Entropy when equivalence classes are known: $G_{R}$ or $G(U|\nu_{R})$}
+Let $\nu_{R} : I_{hi} \rightarrow [I_{hi}]_{R}$  be the map of secret inputs to its equivalence classes computed when run on experiments $E$. Given $\nu_{R}$, $p$ could be modified depending on the size of equivalence classes. Lets say: $p_{\nu_{R}}$.\\
+$G_{R} = \sum_{1 \leq i \leq |I_{hi}|} i.p_{\nu_{R}}$
+\end{block}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{Information flow metrics 2}
+\begin{block}{Minimal Guessing Entropy ($\hat{G_{R}}$ or $\hat{G}(U|\nu_{R})$}
+Minimal guessing effort for the weakest secrets i.e high inputs with large equivalence classes.\\
+$\hat{G_{R}} = min(G_{R}|\nu_{R} = [s_{hi}]_{R} | s_{hi} \in I_{hi})$.
+\end{block}
+Shannon entropy can be computed in exactly the same way as explained by Lucas in his \href{http://link.springer.com/chapter/10.1007\%2F978-3-642-00596-1_21}{first presentation}
+\end{frame}
+%------------------------------------------------
+
+\begin{frame}[fragile]
+\frametitle{Example}
+Simple Password checker:
+\begin{lstlisting}[basicstyle=\ttfamily]
+if (l==h)
+  out = 1;
+else
+  out = 0;
+\end{lstlisting}
+Relation computed by DISCO would be:\\
+$R = (\bar{h} = l \land l - h \leq -1) \lor (\bar{h} = l \land l - h \geq 1) \lor (h = l \land \bar{h} - l \leq -1) \lor (h = l \land l - \bar{h} \leq -1)$. \\
+To compute password entropy after one guess, Lets consider $E = (l == 0)$, then the constraint $R_{2}$ computed by DISCO would be: $R_{2} = (\bar{h} = 0 \land 0 - h \leq -1) \lor (\bar{h} = 0 \land 0 - h \geq 1) \lor (h = 0 \land \bar{h} - 0 \leq -1) \lor (h = 0 \land 0 - \bar{h} \leq -1)$\\
+\end{frame}
+
+\begin{frame}
+\frametitle{Example (cont)}
+Given $R_{2}$, considering 32 bit numbers for $h$, QUANT will compute 2 equivalence classes, $B_{1} \equiv h = 0, B_{2} \equiv h \leq -1 \lor h \geq 1$ and corresponding sizes are $|B_{1}| = 0$ and $|B_{2}| = 2^{32} - 2$.\\
+Shannon entropy = $\frac{1}{2^{32}} \sum_{i=1}^{2}|B_{i}|.log (|B_{i}|) = 31.99999999992$, after single guess.
+\end{frame}
+
+\end{document} 
