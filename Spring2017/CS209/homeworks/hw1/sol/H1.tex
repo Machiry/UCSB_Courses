@@ -1,0 +1,149 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage[bookmarks=false,pdfstartview=FitH]{hyperref}
+
+\topmargin -0.5 in
+\oddsidemargin 0 in
+\evensidemargin 0 in
+\textheight 9 in
+\textwidth 6.5 in
+\parskip 2mm
+\parindent 0mm
+\leftmargini 5mm
+\leftmarginii 5mm
+\def\le{\leqslant}
+\def\ge{\geqslant}
+\def\preceq{\preccurlyeq}
+
+\title{\vspace*{-1cm}\Large\bf Homework 1 (CS209, Spring 2017) \vspace*{-5mm}}
+\author{\normalsize Aravind Machiry}
+\date{\vspace*{-1cm}}
+
+\begin{document}
+
+\maketitle
+We will use symbols $T$ and $F$ to indicate truth values True and False respectively.
+\thispagestyle{empty}
+\begin{enumerate}
+\item
+  Let $A, B$ be distinct sentence symbols in $\cal S$.
+  Determine if each of the following wffs is a tautology.
+  If your answer is negative, find a truth assignment $v$
+  that does not satisfy the wff and show the truth values of
+  $A,B$ under the assignment $v$.
+  \begin{enumerate}
+  \item $(((A \rightarrow B) \rightarrow B) \rightarrow B)$
+  \item $(((A \rightarrow B) \rightarrow B) \rightarrow A)$
+  \end{enumerate}
+  \textbf{Solution:}
+We will use truth table to check if the above wffs are tautologies.  
+\begin{center}
+\begin{tabular}{ |c|c|c|c| } 
+ \hline
+ A & B & $(((A \rightarrow B) \rightarrow B) \rightarrow B)$ & $(((A \rightarrow B) \rightarrow B) \rightarrow A)$ \\ 
+ \hline
+ T & T & T & T \\ 
+ T & F & \textbf{F} & T \\ 
+ F & T & T & \textbf{F} \\ 
+ F & F & T & T \\ 
+ \hline
+\end{tabular}
+\end{center}
+As we can clearly, see from the above table, there are truth assignments where the wffs evaluate to false. Specifically, the wff:$(((A \rightarrow B) \rightarrow B) \rightarrow B)$ is false when $A=T$ and $B=F$, the wff: $(((A \rightarrow B) \rightarrow B) \rightarrow A)$ is false when $A=F$ and $B=T$.
+
+So none of the wffs are tautology.
+\item
+  Let $A, B, C$ be distinct sentence symbols in $\cal S$.
+  Show that neither of the following two wffs tautologically
+  implies the other:
+  $$
+  \begin{array}{l}
+    (A \leftrightarrow (B \leftrightarrow C))\\
+    ((A\land (B\land C)) \lor ((\neg A) \land ((\neg B) \land
+    (\neg C))))
+  \end{array}
+  $$
+  Note that you need to exhibit two truth assignments
+  (i.e., not eight).
+
+\textbf{Solution:}
+Lets denote $\alpha\ =\ (A \leftrightarrow (B \leftrightarrow C))$ and $\beta\ =\ ((A\land (B\land C)) \lor ((\neg A) \land ((\neg B) \land (\neg C))))$. \\
+Consider the following truth assignment, $A=T$, $B=F$ and $C=F$, with this assignment the wff $\alpha$ evaluates to $T$, however $\beta$ evaluates to $F$. This proves that $\alpha \not{\models} \beta$.
+
+Similarly, consider another truth assignment, $A=F$, $B=F$ and $C=F$. However, with this assignment the wff $\alpha$ evaluates to $F$ and $\beta$ evaluates to $T$. This proves that $\beta \not{\models} \alpha$.
+
+Thus $\alpha \not{\models} \beta$ and $\beta \not{\models} \alpha$.
+\item
+  Prove or disprove:
+
+  {\sc Theorem:}
+  For each natural number $n\ge 2$,
+  there is a set $\Sigma_n$ with $n$ wff's such that
+  (1) $\Sigma_n$ is not satisfiable, and
+  (2) each $(n{-}1)$-element subset of $\Sigma_n$
+  is satisfiable.
+  
+  \textbf{Solution:} I will prove this by construction.  
+  
+  Consider $A_{1}, A_{2}, A_{3}...$ be the countably infinite distinct sentence symbols in $\cal S$. 
+  
+  \textit{Base case (n = 2):} We can have $\Sigma_{2}\ =\ \{A_{1}, \lnot A_{1}\}$. All the possible subsets of size 1 (i.e. n-1) $\{A_{1}\}$ and $\{\lnot A_{1}\}$ are satisfiable with truth assignments $A\ =\ T$ and $A\ =\ F$ respectively. However, $\{A_{1}, \lnot A_{1}\}$ is not satisfiable.
+  
+  Now for any $n > 2$, we can create $\Sigma_{n}\ =\ \{A_{1}, A_{2},...,A_{n-1}, \alpha\}$, where $\alpha\ =\ ((\lnot A_{1}) \lor (\lnot A_{2}) \lor (\lnot A_{3}) \lor ... \lor (\lnot A_{n-1}))$. 
+  
+  Consider all the subsets of size (n-1) of $\Sigma_{n}$, there are n subsets of size n-1, lets call them $sub_{1}$, $sub_{2}$, $sub_{3}$,$sub_{4}$,...,$sub_{n-1}$, $sub_{n}$. Where $sub_{1}$ is a set of all elements of $\Sigma_{n}$ except $A_{1}$ i.e., $\Sigma_{n} - A_{1}\ =\ \{A_{2},...,A_{n-1}, \alpha\}$, similarly  $sub_{2}\ =\ \Sigma_{n} - A_{2}$ and so on, finally $sub_{n}\ =\ \Sigma_{n} - \alpha$. Each of the subsets are satisfiable with mappings $v_{1}$, $v_{2}$,...,$v_{n}$ respectively.
+  
+  where for $i \leq (n-1)$,
+  
+  \begin{equation}
+   v_{i}(B) = \left\{
+                \begin{array}{ll}
+                  F\qquad if\ B = A_{i} \\
+                  T\qquad otherwise
+                \end{array}
+              \right.
+  \end{equation}
+  
+  and $v_{n}\ =\ T$ for all sentence symbols in $\cal S$.
+  
+  Now, for $\Sigma_{n}$ to be satisfiable we should have \textit{all} sentence symbols $A_{1}, A_{2},...,A_{n-1}$ (condition 1) should be $T$ and also $\alpha$ should be $T$, however, for $\alpha$ to be $T$, we should have atleast one sentence symbol from  $A_{1}, A_{2},...,A_{n-1}$ to be $F$, contradicting condition 1, thus $\Sigma_{n}$ is not satisfiable but all subsets of size (n-1) are satisfiable. Hence the proof.
+  	
+  
+
+\item
+  Let $\Sigma$ be a (possibly infinite) set of wffs and
+  $\alpha,\beta$ two wffs.
+
+  Prove: $\Sigma;\alpha\models\beta$ if and only if
+  $\Sigma\models (\alpha\rightarrow\beta)$
+
+  Note that the notation ``$\Sigma;\alpha$'' means $\Sigma\cup\{\alpha\}$.
+  
+  \textbf{Solution:} Lets assume $\Sigma;\alpha\models\beta$  (call this $(1)$), this means for all mappings $\bar{v}$ such that, if $\bar{v}(\Sigma)\ =\ T$ and $\bar{v}(\alpha)\ =\ T$ then $\bar{v}(\beta)\ =\ T$. 
+  Consider all the mappings $\bar{v_{1}}$ such that $\bar{v_{1}}(\Sigma)\ =\ T$, and $\bar{v_{1}}(\alpha)\ =\ F$, any mapping satisfying $\Sigma$ should be either $\bar{v}$ or $\bar{v_{1}}$, from $(1)$, $\bar{v}(\beta)\ =\ T$, and $\bar{v_{1}}(\alpha)\ =\ F$ or $\bar{v_{1}}(\lnot \alpha)\ =\ T$, Hence $\Sigma\models (\beta \lor \lnot \alpha)$ i.e., 
+$\Sigma\models (\alpha\rightarrow\beta)$
+\item
+  Write a complete proof for Case 3
+  (i.e., $\alpha=(\alpha_1\lor\alpha_2)$)
+  of the induction step in proving
+  Lemma 3 (page marked ``15'' in the April 6's lecture notes).
+
+\item 
+  (Duality)
+  Let $\alpha$ be a wff whose only connectives are $\land,\lor$,
+  and $\neg$.
+  Let $\alpha^*$ be the resulting wff after interchanging $\land$
+  and $\lor$ and replacing each sentence symbol (e.g., $A$) by its
+  negation (i.e., $(\neg A)$).
+  
+  {\sc Theorem:}
+  {\em $\alpha^*$ is tautologically equivalent to $(\neg
+    \alpha)$, i.e., $\alpha^*\models (\neg\alpha)$ and 
+    $(\neg\alpha)\models\alpha^*$.}
+
+  Give a proof using mathematical induction.
+\end{enumerate}
+\end{document}
+
