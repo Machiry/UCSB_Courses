@@ -121,9 +121,13 @@ Thus $\alpha \not{\models} \beta$ and $\beta \not{\models} \alpha$.
 
   Note that the notation ``$\Sigma;\alpha$'' means $\Sigma\cup\{\alpha\}$.
   
-  \textbf{Solution:} Lets assume $\Sigma;\alpha\models\beta$  (call this $(1)$), this means for all mappings $\bar{v}$ such that, if $\bar{v}(\Sigma)\ =\ T$ and $\bar{v}(\alpha)\ =\ T$ then $\bar{v}(\beta)\ =\ T$. 
-  Consider all the mappings $\bar{v_{1}}$ such that $\bar{v_{1}}(\Sigma)\ =\ T$, and $\bar{v_{1}}(\alpha)\ =\ F$, any mapping satisfying $\Sigma$ should be either $\bar{v}$ or $\bar{v_{1}}$, from $(1)$, $\bar{v}(\beta)\ =\ T$, and $\bar{v_{1}}(\alpha)\ =\ F$ or $\bar{v_{1}}(\lnot \alpha)\ =\ T$, Hence $\Sigma\models (\beta \lor \lnot \alpha)$ i.e., 
+  \textbf{Solution:} Lets assume $\Sigma;\alpha\models\beta$  (call this $(1)$), this means for all mappings $\bar{v}$ such that, if $\bar{v}(\Sigma)\ =\ T$ and $\bar{v}(\{\alpha\})\ =\ T$ then $\bar{v}(\{\beta\})\ =\ T$. 
+  Consider all the mappings $\bar{v_{1}}$ such that $\bar{v_{1}}(\Sigma)\ =\ T$, and $\bar{v_{1}}(\{\alpha\})\ =\ F$, any mapping satisfying $\Sigma$ should be either $\bar{v}$ or $\bar{v_{1}}$, from $(1)$, $\bar{v}(\{\beta\})\ =\ T$, and $\bar{v_{1}}(\{\alpha\})\ =\ F$ or $\bar{v_{1}}(\{\lnot \alpha\})\ =\ T$, Hence $\Sigma\models (\beta \lor \lnot \alpha)$ i.e., 
 $\Sigma\models (\alpha\rightarrow\beta)$
+
+Consider, $\Sigma\models (\alpha\rightarrow\beta)$ , this means all mappings $\bar{v}$, which evaluate $\bar{v}(\Sigma)\ =\ T$, if $\bar{v}(\{\alpha\})\ =\ T$, then $\bar{v}(\{\beta\})\ =\ T$.
+So, if $\bar{v}(\Sigma)\ =\ T$ and $\bar{v}(\{\alpha\})\ =\ T$, then $\bar{v}(\{\beta\})\ =\ T$, thus,
+$\bar{v}(\Sigma \cup \{alpha\})\ =\ T$, then $\bar{v}(\{\beta\})\ =\ T$, Hence $\Sigma;\alpha\models\beta$.
 \item
   Write a complete proof for Case 3
   (i.e., $\alpha=(\alpha_1\lor\alpha_2)$)
@@ -144,6 +148,27 @@ $\Sigma\models (\alpha\rightarrow\beta)$
     $(\neg\alpha)\models\alpha^*$.}
 
   Give a proof using mathematical induction.
+  
+  \textbf{Solution:}
+  
+  \textit{Base case:} Consider $\alpha\ =\ A$, So, $\alpha^*\ =\ \lnot A$. Now, $\lnot \alpha\ =\ \lnot A$. As we can see $\alpha^*$ is same as $\lnot \alpha$. So, $\alpha^*\models (\neg\alpha)$ and $(\neg\alpha)\models\alpha^*$
+  
+  \textit{Induction:} Consider, a wff $\alpha_{1}$ Such that 
+  
+  $\alpha_{1}^*\models (\neg\alpha_{1})$ and $(\neg\alpha_{1})\models\alpha_{1}^*$  (consider this 1)
+  
+  Now, Consider $\alpha = \lnot \alpha_{1}$, So, $\alpha^{*} = (\lnot \alpha_{1})*$. So, $\alpha^{*} = \lnot \alpha_{1}*$. 
+  
+  Now, $\lnot \alpha = \lnot(\lnot \alpha_{1})$. From 1, we know $\lnot \alpha_{1}$ and $\alpha_{1}^{*}$ are tautologically equivalent. So, $\lnot \alpha = \lnot \alpha_{1}^{*}$
+  Thus $\alpha^{*}$ and $\lnot \alpha$ are equivalent.
+
+  Consider another wff $\alpha_{2}$, Such that 
+  
+  $\alpha_{2}^*\models (\neg\alpha_{2})$ and $(\neg\alpha_{2})\models\alpha_{2}^*$  (consider this 2)
+  
+  Now, Consider $\alpha = \alpha_{1} \lor \alpha_{2}$, So, $\alpha^{*} = \alpha_{1}^{*} \land \alpha_{2}^{*}$. From (1) and (2) we have, $\alpha^{*} = (\neg\alpha_{1}) \land (\neg\alpha_{2}) = \neg( \alpha_{1} \lor \alpha_{2}) = \neg\alpha$. Thus $\alpha^{*}$ and $\lnot \alpha$ are equivalent.
+  
+   Now, Consider $\alpha = \alpha_{1} \land \alpha_{2}$, So, $\alpha^{*} = \alpha_{1}^{*} \lor \alpha_{2}^{*}$. From (1) and (2) we have, $\alpha^{*} = (\neg\alpha_{1}) \lor (\neg\alpha_{2}) = \neg( \alpha_{1} \land \alpha_{2}) = \neg\alpha$. Thus $\alpha^{*}$ and $\lnot \alpha$ are equivalent.
 \end{enumerate}
 \end{document}
 
