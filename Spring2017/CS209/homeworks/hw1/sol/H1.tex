@@ -135,21 +135,34 @@ $\bar{v}(\Sigma \cup \{alpha\})\ =\ T$, then $\bar{v}(\{\beta\})\ =\ T$, Hence $
   Lemma 3 (page marked ``15'' in the April 6's lecture notes).
   
   \textbf{Solution:}
-  $\alpha = (\alpha_{1} \lor \alpha_{2})$
   
-  $\alpha \in \Delta$
   
-  $(\alpha_{1} \lor \alpha_{2}) \in \Delta$
+  $1) \alpha = (\alpha_{1} \lor \alpha_{2})$
   
-  $\{\lnot \alpha_{1}, \lnot \alpha_{2}, \alpha_{1} \lor \alpha_{2}\} \not\subseteq \Delta$, because $\Delta$ is fin sat.
+  $2) \leftrightarrow \alpha \in \Delta$
   
-  $\lnot \alpha_{1} \not\in \Delta$ or $ \lnot \alpha_{2} \not\in \Delta$
+  $3) \leftrightarrow (\alpha_{1} \lor \alpha_{2}) \in \Delta$
   
-  $\alpha_{1} \in \Delta$ or $ \alpha_{2} \in \Delta$
+  $4) \rightarrow \{\lnot \alpha_{1}, \lnot \alpha_{2}, \alpha_{1} \lor \alpha_{2}\} \not\subseteq \Delta$, because $\Delta$ is fin sat.
+  
+  $5) \leftrightarrow \lnot \alpha_{1} \not\in \Delta$ or $ \lnot \alpha_{2} \not\in \Delta$
+  
+  $6) \leftrightarrow \alpha_{1} \in \Delta$ or $ \alpha_{2} \in \Delta$.
    
- $\bar{u}(\alpha_{1})\ =\ T$ or $\bar{u}(\alpha_{2})\ =\ T$ 
+ $7) \leftrightarrow \bar{u}(\alpha_{1})\ =\ T$ or $\bar{u}(\alpha_{2})\ =\ T$ 
  
- $\bar{u}(\alpha_{1} \lor \alpha_{2})\ =\ T$ 
+ $8) \leftrightarrow \bar{u}(\alpha_{1} \lor \alpha_{2})\ =\ T$ 
+
+
+From equation 6 and 3 are equivalent, as shown below:
+
+$\alpha_{1} \in \Delta$ or $ \alpha_{2} \in \Delta$.
+
+
+$3) \leftrightarrow (\alpha_{1} \lor \alpha_{2}) \in \Delta$
+
+
+Thus establishing the equivalence through out.
 
 \item 
   (Duality)
