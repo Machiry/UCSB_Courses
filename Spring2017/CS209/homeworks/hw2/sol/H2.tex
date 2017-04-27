@@ -1,0 +1,133 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage[bookmarks=false,pdfstartview=FitH]{hyperref}
+
+\topmargin -1.25 in
+\oddsidemargin 0 in
+\evensidemargin 0 in
+\textheight 10 in
+\textwidth 6.5 in
+\parindent 5mm
+\leftmargini 5mm
+\leftmarginii 5mm
+\def\le{\leqslant}
+\def\preceq{\preccurlyeq}
+\def\faA{\mathfrak{A}}
+\def\faB{\mathfrak{B}}
+\def\faC{\mathfrak{C}}
+\def\caR{{\cal R}}
+\def\Emodels{\models\hspace*{-3pt}{=}\hspace*{-6pt}\mid}
+
+\title{\bf Homework \#2\vspace*{-5mm}}
+\author{\normalsize CS209, Spring 2017}
+\date{\vspace*{-1cm}}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\begin{enumerate}
+\item
+  Consider a (first-order) logic language with the following parameters:
+  $\forall$,
+  $Px$ ($x$ is a person),
+  $Ty$ ($y$ is a time instant),
+  $Fxy$ (you can fool person $x$ at time instant $y$),
+  Translate the following English sentences
+  into this logic language.
+  (If a sentence is ambiguous and you will need
+  more than one translation.)
+  \vspace*{-2mm}
+  \begin{enumerate}\itemsep 0pt
+  \item You can fool some of the people all of the time.
+  \item You can fool all of the people some of the time.
+  \item You can't fool all of the people all of the time.
+  \end{enumerate}
+
+\item
+  Let $\Gamma$ be a set of wffs,
+  $\varphi$ and $\psi$ be wffs
+  in some first-order language $\cal L$.
+  Prove the following:
+  \vspace*{-2mm}
+  \begin{enumerate}\itemsep 0pt
+  \item
+    $\Gamma;\varphi\models\psi$ ~iff~
+    $\Gamma\models(\varphi\rightarrow\psi)$.
+  \item
+    $\varphi\Emodels\psi$ ~iff~
+    $\models(\varphi\leftrightarrow\psi)$.
+  \end{enumerate}
+
+\item
+  Let $\alpha$ and $\beta$ be two wffs.
+  Prove the following:~
+  $\{\forall x(\alpha\rightarrow\beta), \forall x \alpha\}
+  \models \forall x \beta$.
+
+\item
+  Show that a wff $\theta$ is valid iff $\forall x \theta$ is valid.
+
+\item
+  Let $\cal L$ be a logic language with one unary predicate
+  symbol $R$, no contant symbols, no function symbols.
+  Let $V$ be a set of variables.
+  We define the set of wffs
+  $\Gamma=\{\neg Ry\mid y\in V\}\cup\{\exists x\,Rx\}$.
+  Is $\Gamma$ satisfiable? Prove your answer.
+
+\item
+  Let $\mathfrak{R}$ be
+  the structure $({\mathbb R}, +, \times)$ for real numbers
+  for the language consists of $\forall, +$, and $\times$
+  (no constants).
+  The addition and multiplication operations in $\mathfrak{R}$
+  are the usual operations.
+  \vspace*{-2mm}
+  \begin{enumerate}\itemsep 0pt
+  \item
+    Write a formula that defines the set $\{0\}$
+    (i.e., containing a single element $0$).
+  \item
+    Write a formula that defines the interval $[0,\infty)$
+    (a set of real numbers).
+  \item
+    Write a formula that defines the set $\{2\}$.
+  \end{enumerate}
+
+\item
+  Consider a new quantifier: $\exists!x\alpha$
+  (read ``there exists a unique $x$ such that $\alpha$'')
+  is to be satisfied in a structure $\faA$ with an assignment $v$
+  iff there is one and only one element $d\in|\faA|$ such that
+  $\models_{\faA}\alpha[v(x/d)]$.
+  Assume that the language has the equality symbol.
+  Find a formula in the original language that
+  is logically equivalent to $\exists!x\alpha$.
+
+\item
+  Prove Part (3) and Part (4) of the Homomorphism Theorem.
+
+\item
+  Let $h$ be an isomorphic embedding of $\faA$ into $\faB$.
+  Show that there is a structure $\faC$ isomorphic to $\faB$
+  such that $\faA$ is a substructure of $\faC$.\\
+  Hint:
+  Let $g$ be a one-to-one function with domain $|\faB|$  such that
+  $g(h(a))=a$ for all $a\in|\faA|$.
+  Define the structure $\faC$ such that
+  $g$ is an isomorphism onto $\faC$.
+
+\item
+  Consider the structure structure $({\mathbb R}, +)$
+  of real numbers for the language
+  consisting of $\forall, +$ (no multiplication
+  nor constants).
+  The addition operation is the usual operations.
+  Prove that the set $\{1\}$ cannot be defined by any formula.
+  \\
+  Hint: Consider automorphisms defined by linear functions.
+\end{enumerate}
+
+\end{document}
