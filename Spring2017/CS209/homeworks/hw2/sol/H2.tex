@@ -20,8 +20,8 @@
 \def\caR{{\cal R}}
 \def\Emodels{\models\hspace*{-3pt}{=}\hspace*{-6pt}\mid}
 
-\title{\bf Homework \#2\vspace*{-5mm}}
-\author{\normalsize CS209, Spring 2017}
+\title{\bf Homework \#2\vspace*{-5mm} (CS209, Spring 2017)}
+\author{\normalsize Aravind Machiry}
 \date{\vspace*{-1cm}}
 
 \begin{document}
@@ -41,8 +41,19 @@
   \vspace*{-2mm}
   \begin{enumerate}\itemsep 0pt
   \item You can fool some of the people all of the time.
+
+\textbf{Answer:}
+$\exists x\ Px \land (\forall y\ (Ty \rightarrow Fxy))$ which is same as $\neg \forall x\ \neg (Px \land (\forall y\ (Ty \rightarrow Fxy)))$
+  
   \item You can fool all of the people some of the time.
+
+\textbf{Answer:}
+$\exists y\ Ty \land (\forall x\ (Px \rightarrow Fxy))$ which is same as $\neg \forall y\ \neg (Ty \land (\forall x\ (Px \rightarrow Fxy)))$
+  
   \item You can't fool all of the people all of the time.
+  
+  \textbf{Answer:}
+  $\neg (\forall x \forall y\ (Px \land Ty \land Fxy))$
   \end{enumerate}
 
 \item
